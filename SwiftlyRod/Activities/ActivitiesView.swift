@@ -11,6 +11,7 @@ import StravaSwift
 struct ActivitiesView: View {
     @StateObject private var viewModel = ActivitiesViewModel()
     @State private var selectedActivity: Activity?
+    
     var token: OAuthToken?
     
 

@@ -18,9 +18,9 @@ struct MainTabView: View {
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
-            StatsView(token: token) // Placeholder for additional views
+            YouView(token: token) // Placeholder for additional views
                 .tabItem {
-                    Label("Stats", systemImage: "chart.bar")
+                    Label("You", systemImage: "heart.text.clipboard")
             }
         }
         .tint(.orange)

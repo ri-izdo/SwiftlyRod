@@ -57,21 +57,10 @@ struct ActivityCellModel: View {
                 Text(activityName)
                     .font(.system(size: CGFloat(activityNameFontSize)))
                     .bold()
+                Spacer()
             }
             Spacer()
         }
-    }
-    
-    func formatTime(seconds: TimeInterval) -> String {
-        let hours = Int(seconds) / 3600
-        let minutes = (Int(seconds) % 3600) / 60
-        let seconds = Int(seconds) % 60
-        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-    }
-    
-    func feetToMiles(feet: Double) -> String {
-        let value = feet / 5280
-        return String(format: "%.2f",value)
     }
     
     func activityStats() -> some View {
@@ -93,5 +82,17 @@ struct ActivityCellModel: View {
                 }
             Spacer()
         }
+    }
+    
+    func formatTime(seconds: TimeInterval) -> String {
+        let hours = Int(seconds) / 3600
+        let minutes = (Int(seconds) % 3600) / 60
+        let seconds = Int(seconds) % 60
+        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+    
+    func feetToMiles(feet: Double) -> String {
+        let value = feet / 5280
+        return String(format: "%.2f",value)
     }
 }
