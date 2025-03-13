@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F522B6B02D825F2C002DD07A /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F522B6AF2D825F2C002DD07A /* RiveRuntime */; };
 		F52CD8A52D7AABDB00BE7A37 /* StravaSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F52CD8A42D7AABDB00BE7A37 /* StravaSwift */; };
+		F56E176C2D82CFB100F6F20E /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F56E176B2D82CFB100F6F20E /* RiveRuntime */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 			files = (
 				F52CD8A52D7AABDB00BE7A37 /* StravaSwift in Frameworks */,
 				F522B6B02D825F2C002DD07A /* RiveRuntime in Frameworks */,
+				F56E176C2D82CFB100F6F20E /* RiveRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +89,7 @@
 			packageProductDependencies = (
 				F52CD8A42D7AABDB00BE7A37 /* StravaSwift */,
 				F522B6AF2D825F2C002DD07A /* RiveRuntime */,
+				F56E176B2D82CFB100F6F20E /* RiveRuntime */,
 			);
 			productName = SwiftlyRod;
 			productReference = F52851E22D7A3B5700F13741 /* SwiftlyRod.app */;
@@ -384,6 +387,10 @@
 		F52CD8A42D7AABDB00BE7A37 /* StravaSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = StravaSwift;
+		};
+		F56E176B2D82CFB100F6F20E /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RiveRuntime;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

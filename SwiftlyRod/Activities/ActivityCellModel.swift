@@ -16,17 +16,20 @@ struct ActivityCellModel: View {
     
     let nameTextSize: Float = 18.0
     let activityNameFontSize: Float = 25.0
-    let statFontSize: Float = 10.0
+    let statTextTitleSize: Float = 10.0
+    let statTextValuesize: Float = 14.0
     
     var body: some View {
         ZStack {
             Color.gray.opacity(0.2)
             VStack {
+                Spacer()
                 header()
                 Spacer()
                 activityStats()
                 Spacer()
             }
+            .padding()
         }
     }
     
@@ -49,7 +52,7 @@ struct ActivityCellModel: View {
                 Text("\(firstName) \(lastName)")
                     .font(.system(size: CGFloat(nameTextSize)))
                 activityDate()
-                    .font(.system(size: CGFloat(statFontSize)))
+                    .font(.system(size: CGFloat(statTextTitleSize)))
                 Spacer()
                 Text(activityName)
                     .font(.system(size: CGFloat(activityNameFontSize)))
@@ -66,8 +69,9 @@ struct ActivityCellModel: View {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
-    func feetToMiles(feet: Double) -> Double {
-        return feet / 5280
+    func feetToMiles(feet: Double) -> String {
+        let value = feet / 5280
+        return String(format: "%.2f",value)
     }
     
     func activityStats() -> some View {
@@ -77,15 +81,15 @@ struct ActivityCellModel: View {
         return HStack {
                 VStack(alignment: .leading) {
                     Text("Distance")
-                        .font(.system(size: CGFloat(statFontSize)))
-                    Text("\(distance) km")
-                        .font(.system(size: 20))
+                        .font(.system(size: CGFloat(statTextTitleSize)))
+                    Text("\(distance) mi")
+                        .font(.system(size: CGFloat(statTextValuesize)))
                 }
                 VStack(alignment: .leading) {
                     Text("Duration")
-                        .font(.system(size: CGFloat(statFontSize)))
+                        .font(.system(size: CGFloat(statTextTitleSize)))
                     Text("\(formatTime(seconds: movingTime))")
-                        .font(.system(size: 20))
+                        .font(.system(size: CGFloat(statTextValuesize)))
                 }
             Spacer()
         }

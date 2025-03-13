@@ -21,7 +21,7 @@ struct MainTabView: View {
             StatsView(token: token) // Placeholder for additional views
                 .tabItem {
                     Label("Stats", systemImage: "chart.bar")
-                }
+            }
         }
         .tint(.orange)
     }
