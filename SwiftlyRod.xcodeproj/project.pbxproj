@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F522B6B02D825F2C002DD07A /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F522B6AF2D825F2C002DD07A /* RiveRuntime */; };
 		F52CD8A52D7AABDB00BE7A37 /* StravaSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F52CD8A42D7AABDB00BE7A37 /* StravaSwift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F52CD8A52D7AABDB00BE7A37 /* StravaSwift in Frameworks */,
+				F522B6B02D825F2C002DD07A /* RiveRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +86,7 @@
 			name = SwiftlyRod;
 			packageProductDependencies = (
 				F52CD8A42D7AABDB00BE7A37 /* StravaSwift */,
+				F522B6AF2D825F2C002DD07A /* RiveRuntime */,
 			);
 			productName = SwiftlyRod;
 			productReference = F52851E22D7A3B5700F13741 /* SwiftlyRod.app */;
@@ -115,6 +118,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				F52CD8A32D7AABDB00BE7A37 /* XCLocalSwiftPackageReference "../../iOS Packages/StravaSwift" */,
+				F522B6AE2D825F2C002DD07A /* XCLocalSwiftPackageReference "../../iOS Packages/rive-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F52851E32D7A3B5700F13741 /* Products */;
@@ -362,6 +366,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		F522B6AE2D825F2C002DD07A /* XCLocalSwiftPackageReference "../../iOS Packages/rive-ios" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../iOS Packages/rive-ios";
+		};
 		F52CD8A32D7AABDB00BE7A37 /* XCLocalSwiftPackageReference "../../iOS Packages/StravaSwift" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../iOS Packages/StravaSwift";
@@ -369,6 +377,10 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F522B6AF2D825F2C002DD07A /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RiveRuntime;
+		};
 		F52CD8A42D7AABDB00BE7A37 /* StravaSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = StravaSwift;
