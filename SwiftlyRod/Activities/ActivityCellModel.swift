@@ -14,12 +14,18 @@ struct ActivityCellModel: View {
     var activity: Activity
     var token: OAuthToken?
     
+    let nameTextSize: Float = 18.0
+    let activityNameFontSize: Float = 25.0
+    let statFontSize: Float = 10.0
+    
     var body: some View {
         ZStack {
-            Color.gray.opacity(0.1)
+            Color.gray.opacity(0.2)
             VStack {
-                header(token: token, activity: activity)
-                
+                header()
+                Spacer()
+                activityStats()
+                Spacer()
             }
         }
     }
@@ -33,15 +39,54 @@ struct ActivityCellModel: View {
         }
     }
     
-    func header(token: OAuthToken?, activity: Activity) -> some View {
+    func header() -> some View {
         let firstName = token?.athlete?.firstname ?? "Unknown"
         let lastName = token?.athlete?.lastname ?? ""
+        let activityName = activity.name ?? "Unknown Activity"
 
         return HStack {
-            VStack {
+            VStack(alignment: .leading) {
                 Text("\(firstName) \(lastName)")
+                    .font(.system(size: CGFloat(nameTextSize)))
                 activityDate()
+                    .font(.system(size: CGFloat(statFontSize)))
+                Spacer()
+                Text(activityName)
+                    .font(.system(size: CGFloat(activityNameFontSize)))
+                    .bold()
             }
+            Spacer()
+        }
+    }
+    
+    func formatTime(seconds: TimeInterval) -> String {
+        let hours = Int(seconds) / 3600
+        let minutes = (Int(seconds) % 3600) / 60
+        let seconds = Int(seconds) % 60
+        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+    
+    func feetToMiles(feet: Double) -> Double {
+        return feet / 5280
+    }
+    
+    func activityStats() -> some View {
+        let distance = feetToMiles(feet: activity.distance ?? 0.0)
+        let movingTime = activity.movingTime ?? 0.0
+        
+        return HStack {
+                VStack(alignment: .leading) {
+                    Text("Distance")
+                        .font(.system(size: CGFloat(statFontSize)))
+                    Text("\(distance) km")
+                        .font(.system(size: 20))
+                }
+                VStack(alignment: .leading) {
+                    Text("Duration")
+                        .font(.system(size: CGFloat(statFontSize)))
+                    Text("\(formatTime(seconds: movingTime))")
+                        .font(.system(size: 20))
+                }
             Spacer()
         }
     }
