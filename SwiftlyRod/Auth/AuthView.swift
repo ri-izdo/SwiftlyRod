@@ -10,13 +10,15 @@ import StravaSwift
 import RiveRuntime
 
 
+
 struct AuthView: View {
     @State private var isLoading = false
     @State private var token: OAuthToken?
     @State private var athlete: Athlete? // Store athlete separately
     @State private var navigateToMain = false
     @State private var errorMessage: AuthError?
-    private let solarAnimation = RiveViewModel(fileName: "solar_system_animation")
+    @State private var blurAmount: CGFloat = 0.0
+    private let splashScreen = RiveViewModel(fileName: "splash_screen", stateMachineName: "workout")
     
     var body: some View {
         VStack {
@@ -24,18 +26,52 @@ struct AuthView: View {
                 LoadingAnimation()
             } else {
                 VStack {
-                    solarAnimation.view()
-                        .frame(width: 200, height: 200) // Adjust as needed
-                        .onAppear {
-                            solarAnimation.play()
+                    ZStack {
+                        Rectangle()
+                            .fill(Color(red: 252/255, green: 82/255, blue: 0/255))
+                            .frame(maxWidth: .infinity, maxHeight: .infinity) // Expand to full screen
+                            .ignoresSafeArea() // Cover safe areas
+                        
+                        VStack {
+                            splashScreen.view()
+                                .scaleEffect(1.2) // Increase scale to push beyond screen
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .blur(radius: blurAmount)
+                                .ignoresSafeArea()
+                                .onAppear {
+                                    splashScreen.play()
+                                }
+                            Spacer()
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.black) // Set rectangle color to black
+                                    .frame(maxWidth: .infinity, maxHeight: 450) // Full-screen size
+                                    .ignoresSafeArea() // Extend beyond safe areas
+                                Spacer()
+                                VStack {
+                                    Spacer()
+                                    Text("Track your active life in one place.")
+                                        .font(.system(size: 20, weight: .bold)) // Match text style
+                                        .foregroundColor(.white)
+                                        .padding()
+                                    Spacer()
+                                    Button("Get Started") {
+                                        login()
+                                    }
+                                        .font(.system(size: 14, weight: .bold)) // Match text style
+                                        .foregroundColor(.white)
+                                        .frame(width: 280, height: 50) // Increase button size
+                                        .background(
+                                            LinearGradient(gradient: Gradient(colors: [Color.orange.opacity(0.9), Color(red: 252/255, green: 82/255, blue: 0/255)]),
+                                                           startPoint: .topLeading,
+                                                           endPoint: .bottomTrailing)
+                                        )
+                                        .cornerRadius(10) // Rounded edges
+                                    Spacer()
+                                }
+                            }
                         }
-                    Button("Login with Strava") {
-                        login()
                     }
-                    .padding()
-                    .background(Color.orange)
-                    .foregroundColor(.white)
-                    .clipShape(Capsule())
                 }
             }
         }

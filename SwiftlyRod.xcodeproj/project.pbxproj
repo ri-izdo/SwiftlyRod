@@ -10,6 +10,7 @@
 		F522B6B02D825F2C002DD07A /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F522B6AF2D825F2C002DD07A /* RiveRuntime */; };
 		F52CD8A52D7AABDB00BE7A37 /* StravaSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F52CD8A42D7AABDB00BE7A37 /* StravaSwift */; };
 		F56E176C2D82CFB100F6F20E /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F56E176B2D82CFB100F6F20E /* RiveRuntime */; };
+		F5B91AB42D8342E5007CEA40 /* SplineRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F5B91AB32D8342E5007CEA40 /* SplineRuntime */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5B91AB42D8342E5007CEA40 /* SplineRuntime in Frameworks */,
 				F52CD8A52D7AABDB00BE7A37 /* StravaSwift in Frameworks */,
 				F522B6B02D825F2C002DD07A /* RiveRuntime in Frameworks */,
 				F56E176C2D82CFB100F6F20E /* RiveRuntime in Frameworks */,
@@ -90,6 +92,7 @@
 				F52CD8A42D7AABDB00BE7A37 /* StravaSwift */,
 				F522B6AF2D825F2C002DD07A /* RiveRuntime */,
 				F56E176B2D82CFB100F6F20E /* RiveRuntime */,
+				F5B91AB32D8342E5007CEA40 /* SplineRuntime */,
 			);
 			productName = SwiftlyRod;
 			productReference = F52851E22D7A3B5700F13741 /* SwiftlyRod.app */;
@@ -122,6 +125,7 @@
 			packageReferences = (
 				F52CD8A32D7AABDB00BE7A37 /* XCLocalSwiftPackageReference "../../iOS Packages/StravaSwift" */,
 				F522B6AE2D825F2C002DD07A /* XCLocalSwiftPackageReference "../../iOS Packages/rive-ios" */,
+				F5B91AB22D8342E5007CEA40 /* XCLocalSwiftPackageReference "../../iOS Packages/spline-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F52851E32D7A3B5700F13741 /* Products */;
@@ -377,6 +381,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../iOS Packages/StravaSwift";
 		};
+		F5B91AB22D8342E5007CEA40 /* XCLocalSwiftPackageReference "../../iOS Packages/spline-ios" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../iOS Packages/spline-ios";
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -391,6 +399,10 @@
 		F56E176B2D82CFB100F6F20E /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RiveRuntime;
+		};
+		F5B91AB32D8342E5007CEA40 /* SplineRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SplineRuntime;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

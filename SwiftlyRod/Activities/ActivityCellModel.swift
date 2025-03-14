@@ -7,7 +7,7 @@
 
 import SwiftUI
 import StravaSwift
-import Foundation
+import RiveRuntime
 
 
 struct ActivityCellModel: View {
@@ -18,6 +18,7 @@ struct ActivityCellModel: View {
     let activityNameFontSize: Float = 25.0
     let statTextTitleSize: Float = 10.0
     let statTextValuesize: Float = 14.0
+    @State private var goalButton = RiveViewModel(fileName: "bell_animation")
     
     var body: some View {
         ZStack {
@@ -81,6 +82,18 @@ struct ActivityCellModel: View {
                         .font(.system(size: CGFloat(statTextValuesize)))
                 }
             Spacer()
+            
+            if Float(distance) >= 0.1 {
+                VStack {
+                    goalButton.view()
+                        .onAppear() {
+                            goalButton.play(animationName: "idleStroke")
+                        }
+                        .onTapGesture {
+                            goalButton.play(animationName: "ClickToFill")
+                        }
+                }
+            }
         }
     }
     
@@ -91,8 +104,8 @@ struct ActivityCellModel: View {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
-    func feetToMiles(feet: Double) -> String {
+    func feetToMiles(feet: Double) -> Float {
         let value = feet / 5280
-        return String(format: "%.2f",value)
+        return Float(String(format: "%.2f",value)) ?? 0.0
     }
 }
