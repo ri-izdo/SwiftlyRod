@@ -7,7 +7,6 @@
 
 import SwiftUI
 import StravaSwift
-import SplineRuntime
 
 struct ActivitiesView: View {
     @StateObject private var viewModel = ActivitiesViewModel()
@@ -26,23 +25,21 @@ struct ActivitiesView: View {
                         .foregroundColor(.gray)
                         .padding()
                 } else {
-                    ZStack {
-                        List(viewModel.activities) {
-                            activity in
-                            Button {
-                                selectedActivity = activity
-                            } label: {
-                                ActivityCellModel(
-                                    activity: activity,
-                                    token: token
-                                )
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .listRowBackground(Color.clear) // Prevents system background
-                            .listRowSeparator(.hidden)
+                    List(viewModel.activities) {
+                        activity in
+                        Button {
+                            selectedActivity = activity
+                        } label: {
+                            ActivityCellModel(
+                                activity: activity,
+                                token: token
+                            )
                         }
-                        .listStyle(.plain)
+                        .buttonStyle(PlainButtonStyle())
+                        .listRowBackground(Color.clear) // Prevents system background
+                        .listRowSeparator(.hidden)
                     }
+                    .listStyle(.plain)
                 }
             }
             .navigationTitle("Activities")
