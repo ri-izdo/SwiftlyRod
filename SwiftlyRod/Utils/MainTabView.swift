@@ -19,7 +19,7 @@ struct MainTabView: View {
             TabView(selection: $selectedTab) {
                 ActivitiesView(token: token)
                     .tag(0)
-                AwardView(token: token)
+                AwardView()
                     .tag(1)
             }
             .background(Color.gray.opacity(0.2))
