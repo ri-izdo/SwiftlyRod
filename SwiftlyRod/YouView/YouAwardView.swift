@@ -1,22 +1,50 @@
 //
-//  StatsView.swift
+//  YouAwardView.swift
 //  SwiftlyRod
 //
-//  Created by Roderick Lizardo on 3/7/25.
+//  Created by Roderick Lizardo on 3/14/25.
 //
-//
+
 
 import SwiftUI
 import StravaSwift
 import SplineRuntime
 
-struct AwardView: View {
+
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 6: // RGB (No Alpha)
+            (a, r, g, b) = (255, (int >> 16) & 0xFF, (int >> 8) & 0xFF, int & 0xFF)
+        case 8: // ARGB
+            (a, r, g, b) = ((int >> 24) & 0xFF, (int >> 16) & 0xFF, (int >> 8) & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        self = Color(
+            .sRGB,
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue: Double(b) / 255,
+            opacity: Double(a) / 255
+        )
+    }
+}
+
+
+
+struct YouAwardView: View {
     @State private var showSpline1 = false
     @State private var showSpline2 = false
     @State private var showSpline3 = false
     @State private var showSpline4 = false
     @State private var selectedButton: Int? = nil
     @State private var showAwards: [Bool] = [] // Animation states for each button
+    @State private var showChart = false // ✅ Controls the WalkingChartView fade-in
 
     let buttonCount = 12 // Number of buttons
 
@@ -28,14 +56,6 @@ struct AwardView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // Static Custom Color Gradient Background
-                LinearGradient(
-                    gradient: Gradient(colors: [Color.white, Color.gray.opacity(0.2)]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .edgesIgnoringSafeArea(.all)
-
                 VStack(alignment: .leading) {
                     Spacer().frame(height: 40)
 
@@ -82,6 +102,8 @@ struct AwardView: View {
                                         selectedButton == index
                                         || (index == 0 && showSpline1)
                                         || (index == 1 && showSpline2)
+                                        || (index == 2 && showSpline3)
+                                        || (index == 3 && showSpline4)
                                         ? Color.orange.opacity(0.5)
                                         : Color.gray.opacity(0.3)
                                     )
@@ -101,6 +123,13 @@ struct AwardView: View {
                     }
                     .padding(.horizontal)
 
+                    // ✅ WalkingChartView Fades In After Other Effects
+                    ZStack { // ✅ Delayed animation
+                        WalkingChartView()
+                            .scaleEffect(0.75)
+                            .opacity(showChart ? 1 : 0) // ✅ Fade-in effect
+                            .animation(.easeIn(duration: 1.2).delay(1.2), value: showChart) // ✅ Delayed animation
+                    }
                     Spacer()
                 }
                 .blur(radius: showSpline1 || showSpline2 ? 10 : 0)
@@ -135,6 +164,11 @@ struct AwardView: View {
             .edgesIgnoringSafeArea(.all)
             .onAppear {
                 resetAndAnimateAwards()
+                
+                // ✅ Delay WalkingChartView appearance until animations finish
+                DispatchQueue.main.asyncAfter(deadline: .now() + (0.1 * Double(buttonCount)) + 1.0) {
+                    showChart = true
+                }
             }
         }
     }
@@ -152,6 +186,7 @@ struct AwardView: View {
     }
 }
 
+
 // Reusable View for Spline Overlay
 struct SplineOverlayView: View {
     let url: String
@@ -159,7 +194,7 @@ struct SplineOverlayView: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.4)
+            Color.black.opacity(0.5)
                 .edgesIgnoringSafeArea(.all)
                 .onTapGesture {
                     onClose()
@@ -176,3 +211,4 @@ struct SplineOverlayView: View {
         .transition(.opacity)
     }
 }
+

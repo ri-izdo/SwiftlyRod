@@ -22,7 +22,9 @@ struct ActivityCellModel: View {
     
     var body: some View {
         ZStack {
-            Color.gray.opacity(0.2)
+            BlurView(style: .dark)
+            Color.gray.opacity(0.25)
+            
             VStack {
                 Spacer()
                 header()
@@ -67,12 +69,13 @@ struct ActivityCellModel: View {
     func activityStats() -> some View {
         let distance = feetToMiles(feet: activity.distance ?? 0.0)
         let movingTime = activity.movingTime ?? 0.0
+        let distanceDisplay = String(format: "%.2f",distance)
         
         return HStack {
                 VStack(alignment: .leading) {
                     Text("Distance")
                         .font(.system(size: CGFloat(statTextTitleSize)))
-                    Text("\(distance) mi")
+                    Text("\(distanceDisplay) mi")
                         .font(.system(size: CGFloat(statTextValuesize)))
                 }
                 VStack(alignment: .leading) {
@@ -83,7 +86,7 @@ struct ActivityCellModel: View {
                 }
             Spacer()
             
-            if Float(distance) >= 0.1 {
+            if Float(distance) >= 0.2 {
                 VStack {
                     goalButton.view()
                         .onAppear() {
@@ -93,6 +96,7 @@ struct ActivityCellModel: View {
                             goalButton.play(animationName: "ClickToFill")
                         }
                 }
+                .offset(x: 100, y: -90)
             }
         }
     }
@@ -108,4 +112,30 @@ struct ActivityCellModel: View {
         let value = feet / 5280
         return Float(String(format: "%.2f",value)) ?? 0.0
     }
+}
+
+
+struct BlurView: UIViewRepresentable {
+
+    let style: UIBlurEffect.Style
+
+    func makeUIView(context: UIViewRepresentableContext<BlurView>) -> UIView {
+        let view = UIView(frame: .zero)
+        view.backgroundColor = .clear
+        let blurEffect = UIBlurEffect(style: style)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        view.insertSubview(blurView, at: 0)
+        NSLayoutConstraint.activate([
+            blurView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            blurView.widthAnchor.constraint(equalTo: view.widthAnchor),
+        ])
+        return view
+    }
+
+    func updateUIView(_ uiView: UIView,
+                      context: UIViewRepresentableContext<BlurView>) {
+
+    }
+
 }

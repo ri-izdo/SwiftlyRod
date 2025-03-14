@@ -7,6 +7,7 @@
 
 import SwiftUI
 import StravaSwift
+import SplineRuntime
 
 struct ActivitiesView: View {
     @StateObject private var viewModel = ActivitiesViewModel()
@@ -17,37 +18,43 @@ struct ActivitiesView: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
-                if viewModel.isLoading {
-                    LoadingAnimation()
-                } else if viewModel.activities.isEmpty {
-                    Text("⚠️ No Activities Found")
-                        .foregroundColor(.gray)
-                        .padding()
-                } else {
-                    List(viewModel.activities) {
-                        activity in
-                        Button {
-                            selectedActivity = activity
-                        } label: {
-                            ActivityCellModel(
-                                activity: activity,
-                                token: token
-                            )
+            ZStack {
+                let url = URL(string: "https://build.spline.design/8oqdq4W6DqdFPuGv8mxS/scene.splineswift")!
+                SplineView(sceneFileURL: url).ignoresSafeArea(.all)
+                
+                VStack {
+                    if viewModel.isLoading {
+                        LoadingAnimation()
+                    } else if viewModel.activities.isEmpty {
+                        Text("⚠️ No Activities Found")
+                            .foregroundColor(.gray)
+                            .padding()
+                    } else {
+                        List(viewModel.activities) {
+                            activity in
+                            Button {
+                                selectedActivity = activity
+                            } label: {
+                                ActivityCellModel(
+                                    activity: activity,
+                                    token: token
+                                )
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .listRowBackground(Color.clear) // Prevents system background
+                            .listRowSeparator(.hidden)
+                            .cornerRadius(8)
                         }
-                        .buttonStyle(PlainButtonStyle())
-                        .listRowBackground(Color.clear) // Prevents system background
-                        .listRowSeparator(.hidden)
+                        .listStyle(.plain)
                     }
-                    .listStyle(.plain)
                 }
-            }
-            .navigationTitle("Activities")
-            .onAppear {
-                viewModel.fetchActivities()
-            }
-            .navigationDestination(item: $selectedActivity) { activity in
-                ActivityDetailView(activity: activity)
+                .navigationTitle("Activities")
+                .onAppear {
+                    viewModel.fetchActivities()
+                }
+                .navigationDestination(item: $selectedActivity) { activity in
+                    ActivityDetailView(activity: activity)
+                }
             }
         }
     }

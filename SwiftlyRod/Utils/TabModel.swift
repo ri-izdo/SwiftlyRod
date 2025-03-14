@@ -8,7 +8,6 @@
 import SwiftUI
 import RiveRuntime
 
-
 struct TabButton: View {
     @Binding var selectedTab: Int
     let tab: Int
@@ -42,7 +41,7 @@ struct TabButton: View {
             }
 
             // 🔄 Reset animation after playing
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 riveViewModel?.setInput(animationBoolean, value: false) // ✅ Reset state
                 print("🔄 Rive animation reset: \(animationBoolean)")
             }
