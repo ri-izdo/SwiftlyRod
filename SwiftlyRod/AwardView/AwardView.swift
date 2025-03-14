@@ -26,7 +26,7 @@ struct AwardView: View {
         ZStack {
             // Static Custom Color Gradient Background (#FC4C01 and Black)
             LinearGradient(
-                gradient: Gradient(colors: [Color("#FC4C01"), Color.black]),
+                gradient: Gradient(colors: [Color("#FC4C01"), Color.gray ]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )

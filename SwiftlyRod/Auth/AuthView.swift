@@ -8,7 +8,7 @@
 import SwiftUI
 import StravaSwift
 import RiveRuntime
-
+import SplineRuntime
 
 
 struct AuthView: View {
@@ -27,20 +27,28 @@ struct AuthView: View {
             } else {
                 VStack {
                     ZStack {
-                        Rectangle()
-                            .fill(Color(red: 252/255, green: 82/255, blue: 0/255))
-                            .frame(maxWidth: .infinity, maxHeight: .infinity) // Expand to full screen
-                            .ignoresSafeArea() // Cover safe areas
-                        
                         VStack {
-                            splashScreen.view()
-                                .scaleEffect(1.2) // Increase scale to push beyond screen
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .blur(radius: blurAmount)
-                                .ignoresSafeArea()
-                                .onAppear {
-                                    splashScreen.play()
-                                }
+//                            splashScreen.view()
+//                                .scaleEffect(1.2) // Increase scale to push beyond screen
+//                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                                .blur(radius: blurAmount)
+//                                .ignoresSafeArea()
+//                                .onAppear {
+//                                    splashScreen.play()
+//                                }
+                            ZStack {
+
+                                let url = URL(string: "https://build.spline.design/r8xUItGCH4lL7oXkSuXx/scene.splineswift")!
+
+                                        // fetching from local
+                                        // let url = Bundle.main.url(forResource: "scene", withExtension: "splineswift")!
+
+
+
+                                SplineView(sceneFileURL: url).ignoresSafeArea(.all)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                
+                            }
                             Spacer()
                             ZStack {
                                 Rectangle()
@@ -50,8 +58,9 @@ struct AuthView: View {
                                 Spacer()
                                 VStack {
                                     Spacer()
-                                    Text("Track your active life in one place.")
-                                        .font(.system(size: 20, weight: .bold)) // Match text style
+                                    Text("Track your progress and cheer each other on. Join over 100 million active people on Strava for free.")
+                                        .multilineTextAlignment(.center)
+                                        .font(.system(size: 30, weight: .bold)) // Match text style
                                         .foregroundColor(.white)
                                         .padding()
                                     Spacer()
