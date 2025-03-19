@@ -37,5 +37,10 @@ struct MainTabView: View {
                 Spacer()
             }
         }
+        .onAppear {
+            if selectedTab != 2 {
+                YouView().resetAnimations()
+            }
+        }
     }
 }

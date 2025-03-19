@@ -13,9 +13,6 @@ import SplineRuntime
 struct YouView: View {
     var token: OAuthToken?
     
-
-
-    
     @State private var isMedal1 = false
     @State private var isMedal2 = false
     @State private var isMedal3 = false
@@ -41,42 +38,56 @@ struct YouView: View {
     @State var viewWidth: CGFloat = 0.0
     @State var viewHeight: CGFloat = 0.0
     @State var viewcenterPosition: CGPoint = .zero
+    
+    @State private var showAwardSection = false
+    @State private var showWalkSection = false
+    @State private var showHIITSection = false
+    
+    @State private var animationDuration = 0.0
+    
 
     var body: some View {
         NavigationStack {
             ZStack {
                 Color.black
                     .edgesIgnoringSafeArea(.all)
-                    .blur(radius: showSpline ? 10 : 0)
+                
                 ScrollView {
                     awardSection()
                         .frame(maxWidth: .infinity, minHeight: 200)
                         .cornerRadius(20)
-                    Rectangle()
-                        .fill(Color.blue)
-                        .frame(maxWidth: .infinity, minHeight: 400)
+                        .opacity(showAwardSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
+                    
+                    WalkStatsView()
+                        .frame(maxWidth: .infinity, minHeight: 250)
                         .cornerRadius(20)
+                        .opacity(showWalkSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
                 }
+                .blur(radius: showSpline ? 10 : 0)
+                .padding(.horizontal, 10)
                 
-                ZStack {
-                    if showSpline {
-                        SplineOverlayView(
-                            url: activeSplineURL,
-                            onClose: {
-                                closeSpline()
-                            },
-                            startPosition: splineStartPosition,
-                            endPosition: viewcenterPosition, // Make sure it centers
-                            width: self.viewWidth,
-                            height: self.viewHeight,
-                            scale: splineScale,
-                            opacity: splineOpacity,
-                            medalName: medalName,
-                            caption: caption
-                        )
-                    }
+                if showSpline {
+                    SplineOverlayView(
+                        url: activeSplineURL,
+                        onClose: {
+                            closeSpline()
+                        },
+                        startPosition: splineStartPosition,
+                        endPosition: viewcenterPosition, // Make sure it centers
+                        width: self.viewWidth,
+                        height: self.viewHeight,
+                        scale: splineScale,
+                        opacity: splineOpacity,
+                        medalName: medalName,
+                        caption: caption
+                    )
                 }
             }
+        }
+        .onAppear {
+            resetAndAnimateSections()
         }
     }
 
@@ -86,16 +97,19 @@ struct YouView: View {
             let imageSize = min(geometry.size.width, heightSpec) * 0.3
 
             VStack {
-                Text("Awards")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                Divider()
-                    .frame(height: 0.3)
-                    .background(Color.white)
-                    .offset(y: -10)
+                VStack {
+                    Text("Awards")
+                        .font(Font.custom("SF Pro", size: 18))
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Divider()
+                        .frame(height: 0.3)
+                        .background(Color.white)
+                        .offset(y: -15)
+                }
+                .offset(y: -20)
 
                 HStack {
                     Spacer()
@@ -169,7 +183,37 @@ struct YouView: View {
             showSpline = false
         }
     }
+    
+    // 🔄 Reset animations and restart transitions
+    func resetAndAnimateSections() {
+        resetAnimations()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            animationDuration = 1.0
+            showAwardSection = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                showWalkSection = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                    showHIITSection = true
+                }
+            }
+        }
+    }
+
+    // ❌ Reset animation states when leaving the tab
+    func resetAnimations() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
+            animationDuration = 0.0
+            showAwardSection = false
+            showWalkSection = false
+            showHIITSection = false
+            splineScale = 0.1
+            splineOpacity = 0.0
+
+
+        }
+    }
 }
+
 
 // MARK: - Medal Button Component
 struct MedalButton: View {
