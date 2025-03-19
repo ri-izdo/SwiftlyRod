@@ -121,7 +121,7 @@ struct WalkGraph: View {
     var color: Color {
         switch path {
         case \.distance:
-            return Color(hex: "#FC5200")
+            return Color("#FC5200")
         case \.heartRate:
             return Color(hue: 0.5, saturation: 0.5, brightness: 0.6)
         case \.pace:

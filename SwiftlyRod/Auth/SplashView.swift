@@ -11,7 +11,7 @@ import RiveRuntime
 import SplineRuntime
 
 
-struct AuthView: View {
+struct SplashView: View {
     @State private var isLoading = false
     @State private var token: OAuthToken?
     @State private var athlete: Athlete? // Store athlete separately

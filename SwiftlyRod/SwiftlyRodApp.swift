@@ -17,7 +17,7 @@ struct StravaApp: App {
             if let token = StravaClient.sharedInstance.token {
                 MainTabView(token: token)
             } else {
-                AuthView()
+                SplashView()
             }
         }
     }

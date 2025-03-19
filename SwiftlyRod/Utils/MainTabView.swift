@@ -18,7 +18,7 @@ struct MainTabView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
-                AuthView()
+                SplashView()
                     .tag(0)
                 ActivitiesView(token: token)
                     .tag(1)
@@ -29,7 +29,7 @@ struct MainTabView: View {
             
             HStack {
                 Spacer()
-                TabButton(selectedTab: $selectedTab, tab: 0, riveFile: "restart_icon", stateMachine: stateMachine, text: "Splash Page")
+                TabButton(selectedTab: $selectedTab, tab: 0, riveFile: "restart_icon", stateMachine: stateMachine, text: "Splash")
                 Spacer()
                 TabButton(selectedTab: $selectedTab, tab: 1, riveFile: "home_icon", stateMachine: stateMachine, text: "Home")
                 Spacer()
