@@ -97,20 +97,12 @@ struct ChartView: View {
     func resetGraphAnimation() {
         animatedDistances = distances.map { _ in 0 } // Reset to zero
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            withAnimation(.easeInOut(duration: 1.2)) {
+            withAnimation(.easeInOut(duration: 3)) {
                 animatedDistances = distances
             }
         }
     }
 
-
-    // Function to animate the graph data
-    private func animateGraph() {
-        animatedDistances = distances.map { _ in 0 } // Start from zero
-        withAnimation(.easeInOut(duration: 1.2)) { // Apply smooth animation
-            animatedDistances = distances
-        }
-    }
 
     // Function to generate a color gradient based on distance value
     private func gradientColor(for value: Double) -> LinearGradient {
