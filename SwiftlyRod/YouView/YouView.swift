@@ -42,61 +42,70 @@ struct YouView: View {
     @State private var showTitle = false
     @State private var showAwardSection = false
     @State private var showWalkSection = false
-    @State private var showHIITSection = false
+    @State private var showGoalsSection = false
     
     @State private var animationDuration = 0.0
     
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color(hex: "201713")
-                    .edgesIgnoringSafeArea(.all)
-                
-                ScrollView {
-                    HStack {
-                        Text("You")
-                            .font(Font.custom("SF Pro", size: 30))
-                            .foregroundColor(.white)
-                            .padding()
-                            .opacity(showTitle ? 1 : 0)
-                                .animation(.easeIn(duration: animationDuration), value: showTitle)
-                    }
-                    awardSection()
-                        .frame(maxWidth: .infinity, minHeight: 200)
-                        .cornerRadius(20)
-                        .opacity(showAwardSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
+        GeometryReader { geometry in
+            NavigationStack {
+                ZStack {
+                    Color(hex: "201713")
+                        .edgesIgnoringSafeArea(.all)
                     
-                    WalkStatsView()
-                        .frame(maxWidth: .infinity, minHeight: 250)
-                        .cornerRadius(20)
-                        .opacity(showWalkSection ? 1 : 0)
+                    ScrollView {
+                        HStack {
+                            Text("You")
+                                .font(Font.custom("SF Pro", size: 30))
+                                .foregroundColor(.white)
+                                .padding()
+                                .opacity(showTitle ? 1 : 0)
+                                .animation(.easeIn(duration: animationDuration), value: showTitle)
+                        }
+                        awardSection()
+                            .frame(maxWidth: .infinity, minHeight: 200)
+                            .cornerRadius(20)
+                            .opacity(showAwardSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
+                        
+                        GoalBarView()
+                            .frame(maxWidth: .infinity, minHeight: 250)
+                            .cornerRadius(20)
+                            .opacity(showGoalsSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showGoalsSection)
+                        
+                        WalkStatsView()
+                            .frame(maxWidth: .infinity, minHeight: 250)
+                            .cornerRadius(20)
+                            .opacity(showWalkSection ? 1 : 0)
                             .animation(.easeIn(duration: animationDuration), value: showWalkSection)
-                }
-                .blur(radius: showSpline ? 10 : 0)
-                .padding(.horizontal, 10)
-                
-                if showSpline {
-                    SplineOverlayView(
-                        url: activeSplineURL,
-                        onClose: {
-                            closeSpline()
-                        },
-                        startPosition: splineStartPosition,
-                        endPosition: viewcenterPosition, // Make sure it centers
-                        width: self.viewWidth,
-                        height: self.viewHeight,
-                        scale: splineScale,
-                        opacity: splineOpacity,
-                        medalName: medalName,
-                        caption: caption
-                    )
+                        
+                    }
+                    .blur(radius: showSpline ? 10 : 0)
+                    .padding(.horizontal, 10)
+                    
+                    if showSpline {
+                        SplineOverlayView(
+                            url: activeSplineURL,
+                            onClose: {
+                                closeSpline()
+                            },
+                            startPosition: splineStartPosition,
+                            endPosition: viewcenterPosition, // Make sure it centers
+                            width: self.viewWidth,
+                            height: self.viewHeight,
+                            scale: splineScale,
+                            opacity: splineOpacity,
+                            medalName: medalName,
+                            caption: caption
+                        )
+                    }
                 }
             }
-        }
-        .onAppear {
-            resetAndAnimateSections()
+            .onAppear {
+                resetAndAnimateSections()
+            }
         }
     }
 
@@ -200,9 +209,9 @@ struct YouView: View {
             animationDuration = 1.0
             showAwardSection = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                showWalkSection = true
+                showGoalsSection = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                    showHIITSection = true
+                    showWalkSection = true
                     showTitle = true
                 }
             }
@@ -217,7 +226,7 @@ struct YouView: View {
             animationDuration = 0.0
             showAwardSection = false
             showWalkSection = false
-            showHIITSection = false
+            showGoalsSection = false
             showTitle = false
 
 

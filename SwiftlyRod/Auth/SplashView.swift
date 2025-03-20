@@ -55,12 +55,15 @@ struct SplashView: View {
     var body: some View {
         VStack {
             if isLoading {
-                LoadingAnimationView(token: token)
+                ZStack {
+                    Rectangle()
+                        .fill(.black)
+                    ProgressView()
+                }
             } else {
                 VStack {
                     ZStack {
                         VStack {
-                                
                             ZStack {
 //
 //                                let url = URL(string: "https://build.spline.design/r8xUItGCH4lL7oXkSuXx/scene.splineswift")!
