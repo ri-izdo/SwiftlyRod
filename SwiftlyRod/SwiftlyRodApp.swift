@@ -15,7 +15,7 @@ struct StravaApp: App {
     var body: some Scene {
         WindowGroup {
             if let token = StravaClient.sharedInstance.token {
-                MainTabView(token: token)
+                LoadingAnimationView(token: token)
             } else {
                 SplashView()
             }

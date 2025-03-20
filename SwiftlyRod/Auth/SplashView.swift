@@ -11,6 +11,38 @@ import RiveRuntime
 import SplineRuntime
 
 
+struct LoadingView: View {
+    @State private var isLoading = true
+    @State private var animateTransition = false
+    @State private var loadingAnimation = RiveViewModel(fileName: "LoadAnimation")
+    
+    var body: some View {
+        ZStack {
+            if isLoading {
+                loadingAnimation.view()
+                    .frame(width: 200, height: 200)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            withAnimation(.easeInOut(duration: 1.0)) {
+                                loadingAnimation.play()
+                                animateTransition = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                isLoading = false
+                            }
+                        }
+                    }
+            } else {
+                SplashView()
+                    .transition(.asymmetric(insertion: .scale(scale: 0.1).combined(with: .opacity), removal: .scale(scale: 1.5).combined(with: .opacity)))
+            }
+        }
+        .animation(.easeInOut, value: isLoading)
+    }
+}
+
+
+
 struct SplashView: View {
     @State private var isLoading = false
     @State private var token: OAuthToken?
@@ -23,30 +55,23 @@ struct SplashView: View {
     var body: some View {
         VStack {
             if isLoading {
-                LoadingAnimation()
+                LoadingAnimationView(token: token)
             } else {
                 VStack {
                     ZStack {
                         VStack {
-//                            splashScreen.view()
-//                                .scaleEffect(1.2) // Increase scale to push beyond screen
-//                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                                .blur(radius: blurAmount)
-//                                .ignoresSafeArea()
-//                                .onAppear {
-//                                    splashScreen.play()
-//                                }
+                                
                             ZStack {
-
-                                let url = URL(string: "https://build.spline.design/r8xUItGCH4lL7oXkSuXx/scene.splineswift")!
-
-                                        // fetching from local
-                                        // let url = Bundle.main.url(forResource: "scene", withExtension: "splineswift")!
-
-
-
-                                SplineView(sceneFileURL: url).ignoresSafeArea(.all)
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//
+//                                let url = URL(string: "https://build.spline.design/r8xUItGCH4lL7oXkSuXx/scene.splineswift")!
+//
+//                                        // fetching from local
+//                                        // let url = Bundle.main.url(forResource: "scene", withExtension: "splineswift")!
+//
+//
+//
+//                                SplineView(sceneFileURL: url).ignoresSafeArea(.all)
+//                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 
                             }
                             Spacer()
@@ -86,7 +111,7 @@ struct SplashView: View {
         }
         .fullScreenCover(isPresented: $navigateToMain) {
             if let token = token {
-                MainTabView(token: token)
+                LoadingAnimationView(token: token)
             }
         }
         .alert(item: $errorMessage) { error in

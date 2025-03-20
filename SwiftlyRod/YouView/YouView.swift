@@ -39,6 +39,7 @@ struct YouView: View {
     @State var viewHeight: CGFloat = 0.0
     @State var viewcenterPosition: CGPoint = .zero
     
+    @State private var showTitle = false
     @State private var showAwardSection = false
     @State private var showWalkSection = false
     @State private var showHIITSection = false
@@ -49,10 +50,18 @@ struct YouView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.black
+                Color(hex: "201713")
                     .edgesIgnoringSafeArea(.all)
                 
                 ScrollView {
+                    HStack {
+                        Text("You")
+                            .font(Font.custom("SF Pro", size: 30))
+                            .foregroundColor(.white)
+                            .padding()
+                            .opacity(showTitle ? 1 : 0)
+                                .animation(.easeIn(duration: animationDuration), value: showTitle)
+                    }
                     awardSection()
                         .frame(maxWidth: .infinity, minHeight: 200)
                         .cornerRadius(20)
@@ -194,6 +203,7 @@ struct YouView: View {
                 showWalkSection = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                     showHIITSection = true
+                    showTitle = true
                 }
             }
         }
@@ -201,13 +211,14 @@ struct YouView: View {
 
     // ❌ Reset animation states when leaving the tab
     func resetAnimations() {
+        splineScale = 0.1
+        splineOpacity = 0.0
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
             animationDuration = 0.0
             showAwardSection = false
             showWalkSection = false
             showHIITSection = false
-            splineScale = 0.1
-            splineOpacity = 0.0
+            showTitle = false
 
 
         }
@@ -238,8 +249,6 @@ struct MedalButton: View {
         .buttonStyle(PlainButtonStyle())
     }
 }
-
-// MARK: - Spline Overlay View (Expands from Medal)
 struct SplineOverlayView: View {
     let url: String
     let onClose: () -> Void
@@ -251,42 +260,62 @@ struct SplineOverlayView: View {
     var opacity: Double
     var medalName: String
     var caption: String
+    @State private var showText: Bool = false
+    @State private var animationDuration = 0.0
 
     var body: some View {
         ZStack {
             Color.black.opacity(0.5)
                 .edgesIgnoringSafeArea(.all)
                 .onTapGesture {
+                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+                        animationDuration = 1.0
+                        showText = false
+                    }
                     onClose()
                 }
-
+            
             VStack {
                 let sceneURL = URL(string: url)!
-
+                
                 SplineView(sceneFileURL: sceneURL)
                     .cornerRadius(20)
                     .scaleEffect(0.95)
                     .opacity(opacity)
                     .offset(y: height * 0.05) // Move slightly down for centering
-
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            animationDuration = 1.5
+                            showText = true
+                        }
+                        
+                    }
+                    .onDisappear {
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                            animationDuration = 1.0
+                            showText = false
+                        }
+                    }
+                
                 VStack {
                     Text(medalName)
                         .foregroundColor(.white)
                         .font(.system(size: 18))
                         .padding(.top, 10)
-
+                    
                     Text(caption)
                         .foregroundColor(.gray.opacity(0.7))
                         .font(.system(size: 14))
                 }
                 .transition(.opacity)
-                .opacity(opacity)
                 .offset(y:-200)
+                .opacity(showText ? 1 : 0)
+                .animation(.easeIn(duration: animationDuration), value: showText)
+                //            .frame(maxWidth: .infinity, maxHeight: height * 0.9)
             }
-//            .frame(maxWidth: .infinity, maxHeight: height * 0.9)
+            .transition(.opacity)
+            //        .frame(maxWidth: .infinity, maxHeight: height)
         }
-        .transition(.opacity)
-//        .frame(maxWidth: .infinity, maxHeight: height)
     }
 }
 

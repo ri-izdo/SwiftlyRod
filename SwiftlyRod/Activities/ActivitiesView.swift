@@ -24,7 +24,7 @@ struct ActivitiesView: View {
                 
                 VStack {
                     if viewModel.isLoading {
-                        LoadingAnimation()
+                        LoadingAnimationView()
                     } else if viewModel.activities.isEmpty {
                         Text("⚠️ No Activities Found")
                             .foregroundColor(.gray)
