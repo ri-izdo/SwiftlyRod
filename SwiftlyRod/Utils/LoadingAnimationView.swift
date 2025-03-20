@@ -49,7 +49,7 @@ struct LoadingAnimationView: View {
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color(red: 252/255, green: 76/255, blue: 2/255), // FC4C02
-                    Color.white
+                    Color.black
                 ]),
                 startPoint: .top,
                 endPoint: .bottom
@@ -111,4 +111,60 @@ struct CircleMaskView: View {
                 }
         }
     }
+}
+
+
+struct GradualScalingImage: View {
+    @State private var scale: CGFloat = 1.0  // Image scaling state
+    @State private var duration: Double = 0.3 // Initial animation duration
+    @State private var loadingAnimation = RiveViewModel(fileName: "runner")
+    
+    @State private var isTransitioning = false
+    
+    var body: some View {
+        ZStack {
+            if isTransitioning {
+                Text("Hi")
+            } else {
+                ZStack {
+                    LinearGradient(
+                        gradient: Gradient(colors: [
+                            Color(red: 252/255, green: 76/255, blue: 2/255), // FC4C02
+                            Color.black
+                        ]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    
+                    loadingAnimation.view()
+                        .scaleEffect(scale) // Correctly applying the scale state
+                    //                    .onAppear {
+                    //                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    //                            animateScaling()
+                    //                        }
+                    
+                    //             }
+                }
+            }
+        }
+    }
+
+//    func animateScaling() {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+//            withAnimation(.easeInOut(duration: duration)) {
+//                if scale == 1.0 {
+//                    scale = 1.1
+//                    scale = 1.5
+//                } else {
+//                    scale = 0.0  // Shrink to zero before transition
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+//                        isTransitioning = true // Transition after shrink completes
+//                    }
+//                    return // Stop recursive animation
+//                }
+//            }
+//            duration += 0.2 // Increase duration over time
+//            animateScaling() // Recursively call animation function
+//        }
+//    }
 }
