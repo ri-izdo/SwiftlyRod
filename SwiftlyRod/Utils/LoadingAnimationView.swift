@@ -57,7 +57,7 @@ struct LoadingAnimationView: View {
                     loadingAnimation.view()
                         .scaleEffect(scale) // Correctly applying the scale state
                         .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 animateScaling()
                             }
                             

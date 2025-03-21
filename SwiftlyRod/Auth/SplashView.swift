@@ -109,7 +109,7 @@ struct SplashView: View {
                                 .foregroundColor(.white)
                                 .offset(y:-200)
                             Button("Get Started!") {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                DispatchQueue.main.asyncAfter(deadline: .now()) {
                                     login()
                                 }
                             }
@@ -139,7 +139,6 @@ struct SplashView: View {
                             
                             Button("Continue") {
                                 isReady = true
-                                loadingAnimation.setInput("isRunning", value: true)
                                 
                             }
                             .font(.system(size: 14, weight: .bold))
