@@ -9,6 +9,7 @@
 import SwiftUI
 import StravaSwift
 import SplineRuntime
+import CoreLocation
 
 struct YouView: View {
     var token: OAuthToken?
@@ -68,6 +69,7 @@ struct YouView: View {
                                 .animation(.easeIn(duration: animationDuration), value: showTitle)
                         }
                         HStack {
+                            WeatherContentView()
                             Spacer()
                             DailyRingView()
                                 .frame(width: geometry.size.width * 0.5, height: 200)
@@ -409,3 +411,77 @@ struct StepDistanceView: View {
 }
 
 
+struct WeatherResponse: Decodable {
+    struct Main: Decodable {
+        let temp: Double
+    }
+    struct Weather: Decodable {
+        let description: String
+    }
+    let name: String
+    let main: Main
+    let weather: [Weather]
+}
+
+class WeatherViewModel: ObservableObject {
+    @Published var temperature: String = "--"
+    @Published var description: String = "--"
+    @Published var cityName: String = "--"
+
+    let apiKey = "267001f0391eeb52d18f536fce6ed811"
+
+    func fetchWeather(for city: String) {
+        let query = city.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? city
+        guard let url = URL(string:
+            "https://api.openweathermap.org/data/2.5/weather?q=\(query)&appid=\(apiKey)&units=metric"
+        ) else { return }
+
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data else { return }
+
+            if let decoded = try? JSONDecoder().decode(WeatherResponse.self, from: data) {
+                DispatchQueue.main.async {
+                    self.temperature = String(format: "%.1f ℃", decoded.main.temp)
+                    self.description = decoded.weather.first?.description.capitalized ?? "--"
+                    self.cityName = decoded.name
+                }
+            }
+        }.resume()
+    }
+}
+
+struct WeatherContentView: View {
+    @StateObject var viewModel = WeatherViewModel()
+    @State private var city = "San Jose"
+
+    var body: some View {
+        VStack {
+//            TextField("Enter city", text: $city, onCommit: {
+//                viewModel.fetchWeather(for: city)
+//            })
+//            .textFieldStyle(RoundedBorderTextFieldStyle())
+//            .padding()
+
+            Text(viewModel.cityName)
+                .font(.system(size: 18))
+                .font(.largeTitle)
+                .bold()
+
+            Text(viewModel.temperature)
+                .font(.system(size: 14))
+                .bold()
+
+            Text(viewModel.description)
+                .font(.system(size: 12))
+                .font(.title2)
+                .foregroundColor(.gray)
+
+            Spacer()
+        }
+//        .scaleEffect(0.5)
+        .padding()
+        .onAppear {
+            viewModel.fetchWeather(for: city)
+        }
+    }
+}
