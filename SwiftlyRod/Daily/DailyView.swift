@@ -62,55 +62,18 @@ extension HKWorkoutActivityType {
 struct DailyView: View {
     @State private var sectionRadius: CGFloat = 15.0
     @StateObject var homeViewModel = HomeViewModel()
-    @StateObject var progressRing = RiveViewModel(fileName: "strava_progress_ring", stateMachineName: "State Machine 1")
-
     
     var body: some View {
-        
-        GeometryReader { geometry in
-            NavigationStack {
-                ZStack {
-                    Color(.black)
-                        .edgesIgnoringSafeArea(.all)
-                    
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 20) {
-                            Text("Your Summary")
-                                .font(Font.custom("SF Pro", size: 30))
-                                .foregroundColor(.white)
-                                .padding(.horizontal)
-                    
-                            
-                            HStack(spacing: 15) {
-                                StravaStepDistanceView()
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 200)
+        VStack(alignment: .leading) {
+            HStack{
+                ProgressCircleView(progress: $homeViewModel.calories, goal: homeViewModel.caloriesGoal, color: .red)
 
-                                    .cornerRadius(sectionRadius)
-                                
-                                Rectangle()
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 200)
-                                    .foregroundColor(Color.gray.opacity(0.3))
-                                    .cornerRadius(sectionRadius)
-                            }
-    
-                            VStack(alignment: .leading) {
-                                HStack{
-                                    ProgressCircleView(progress: $homeViewModel.calories, goal: homeViewModel.caloriesGoal, color: .red)
-    
-                                    ProgressCircleView(progress: $homeViewModel.exercise, goal: homeViewModel.activeGoal, color: .green)
-                                        .padding(.all, 20)
-    
-                                    ProgressCircleView(progress: $homeViewModel.stand, goal: homeViewModel.standGoal, color: .blue)
-                                        .padding(.all, 40)
-                                    Spacer()
-                                }
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 15)
-                }
+                ProgressCircleView(progress: $homeViewModel.exercise, goal: homeViewModel.activeGoal, color: .green)
+                    .padding(.all, 20)
+
+                ProgressCircleView(progress: $homeViewModel.stand, goal: homeViewModel.standGoal, color: .blue)
+                    .padding(.all, 40)
+                Spacer()
             }
         }
     }
