@@ -44,10 +44,12 @@ struct YouView: View {
     @State private var showWalkSection = false
     @State private var showGoalsSection = false
     @State private var showDailyingRingSection = false
+    @State private var isWalkingViewSection = false
     
     @State private var animationDuration = 0.0
     
     @State private var sectionRadius: CGFloat = 25.0
+    
 
     var body: some View {
         GeometryReader { geometry in
@@ -107,9 +109,17 @@ struct YouView: View {
                             .opacity(showWalkSection ? 1 : 0)
                             .animation(.easeIn(duration: animationDuration), value: showWalkSection)
                         
+                        WalkingChartView()
+                            .frame(maxWidth: .infinity, minHeight: 250)
+                            .cornerRadius(sectionRadius)
+                            .opacity(showWalkSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
+                        
                     }
                     .blur(radius: showSpline ? 10 : 0)
                     .padding(.horizontal, 25)
+                    
+                    
                     
                     if showSpline {
                         SplineOverlayView(
@@ -242,6 +252,7 @@ struct YouView: View {
                         showDailyingRingSection = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                             showTitle = true
+                            isWalkingViewSection = true
                         }
                     }
                 }
@@ -260,6 +271,7 @@ struct YouView: View {
             showGoalsSection = false
             showTitle = false
             showDailyingRingSection = false
+            isWalkingViewSection = false
 
 
         }

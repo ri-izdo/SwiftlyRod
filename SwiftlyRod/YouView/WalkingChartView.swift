@@ -33,7 +33,7 @@ extension AnyTransition {
 
 // MARK: - Walking Data View
 struct WalkingChartView: View {
-    @State private var showDetail = false
+    @State private var showDetail = true
     @State private var walk: Walk = ModelData().Walks[0]
     
 //    var path: KeyPath<Hike.Observation, Range<Double>>
@@ -44,39 +44,45 @@ struct WalkingChartView: View {
 //        }
 //    }
     var body: some View {
-        VStack {
-            HStack {
-                WalkGraph(walk: walk, path: \.distance)
-                    .frame(width: 50, height: 30)
-                    .offset(x:2)
-
-                VStack(alignment: .leading) {
-                    Text(walk.name)
-                        .font(.headline)
-                    Text(walk.distanceText)
-                }
-                .offset(x:2)
-
-                Spacer()
-
-                Button {
-                    withAnimation {
-                        showDetail.toggle()
+        ZStack {
+            VStack {
+                HStack {
+                    WalkGraph(walk: walk, path: \.distance)
+                        .frame(width: 50, height: 30)
+                        .offset(x:2)
+                    
+                    VStack(alignment: .leading) {
+                        Text(walk.name)
+                            .font(.headline)
+                        Text(walk.distanceText)
                     }
-                } label: {
-                    Label("Graph", systemImage: "chevron.right.circle")
-                        .labelStyle(.iconOnly)
-                        .imageScale(.large)
-                        .rotationEffect(.degrees(showDetail ? 90 : 0))
-                        .scaleEffect(showDetail ? 1.5 : 1)
-                        .padding()
+                    .offset(x:2)
+                    
+                    Spacer()
+                    
+                    Button {
+                        withAnimation {
+                            showDetail.toggle()
+                        }
+                    } label: {
+                        Label("Graph", systemImage: "chevron.right.circle")
+                            .labelStyle(.iconOnly)
+                            .imageScale(.large)
+                            .rotationEffect(.degrees(showDetail ? 90 : 0))
+                            .scaleEffect(showDetail ? 1.5 : 1)
+                            .padding()
+                    }
+                }
+
+                if showDetail {
+                    WalkDetail(walk: walk)
+                        .transition(.moveAndFade)
                 }
             }
-            if showDetail {
-                WalkDetail(walk: walk)
-                    .transition(.moveAndFade)
-            }
+            .scaleEffect(0.85)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.gray.opacity(0.3))
     }
 }
 
@@ -121,7 +127,7 @@ struct WalkGraph: View {
     var color: Color {
         switch path {
         case \.distance:
-            return Color("#FC5200")
+            return Color(hex:"#FC5200")
         case \.heartRate:
             return Color(hue: 0.5, saturation: 0.5, brightness: 0.6)
         case \.pace:
