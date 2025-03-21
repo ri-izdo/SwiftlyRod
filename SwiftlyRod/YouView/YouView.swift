@@ -240,7 +240,6 @@ struct YouView: View {
                     showWalkSection = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         showDailyingRingSection = true
-                        showTitle = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                             showTitle = true
                         }
