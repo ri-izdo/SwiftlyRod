@@ -46,6 +46,7 @@ struct YouView: View {
     
     @State private var animationDuration = 0.0
     
+    @State private var sectionRadius: CGFloat = 25.0
 
     var body: some View {
         GeometryReader { geometry in
@@ -56,34 +57,54 @@ struct YouView: View {
                     
                     ScrollView {
                         HStack {
-                            Text("You")
+                            Text("Your Summary")
                                 .font(Font.custom("SF Pro", size: 30))
                                 .foregroundColor(.white)
                                 .padding()
                                 .opacity(showTitle ? 1 : 0)
                                 .animation(.easeIn(duration: animationDuration), value: showTitle)
                         }
+                        HStack {
+                            Spacer()
+                            DailyView()
+                        }
                         awardSection()
                             .frame(maxWidth: .infinity, minHeight: 200)
-                            .cornerRadius(20)
+                            .cornerRadius(sectionRadius)
                             .opacity(showAwardSection ? 1 : 0)
                             .animation(.easeIn(duration: animationDuration), value: showAwardSection)
                         
-                        GoalBarView()
-                            .frame(maxWidth: .infinity, minHeight: 250)
-                            .cornerRadius(20)
-                            .opacity(showGoalsSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showGoalsSection)
+//                        HStack {
+//                            Text("Hi")
+//                            DailyRingView()
+//                                .scaleEffect(2.0)
+//                            GoalBarView()
+//                                .frame(width: geometry.size.width * 0.5, height: 200)
+//                                .cornerRadius(sectionRadius)
+//                                .opacity(showGoalsSection ? 1 : 0)
+//                                .animation(.easeIn(duration: animationDuration), value: showGoalsSection)
+                            
+//                            Rectangle()
+//                                .frame(width: geometry.size.width * 0.5, height: 200)
+//                                .foregroundColor(Color.gray)
+//                                .cornerRadius(sectionRadius)
+//
+//                            
+//                    
+//                            
+//                        }
+                        
+                        
                         
                         WalkStatsView()
                             .frame(maxWidth: .infinity, minHeight: 250)
-                            .cornerRadius(20)
+                            .cornerRadius(sectionRadius)
                             .opacity(showWalkSection ? 1 : 0)
                             .animation(.easeIn(duration: animationDuration), value: showWalkSection)
                         
                     }
                     .blur(radius: showSpline ? 10 : 0)
-                    .padding(.horizontal, 10)
+                    .padding(.horizontal, 25)
                     
                     if showSpline {
                         SplineOverlayView(
@@ -258,6 +279,7 @@ struct MedalButton: View {
         .buttonStyle(PlainButtonStyle())
     }
 }
+
 struct SplineOverlayView: View {
     let url: String
     let onClose: () -> Void
@@ -328,11 +350,6 @@ struct SplineOverlayView: View {
     }
 }
 
-
-
-
-
-
 // MARK: - PreferenceKeys for Medal Positions
 struct Medal1PositionKey: PreferenceKey {
     static var defaultValue: CGRect = .zero
@@ -348,3 +365,24 @@ struct Medal3PositionKey: PreferenceKey {
     static var defaultValue: CGRect = .zero
     static func reduce(value: inout CGRect, nextValue: () -> CGRect) { value = nextValue() }
 }
+
+struct StepDistanceView: View {
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            Color(.gray.opacity(0.15))
+            VStack(alignment: .leading, spacing: 5) {
+                Text("Step Distance")
+                    .font(Font.custom("SF Pro", size: 15))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 15)
+                Divider()
+                    .frame(height: 0.4)
+                    .background(Color.gray)
+//                    .offset(y: -15)
+            }
+            .offset(y:10)
+        }
+    }
+}
+
+

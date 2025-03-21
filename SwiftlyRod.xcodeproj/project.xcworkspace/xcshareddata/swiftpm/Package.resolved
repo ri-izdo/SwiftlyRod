@@ -1,5 +1,5 @@
 {
-  "originHash" : "aec0140a751f77f842b8978378514ebd2c050dd08cd224bc75887e92cf8f2ce2",
+  "originHash" : "1cf5cddaf3513b9e507f24046bc2dbbbbe7897636d472ba95b374f5f87f0f4f1",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -11,9 +11,36 @@
       }
     },
     {
+      "identity" : "rive-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rive-app/rive-ios",
+      "state" : {
+        "revision" : "b909fb8d227a57548ec554a398a27ef0f021b421",
+        "version" : "6.7.2"
+      }
+    },
+    {
+      "identity" : "spline-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/splinetool/spline-ios",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b2059bd2bebd793b26a708c24b58878e3fe35d56"
+      }
+    },
+    {
+      "identity" : "stravaswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mpclarkson/StravaSwift",
+      "state" : {
+        "revision" : "2f85579d79a6ceb1898a67720f1eac4e1c3d2c38",
+        "version" : "1.0.2"
+      }
+    },
+    {
       "identity" : "swiftyjson",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SwiftyJSON/SwiftyJSON",
+      "location" : "https://github.com/SwiftyJSON/SwiftyJSON.git",
       "state" : {
         "revision" : "af76cf3ef710b6ca5f8c05f3a31307d44a3c5828",
         "version" : "5.0.2"

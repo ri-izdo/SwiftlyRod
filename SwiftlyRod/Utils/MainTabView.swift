@@ -18,7 +18,7 @@ struct MainTabView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
-                GradualScalingImage()
+                LoadingAnimationView(token: token)
                     .tag(0)
                 ActivitiesView(token: token)
                     .tag(1)

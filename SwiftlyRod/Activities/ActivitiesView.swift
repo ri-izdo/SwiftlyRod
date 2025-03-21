@@ -9,6 +9,7 @@ import SwiftUI
 import StravaSwift
 import SplineRuntime
 
+
 struct ActivitiesView: View {
     @StateObject private var viewModel = ActivitiesViewModel()
     @State private var selectedActivity: Activity?
@@ -19,9 +20,8 @@ struct ActivitiesView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                let url = URL(string: "https://build.spline.design/8oqdq4W6DqdFPuGv8mxS/scene.splineswift")!
-                SplineView(sceneFileURL: url).ignoresSafeArea(.all)
-                
+                Rectangle()
+                    .fill(Color.black)
                 VStack {
                     if viewModel.isLoading {
                         LoadingAnimationView()
