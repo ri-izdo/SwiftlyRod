@@ -104,13 +104,14 @@ struct SplashView: View {
                             .offset(y:-650)
                         
                         if isReady {
-                            Text("Press Get Started to join!")
+                            Text("Get Started to join!")
                                 .font(.system(size: 16, weight: .bold)) // Match text style
                                 .foregroundColor(.white)
                                 .offset(y:-200)
                             Button("Get Started!") {
                                 DispatchQueue.main.asyncAfter(deadline: .now()) {
                                     login()
+                                    loadingAnimation.stop()
                                 }
                             }
                             .font(.system(size: 16, weight: .bold)) // Match text style
