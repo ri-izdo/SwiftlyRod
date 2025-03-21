@@ -92,7 +92,7 @@ struct SplashView: View {
                         
                         loadingAnimation.view()
                             .onAppear {
-                                loadingAnimation.setInput("isRunning", value: isReady)
+                                loadingAnimation.setInput("isRunning", value: false)
                             }
                         
                         Image("strava_title")
