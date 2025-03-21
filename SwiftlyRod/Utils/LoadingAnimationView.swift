@@ -105,11 +105,11 @@ struct CircleMaskView: View {
 }
 
 
-struct GradualScalingImage: View {
-
+struct LoadingRunnerView: View {
+    var runningState: Bool = false
     @State private var scale: CGFloat = 1.0  // Image scaling state
     @State private var duration: Double = 0.3 // Initial animation duration
-    @State private var loadingAnimation = RiveViewModel(fileName: "runner")
+    @State private var loadingAnimation = RiveViewModel(fileName: "runner_character", stateMachineName: "State Machine 1")
     
     @State private var isTransitioning = false
     
@@ -121,12 +121,12 @@ struct GradualScalingImage: View {
                                endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
                 
-                Image("strava_title")
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
-                    .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottom)
-                    .scaleEffect(0.9)
+//                Image("strava_title")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .padding()
+//                    .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottom)
+//                    .scaleEffect(0.9)
                 
                 if isTransitioning {
                     MainTabView()
@@ -135,7 +135,9 @@ struct GradualScalingImage: View {
                 } else {
                     
                     loadingAnimation.view()
-                        .scaleEffect(scale) // Correctly applying the scale state
+                        .onAppear {
+                            loadingAnimation.setInput("isRunning", value: runningState)
+                        }
                 }
             }
         }

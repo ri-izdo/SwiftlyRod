@@ -59,7 +59,7 @@ extension HKWorkoutActivityType {
 }
 
 
-struct DailyView: View {
+struct DailyRingView: View {
     @State private var sectionRadius: CGFloat = 15.0
     @StateObject var homeViewModel = HomeViewModel()
     

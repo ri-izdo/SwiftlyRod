@@ -18,7 +18,7 @@ struct WalkStatsView: View {
         
             VStack {
                 VStack {
-                    Text("Walking Stats")
+                    Text("Walking Summary")
                         .font(Font.custom("SF Pro", size: 18))
                         .foregroundColor(.white)
                         .padding()

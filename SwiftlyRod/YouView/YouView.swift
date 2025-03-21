@@ -43,6 +43,7 @@ struct YouView: View {
     @State private var showAwardSection = false
     @State private var showWalkSection = false
     @State private var showGoalsSection = false
+    @State private var showDailyingRingSection = false
     
     @State private var animationDuration = 0.0
     
@@ -57,7 +58,7 @@ struct YouView: View {
                     
                     ScrollView {
                         HStack {
-                            Text("Your Summary")
+                            Text("My HQ")
                                 .font(Font.custom("SF Pro", size: 30))
                                 .foregroundColor(.white)
                                 .padding()
@@ -66,8 +67,11 @@ struct YouView: View {
                         }
                         HStack {
                             Spacer()
-                            DailyView()
+                            DailyRingView()
                                 .frame(width: geometry.size.width * 0.5, height: 200)
+                                .opacity(showDailyingRingSection ? 1 : 0)
+                                .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
+                            
                         }
                         awardSection()
                             .frame(maxWidth: .infinity, minHeight: 200)
@@ -230,11 +234,17 @@ struct YouView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             animationDuration = 1.0
             showAwardSection = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 showGoalsSection = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     showWalkSection = true
-                    showTitle = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        showDailyingRingSection = true
+                        showTitle = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            showTitle = true
+                        }
+                    }
                 }
             }
         }
@@ -250,6 +260,7 @@ struct YouView: View {
             showWalkSection = false
             showGoalsSection = false
             showTitle = false
+            showDailyingRingSection = false
 
 
         }
