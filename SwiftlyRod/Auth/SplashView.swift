@@ -104,7 +104,7 @@ struct SplashView: View {
                             .offset(y:-650)
                         
                         if isReady {
-                            Text("I'm ready, are you?! Press Get Started!")
+                            Text("Press Get Started to join!")
                                 .font(.system(size: 16, weight: .bold)) // Match text style
                                 .foregroundColor(.white)
                                 .offset(y:-200)
@@ -132,7 +132,7 @@ struct SplashView: View {
                                 isGlowing = true
                             }
                         } else {
-                            Text("This app explores your fitness journey using Strava's API and HealthKit.")
+                            Text("I'm here to help with your fitness journey.")
                                 .font(.system(size: 16, weight: .bold)) // Match text style
                                 .foregroundColor(.white)
                                 .offset(y:-200)
