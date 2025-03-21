@@ -111,7 +111,6 @@ struct SplashView: View {
                             Button("Get Started!") {
                                 DispatchQueue.main.asyncAfter(deadline: .now()) {
                                     login()
-                                    loadingAnimation.stop()
                                 }
                             }
                             .font(.system(size: 16, weight: .bold)) // Match text style

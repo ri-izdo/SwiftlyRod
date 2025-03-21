@@ -20,8 +20,8 @@ struct MainTabView: View {
             TabView(selection: $selectedTab) {
                 LoadingAnimationView(token: token)
                     .tag(0)
-                ActivitiesView(token: token)
-                    .tag(1)
+//                ActivitiesView(token: token)
+//                    .tag(1)
                 YouView(token: token)
                     .tag(2)
             }
@@ -31,8 +31,8 @@ struct MainTabView: View {
                 Spacer()
                 TabButton(selectedTab: $selectedTab, tab: 0, riveFile: "restart_icon", stateMachine: stateMachine, text: "Splash")
                 Spacer()
-                TabButton(selectedTab: $selectedTab, tab: 1, riveFile: "home_icon", stateMachine: stateMachine, text: "Home")
-                Spacer()
+//                TabButton(selectedTab: $selectedTab, tab: 1, riveFile: "home_icon", stateMachine: stateMachine, text: "Home")
+//                Spacer()
                 TabButton(selectedTab: $selectedTab, tab: 2, riveFile: "usericon", stateMachine: stateMachine, text: "You")
                 Spacer()
             }
