@@ -65,15 +65,18 @@ struct DailyView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack{
-                ProgressCircleView(progress: $homeViewModel.calories, goal: homeViewModel.caloriesGoal, color: .red)
-
-                ProgressCircleView(progress: $homeViewModel.exercise, goal: homeViewModel.activeGoal, color: .green)
-                    .padding(.all, 20)
-
-                ProgressCircleView(progress: $homeViewModel.stand, goal: homeViewModel.standGoal, color: .blue)
-                    .padding(.all, 40)
+            HStack {
                 Spacer()
+                ZStack{
+                    ProgressCircleView(progress: $homeViewModel.calories, goal: homeViewModel.caloriesGoal, color: .red)
+                    
+                    ProgressCircleView(progress: $homeViewModel.exercise, goal: homeViewModel.activeGoal, color: .green)
+                        .padding(.all, 20)
+                    
+                    ProgressCircleView(progress: $homeViewModel.stand, goal: homeViewModel.standGoal, color: .blue)
+                        .padding(.all, 40)
+                    Spacer()
+                }
             }
         }
     }
@@ -133,7 +136,7 @@ struct ProgressCircleView: View {
                 .trim(from: 0, to: CGFloat(progress) / CGFloat(goal))
                 .stroke(color, style: StrokeStyle(lineWidth: width, lineCap: .round))
                 .rotationEffect(.degrees(-90))
-                .shadow(radius: 5)
+                .shadow(radius: 10)
         }
         .padding()
     }

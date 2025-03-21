@@ -67,6 +67,7 @@ struct YouView: View {
                         HStack {
                             Spacer()
                             DailyView()
+                                .frame(width: geometry.size.width * 0.5, height: 200)
                         }
                         awardSection()
                             .frame(maxWidth: .infinity, minHeight: 200)
