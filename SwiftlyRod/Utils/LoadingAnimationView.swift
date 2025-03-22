@@ -1,6 +1,6 @@
 //
 //  LoadingView.swift
-//  SwiftlyRod
+//  Sw iftlyRod
 //
 //  Created by Roderick Lizardo on 3/12/25.
 //
@@ -22,7 +22,6 @@ struct LoadingAnimation: View {
             .padding()
     }
 }
-
 
 
 struct LoadingAnimationView: View {

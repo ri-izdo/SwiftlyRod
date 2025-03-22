@@ -13,6 +13,11 @@
 		F5AEB4232D8D361600B63D29 /* StravaSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F5AEB4222D8D361600B63D29 /* StravaSwift */; };
 		F5AEB4262D8D363100B63D29 /* StravaSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F5AEB4252D8D363100B63D29 /* StravaSwift */; };
 		F5C4254F2D8D26C0002C2DAB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C4254E2D8D26C0002C2DAB /* StoreKit.framework */; };
+		F5E65F592D8E0BB2008B6BD9 /* StravaSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F52CD8A42D7AABDB00BE7A37 /* StravaSwift */; };
+		F5E65F5A2D8E0BB2008B6BD9 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F522B6AF2D825F2C002DD07A /* RiveRuntime */; };
+		F5E65F5B2D8E0BB2008B6BD9 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F56E176B2D82CFB100F6F20E /* RiveRuntime */; };
+		F5E65F5C2D8E0BB2008B6BD9 /* SplineRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F5B91AB32D8342E5007CEA40 /* SplineRuntime */; };
+		F5E65F5D2D8E0BB2008B6BD9 /* SplineRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F574CDBE2D8D089C002D8E2D /* SplineRuntime */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +51,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5E65F5D2D8E0BB2008B6BD9 /* SplineRuntime in Frameworks */,
+				F5E65F5C2D8E0BB2008B6BD9 /* SplineRuntime in Frameworks */,
+				F5E65F5B2D8E0BB2008B6BD9 /* RiveRuntime in Frameworks */,
+				F5E65F5A2D8E0BB2008B6BD9 /* RiveRuntime in Frameworks */,
+				F5E65F592D8E0BB2008B6BD9 /* StravaSwift in Frameworks */,
 				F5AEB4232D8D361600B63D29 /* StravaSwift in Frameworks */,
 				F5C4254F2D8D26C0002C2DAB /* StoreKit.framework in Frameworks */,
 				F5AEB4202D8D35B700B63D29 /* StravaSwift in Frameworks */,
@@ -146,6 +156,7 @@
 				F5AEB4182D8D35A000B63D29 /* XCRemoteSwiftPackageReference "rive-ios" */,
 				F5AEB41B2D8D35AD00B63D29 /* XCRemoteSwiftPackageReference "spline-ios" */,
 				F5AEB4242D8D363000B63D29 /* XCRemoteSwiftPackageReference "StravaSwift" */,
+				F54905232D8E1E4900958F2B /* XCRemoteSwiftPackageReference "purchases-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F52851E32D7A3B5700F13741 /* Products */;
@@ -399,6 +410,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F54905232D8E1E4900958F2B /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.20.1;
+			};
+		};
 		F5AEB4182D8D35A000B63D29 /* XCRemoteSwiftPackageReference "rive-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rive-app/rive-ios";

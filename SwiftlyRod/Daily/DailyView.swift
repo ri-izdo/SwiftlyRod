@@ -62,22 +62,46 @@ extension HKWorkoutActivityType {
 struct DailyRingView: View {
     @State private var sectionRadius: CGFloat = 15.0
     @StateObject var homeViewModel = HomeViewModel()
+    @StateObject var healthRing = RiveViewModel(fileName: "healthring2", stateMachineName: "State Machine 1")
     
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Spacer()
-                ZStack{
-                    ProgressCircleView(progress: $homeViewModel.calories, goal: homeViewModel.caloriesGoal, color: .red)
-                    
-                    ProgressCircleView(progress: $homeViewModel.exercise, goal: homeViewModel.activeGoal, color: .green)
-                        .padding(.all, 20)
-                    
-                    ProgressCircleView(progress: $homeViewModel.stand, goal: homeViewModel.standGoal, color: .blue)
-                        .padding(.all, 40)
+        GeometryReader { geometry in
+            VStack(alignment: .leading) {
+                HStack {
                     Spacer()
+                    ZStack {
+                        healthRing.view()
+                            .onAppear {
+//                                print(homeview.fetchTodayCalories())
+                                healthRing.setInput("calories", value: CGFloat(homeViewModel.calories))
+                            }
+                            .onChange(of: homeViewModel.calories) {
+                                print(CGFloat(CGFloat(homeViewModel.calories) / CGFloat(homeViewModel.caloriesGoal) * 100))
+                                healthRing.setInput("calories", value: CGFloat(CGFloat(homeViewModel.calories) / CGFloat(homeViewModel.caloriesGoal) * 100))
+                                
+                            }
+                            .onChange(of: homeViewModel.stand) {
+                                healthRing.setInput("stand", value: CGFloat(CGFloat(homeViewModel.stand) / CGFloat(homeViewModel.standGoal) * 100))
+                            }
+                            .onChange(of: homeViewModel.exercise) {
+                                healthRing.setInput("exercise", value: CGFloat(CGFloat(homeViewModel.exercise) / CGFloat(homeViewModel.activeGoal) * 100))
+                                
+                            }
+                                
+                    }
+                                        
+                    //
+                    //                    ProgressCircleView(progress: $homeViewModel.exercise, goal: homeViewModel.activeGoal, color: .green)
+                    //                        .padding(.all, 20)
+                    //
+                    //                    ProgressCircleView(progress: $homeViewModel.stand, goal: homeViewModel.standGoal, color: .blue)
+                    //                        .padding(.all, 40)
+                    //                    Spacer() }
+                    
                 }
+        
             }
+           
         }
     }
 }
@@ -122,13 +146,15 @@ struct StepsCardView: View {
 }
 
 struct ProgressCircleView: View {
-    @Binding var progress: Int
+    var progress: Int
     var goal: Int
     var color: Color
     private let width: CGFloat = 20
+
     
     var body: some View {
         ZStack {
+//            let caloriesBurned: CGFloat = CGFloat(progress) / CGFloat(goal)
             Circle()
                 .stroke(color.opacity(0.3), lineWidth: width)
             
@@ -137,8 +163,14 @@ struct ProgressCircleView: View {
                 .stroke(color, style: StrokeStyle(lineWidth: width, lineCap: .round))
                 .rotationEffect(.degrees(-90))
                 .shadow(radius: 10)
+                .onAppear() {
+                    print(goal)
+                }
         }
         .padding()
+        .onAppear {
+
+        }
     }
 }
 

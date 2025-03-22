@@ -204,6 +204,9 @@ struct SplashView: View {
             animateScaling() // Recursively call animation function
         }
     }
+    
+    
+    
 
     private func login() {
         print("🚀 Login function started")
