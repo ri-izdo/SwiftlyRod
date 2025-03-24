@@ -60,29 +60,28 @@ struct YouView: View {
                         .edgesIgnoringSafeArea(.all)
                     
                     ScrollView {
-                        HStack {
-                            Text("My HQ")
-                                .font(Font.custom("SF Pro", size: 30))
-                                .foregroundColor(.white)
-                                .padding()
-                                .opacity(showTitle ? 1 : 0)
-                                .animation(.easeIn(duration: animationDuration), value: showTitle)
-                        }
-                        HStack {
-                            WeatherContentView()
-                            Spacer()
+
+                        Text("My HQ")
+                            .font(Font.custom("SF Pro", size: 30))
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundColor(.white)
+                            .padding()
+                            .opacity(showTitle ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showTitle)
+                        
+
                             DailyRingView()
-                                .frame(width: geometry.size.width * 0.5, height: 200)
+                                .frame(width: geometry.size.width * 0.6, height: 200)
+                                .cornerRadius(sectionRadius)
                                 .opacity(showDailyingRingSection ? 1 : 0)
                                 .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
-                            
-                        }
-                        awardSection()
-                            .frame(maxWidth: .infinity, minHeight: 200)
-                            .cornerRadius(sectionRadius)
-                            .opacity(showAwardSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
                         
+                            awardSection()
+                                .frame(maxWidth: .infinity, minHeight: 200)
+                                .cornerRadius(sectionRadius)
+                                .opacity(showAwardSection ? 1 : 0)
+                                .animation(.easeIn(duration: animationDuration), value: showAwardSection)
+//                        
 //                        HStack {
 //                            Text("Hi")
 //                            DailyRingView()
@@ -105,21 +104,21 @@ struct YouView: View {
                         
                         
                         
-                        WalkStatsView()
-                            .frame(maxWidth: .infinity, minHeight: 250)
-                            .cornerRadius(sectionRadius)
-                            .opacity(showWalkSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
-                        
-                        WalkingChartView()
-                            .frame(maxWidth: .infinity, minHeight: 250)
-                            .cornerRadius(sectionRadius)
-                            .opacity(showWalkSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
-                        
+//                        WalkStatsView()
+//                            .frame(maxWidth: .infinity, minHeight: 250)
+//                            .cornerRadius(sectionRadius)
+//                            .opacity(showWalkSection ? 1 : 0)
+//                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
+//                        
+//                        WalkingChartView()
+//                            .frame(maxWidth: .infinity, minHeight: 250)
+//                            .cornerRadius(sectionRadius)
+//                            .opacity(showWalkSection ? 1 : 0)
+//                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
+//                        
                     }
                     .blur(radius: showSpline ? 10 : 0)
-                    .padding(.horizontal, 25)
+                    .padding(.horizontal, 10)
                     
                     
                     
@@ -479,9 +478,14 @@ struct WeatherContentView: View {
             Spacer()
         }
 //        .scaleEffect(0.5)
+        
         .padding()
         .onAppear {
             viewModel.fetchWeather(for: city)
         }
     }
+}
+
+#Preview {
+    YouView()
 }

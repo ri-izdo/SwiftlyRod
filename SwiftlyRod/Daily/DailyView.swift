@@ -62,46 +62,120 @@ extension HKWorkoutActivityType {
 struct DailyRingView: View {
     @State private var sectionRadius: CGFloat = 15.0
     @StateObject var homeViewModel = HomeViewModel()
-    @StateObject var healthRing = RiveViewModel(fileName: "healthring2", stateMachineName: "State Machine 1")
+    @StateObject var healthRing = RiveViewModel(fileName: "radial_bar_animation2", stateMachineName: "State Machine 1")
+    
+    @State private var calories: Int = 0
+    @State private var caloriesGoals: Int = 0
+    
+    @State private var exercise: Int = 0
+    @State private var exerciseGoals: Int = 0
+    
+    @State private var stand: Int = 0
+    @State private var standGoals: Int = 0
+    @State private var count: Int = 0
+
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(alignment: .leading) {
-                HStack {
-                    Spacer()
-                    ZStack {
-                        healthRing.view()
-                            .onAppear {
-//                                print(homeview.fetchTodayCalories())
-                                healthRing.setInput("calories", value: CGFloat(homeViewModel.calories))
-                            }
-                            .onChange(of: homeViewModel.calories) {
-                                print(CGFloat(CGFloat(homeViewModel.calories) / CGFloat(homeViewModel.caloriesGoal) * 100))
-                                healthRing.setInput("calories", value: CGFloat(CGFloat(homeViewModel.calories) / CGFloat(homeViewModel.caloriesGoal) * 100))
-                                
-                            }
-                            .onChange(of: homeViewModel.stand) {
-                                healthRing.setInput("stand", value: CGFloat(CGFloat(homeViewModel.stand) / CGFloat(homeViewModel.standGoal) * 100))
-                            }
-                            .onChange(of: homeViewModel.exercise) {
-                                healthRing.setInput("exercise", value: CGFloat(CGFloat(homeViewModel.exercise) / CGFloat(homeViewModel.activeGoal) * 100))
-                                
-                            }
-                                
-                    }
-                                        
-                    //
-                    //                    ProgressCircleView(progress: $homeViewModel.exercise, goal: homeViewModel.activeGoal, color: .green)
-                    //                        .padding(.all, 20)
-                    //
-                    //                    ProgressCircleView(progress: $homeViewModel.stand, goal: homeViewModel.standGoal, color: .blue)
-                    //                        .padding(.all, 40)
-                    //                    Spacer() }
+            VStack {
+                VStack {
+                    Text("Activity Rings")
+                        .font(Font.custom("SF Pro", size: 18))
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Divider()
+                        .frame(height: 0.3)
+                        .background(Color.white)
+                        .offset(y: -15)
                     
                 }
-        
+                showActivityRings()
+                    .offset(x: 75,y: -10)
             }
-           
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.gray.opacity(0.3))
+    }
+    
+    func showActivityCounter() -> some View {
+        return ZStack {
+            VStack {
+                Text("Total Activities of this Month")
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.gray.opacity(0.4))
+        .cornerRadius(15)
+    }
+    
+    func showActivityRings() -> some View {
+        return ZStack {
+            healthRing.view()
+                .onAppear {
+                    healthRing.setInput("calories", value: CGFloat(homeViewModel.calories))
+                }
+                .onChange(of: homeViewModel.calories) {
+
+                    calories = homeViewModel.calories
+                    caloriesGoals = homeViewModel.caloriesGoal
+                    let caloriesProgress: CGFloat = CGFloat(CGFloat(calories) / CGFloat(caloriesGoals) * 100)
+                    print("Calories: \(caloriesProgress)")
+                    healthRing.setInput("calories", value: caloriesProgress)
+                }
+                .onChange(of: homeViewModel.exercise) {
+                    exercise = homeViewModel.exercise
+                    exerciseGoals = homeViewModel.activeGoal
+                
+                    let exerciseProgress: CGFloat = CGFloat(CGFloat(exercise) / CGFloat(exerciseGoals) * 100)
+
+                    print("Exercise: \(exerciseProgress)")
+                    healthRing.setInput("exercise", value: exerciseProgress)
+                }
+                .onChange(of: homeViewModel.stand) {
+                    stand = homeViewModel.stand
+                    standGoals = homeViewModel.standGoal
+
+                    let standProgress: CGFloat = CGFloat(CGFloat(stand) / CGFloat(standGoals) * 100)
+                    
+                    print("Stand: \(standProgress)")
+                    healthRing.setInput("stand", value: standProgress)
+                }
+            
+            HStack {
+                VStack {
+                    Text("Move")
+                        .font(Font.custom("SF Pro", size: 12))
+                        .foregroundColor(.white)
+                    Text("\(calories)/\(caloriesGoals)")
+                        .font(Font.custom("SF Pro", size: 12))
+                        .foregroundColor(.white)
+
+                    
+                    Rectangle()
+                        .frame(height: 0.02)
+                        .opacity(0.0)
+                    
+                    Text("Exercise")
+                        .font(Font.custom("SF Pro", size: 12))
+                        .foregroundColor(.white)
+                    Text("\(exercise)/\(exerciseGoals)")
+                        .font(Font.custom("SF Pro", size: 12))
+                        .foregroundColor(.white)
+                    
+                    Rectangle()
+                        .frame(height: 0.02)
+                        .opacity(0.0)
+                    
+                    Text("Stand")
+                        .font(Font.custom("SF Pro", size: 12))
+                        .foregroundColor(.white)
+                    Text("\(stand)/\(standGoals)")
+                        .font(Font.custom("SF Pro", size: 12))
+                        .foregroundColor(.white)
+                }
+            }
         }
     }
 }
@@ -166,10 +240,6 @@ struct ProgressCircleView: View {
                 .onAppear() {
                     print(goal)
                 }
-        }
-        .padding()
-        .onAppear {
-
         }
     }
 }
@@ -841,4 +911,9 @@ extension Double {
         return formatter.string(from: NSNumber(value: self)) ?? "0"
     }
     
+}
+
+
+#Preview {
+    YouView()
 }
