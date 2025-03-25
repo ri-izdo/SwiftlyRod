@@ -56,6 +56,10 @@ struct YouView: View {
         GeometryReader { geometry in
             NavigationStack {
                 ZStack {
+//                    LinearGradient(gradient: Gradient(colors: [.topColor,.centerColor,.bottomColor]),
+//                                   startPoint: .topLeading,
+//                                   endPoint: .bottom)
+//                    .edgesIgnoringSafeArea(.all)
                     Color(hex: "201713")
                         .edgesIgnoringSafeArea(.all)
                     
@@ -69,21 +73,27 @@ struct YouView: View {
                             .opacity(showTitle ? 1 : 0)
                             .animation(.easeIn(duration: animationDuration), value: showTitle)
                         
-
-                        DailyRingView()
-                            .frame(maxWidth: .infinity, minHeight: 275)
-                            .cornerRadius(sectionRadius)
-                            .opacity(showDailyingRingSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
-                    
+    
+                            
+                            DailyRingView()
+                                .frame(maxWidth: .infinity, minHeight: 275)
+                                .cornerRadius(sectionRadius)
+                                .opacity(showDailyingRingSection ? 1 : 0)
+                                .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
+        
+                        
                         WeeklyWalkView()
                             .frame(maxWidth: .infinity, minHeight: 250)
                             .cornerRadius(sectionRadius)
-
-                        WeeklyWalkView2()
-                            .frame(maxWidth: .infinity, minHeight: 250)
-                            .cornerRadius(sectionRadius)
                         
+                        
+                        StravaMonthlyActivityView(token: token)
+                            .frame(maxWidth: .infinity, minHeight: 300)
+                            .cornerRadius(sectionRadius)
+
+                        InteractiveLineChartView()
+                            .frame(maxWidth: .infinity, minHeight: 500)
+                            .cornerRadius(sectionRadius)
                         
                         MonthWorkoutsGraph()
                             .frame(maxWidth: .infinity, minHeight: 250)
@@ -96,31 +106,7 @@ struct YouView: View {
                             .cornerRadius(sectionRadius)
                             .opacity(showAwardSection ? 1 : 0)
                             .animation(.easeIn(duration: animationDuration), value: showAwardSection)
-//
         
-//                        HStack {
-//                            Text("Hi")
-//                            DailyRingView()
-//                                .scaleEffect(2.0)
-//                            GoalBarView()
-//                                .frame(width: geometry.size.width * 0.5, height: 200)
-//                                .cornerRadius(sectionRadius)
-//                                .opacity(showGoalsSection ? 1 : 0)
-//                                .animation(.easeIn(duration: animationDuration), value: showGoalsSection)
-                            
-//                            Rectangle()
-//                                .frame(width: geometry.size.width * 0.5, height: 200)
-//                                .foregroundColor(Color.gray)
-//                                .cornerRadius(sectionRadius)
-//
-//                            
-//                    
-//                            
-//                        }
-                        
-                    
-                        
-                        
                         WalkStatsView()
                             .frame(maxWidth: .infinity, minHeight: 600)
                             .cornerRadius(sectionRadius)

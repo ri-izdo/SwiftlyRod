@@ -47,7 +47,7 @@ struct WeeklyWalkView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.gray.opacity(0.3))
+            .background(Color.gray.opacity(0.1))
             .onChange(of: chartsViewModel.oneWeekChartData.count) {
                 riveWeeklyChart.stop()
                 for (index, data) in chartsViewModel.oneWeekChartData.enumerated() {

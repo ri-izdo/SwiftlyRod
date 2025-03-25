@@ -11,43 +11,6 @@ import RiveRuntime
 import SplineRuntime
 
 
-//struct LoadingView: View {
-//    @State private var isLoading = true
-//    @State private var animateTransition = false
-//    @State private var loadingAnimation = RiveViewModel(fileName: "LoadAnimation")
-//    @State private var showMaskTransition = false
-//    
-//    var body: some View {
-//        ZStack {
-//            if isLoading {
-//                loadingAnimation.view()
-//                    .scaleEffect(scale)
-//                    .mask(showMaskTransition ? AnyView(CircleMaskView()) : AnyView(Rectangle()))
-//                    .animation(.easeInOut(duration: 1.0), value: showMaskTransition)
-//                    .onAppear {
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                            // Trigger mask animation
-//                            withAnimation {
-//                                showMaskTransition = true
-//                            }
-//                            
-//                            // Delay login until after animation
-//                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//                                login()
-//                            }
-//                        }
-//                    }
-//            } else {
-//                SplashView()
-//                    .transition(.asymmetric(insertion: .scale(scale: 0.1).combined(with: .opacity), removal: .scale(scale: 1.5).combined(with: .opacity)))
-//            }
-//        }
-//        .animation(.easeInOut, value: isLoading)
-//    }
-//}
-
-
-
 struct SplashView: View {
     @State private var isLoading = false
     @State private var token: OAuthToken?

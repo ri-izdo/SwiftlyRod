@@ -10,7 +10,7 @@ import RiveRuntime
 import HealthKit
 
 
-struct Activity {
+struct hkActivity {
     let title: String
     let subtitle: String
     let image: String
@@ -71,6 +71,7 @@ extension HKWorkoutActivityType {
 struct DailyRingView: View {
     @State private var sectionRadius: CGFloat = 15.0
     @StateObject var homeViewModel = HomeViewModel()
+
     
     @StateObject var healthRing = RiveViewModel(fileName: "radial_bar_animation", stateMachineName: "State Machine 1")
     
@@ -84,29 +85,78 @@ struct DailyRingView: View {
     @State private var standGoals: Int = 0
     @State private var count: Int = 0
 
+    @State private var stepGoal: Int = 0
+    @State private var stepCount: Int = 0
     
     var body: some View {
         GeometryReader { geometry in
-            VStack {
-                VStack {
-                    Text("Activity Rings")
-                        .font(Font.custom("SF Pro", size: 18))
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Divider()
-                        .frame(height: 0.3)
-                        .background(Color.white)
-                        .offset(y: -15)
-                    
+            let barHeight = geometry.size.height * 0.8
+            let progressRatio = min(Double(stepCount) / Double(stepGoal), 1.0)
+            ZStack {
+//                VStack {
+//                    Text("Daily Summary")
+//                        .font(Font.custom("SF Pro", size: 18))
+//                        .foregroundColor(.white)
+//                        .padding()
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//
+//                    Divider()
+//                        .frame(height: 0.3)
+//                        .background(Color.white)
+//                        .offset(y: -15)
+//
+//                }
+//                Spacer()
+                DailyActivityView()
+                
+                HStack(spacing:20) {
+                    ZStack(alignment: .bottom) {
+                        // Goal background bar
+                        Rectangle()
+                            .frame(width: 30, height: barHeight)
+                            .foregroundColor(.gray.opacity(0.2))
+                            .cornerRadius(5)
+                        
+                        Rectangle()
+                            .frame(width: 30, height: barHeight * progressRatio)
+                            .foregroundColor(.green)
+                            .cornerRadius(5)
+                            .animation(.easeInOut(duration: 0.4), value: progressRatio)
+                    }
+//                    VStack {
+//                        Rectangle()
+//                            .frame(width: 30, height:geometry.size.height * 0.8)
+//                            .foregroundColor(.green)
+//                            .cornerRadius(5.0)
+//                    }
+//                    
+//                    Rectangle()
+//                        .frame(width: 30, height:geometry.size.height * 0.8)
+//                        .foregroundColor(.blue)
+//                        .cornerRadius(5.0)
                 }
+                .offset(x:-135)
+                
                 showActivityRings()
-                    .offset(x: 75,y: -10)
+                    .offset(x:50)
+                    .padding()
+            
+
+            
+            }
+            .onChange(of: homeViewModel.homeViewActivity.count) {
+//                print("Testing: \(homeViewModel.homeViewActivity.prefix(homeViewModel.showAllActivities == true ? 1 : 1))")
+                for activity in homeViewModel.homeViewActivity {
+                    if activity.title == "Today Steps" {
+                        let subtitle = activity.subtitle
+                        stepGoal = Int(subtitle.replacingOccurrences(of: "Goal: ", with: ""))!
+                        stepCount = Int(activity.amount.replacingOccurrences(of: ",", with: ""))!
+//                        print("steps","\(stepCount)","\(stepGoal)", type(of: stepCount), type(of: stepGoal))
+                    }
+                }
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.gray.opacity(0.3))
+        .background(Color.gray.opacity(0.1))
     }
     
     func showActivityCounter() -> some View {
@@ -161,35 +211,33 @@ struct DailyRingView: View {
             
             HStack {
                 VStack {
-                    Text("Move")
-                        .font(Font.custom("SF Pro", size: 12))
-                        .foregroundColor(.white)
+                    Image(systemName: "flame.fill")
+                        .foregroundColor(Color(hex: "FF5722"))
                     Text("\(calories)/\(caloriesGoals)")
                         .font(Font.custom("SF Pro", size: 12))
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(hex: "FF5722"))
                     
                     
                     Rectangle()
                         .frame(height: 0.02)
                         .opacity(0.0)
                     
-                    Text("Exercise")
-                        .font(Font.custom("SF Pro", size: 12))
-                        .foregroundColor(.white)
+
+                    Image(systemName: "figure.walk")
+                        .foregroundColor(Color(hex: "FFC300"))
                     Text("\(exercise)/\(exerciseGoals)")
                         .font(Font.custom("SF Pro", size: 12))
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(hex: "FFC300"))
                     
                     Rectangle()
                         .frame(height: 0.02)
                         .opacity(0.0)
                     
-                    Text("Stand")
-                        .font(Font.custom("SF Pro", size: 12))
-                        .foregroundColor(.white)
+                    Image(systemName: "chevron.up.2")
+                        .foregroundColor(Color(hex: "00D9FF"))
                     Text("\(stand)/\(standGoals)")
                         .font(Font.custom("SF Pro", size: 12))
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(hex: "00D9FF"))
                 
                 }
             }
