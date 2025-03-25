@@ -29,16 +29,18 @@ struct WalkStatsView: View {
                         .background(Color.white)
                         .offset(y: -15)
                 }
-                ZStack {
-                    Text("Total walks: \(distances.count)")
-                        .font(Font.custom("SF Pro", size: 12))
-                        .foregroundColor(.white)
-                        .padding(.trailing, 20)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                    
-                    ChartView(distances: distances)
-                        .frame(maxWidth: geometry.size.width)
-                }
+                
+                ChartsView()
+//                ZStack {
+//                    Text("Total walks: \(distances.count)")
+//                        .font(Font.custom("SF Pro", size: 12))
+//                        .foregroundColor(.white)
+//                        .padding(.trailing, 20)
+//                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+//                    
+//                    ChartView(distances: distances)
+//                        .frame(maxWidth: geometry.size.width)
+//                }
                     
                 
             }

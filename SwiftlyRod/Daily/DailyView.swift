@@ -10,6 +10,15 @@ import RiveRuntime
 import HealthKit
 
 
+struct Activity {
+    let title: String
+    let subtitle: String
+    let image: String
+    let tintColor: Color
+    let amount: String
+}
+
+
 extension HKWorkoutActivityType {
     
     var name: String {
@@ -62,7 +71,8 @@ extension HKWorkoutActivityType {
 struct DailyRingView: View {
     @State private var sectionRadius: CGFloat = 15.0
     @StateObject var homeViewModel = HomeViewModel()
-    @StateObject var healthRing = RiveViewModel(fileName: "radial_bar_animation2", stateMachineName: "State Machine 1")
+    
+    @StateObject var healthRing = RiveViewModel(fileName: "radial_bar_animation", stateMachineName: "State Machine 1")
     
     @State private var calories: Int = 0
     @State private var caloriesGoals: Int = 0
@@ -112,12 +122,18 @@ struct DailyRingView: View {
     
     func showActivityRings() -> some View {
         return ZStack {
+//            DailyActivityView()
+//                .frame(width: 200, height: 200)
+//                .offset(x:-250)
+//                .scaleEffect(0.6)
+            
+            
             healthRing.view()
                 .onAppear {
                     healthRing.setInput("calories", value: CGFloat(homeViewModel.calories))
                 }
                 .onChange(of: homeViewModel.calories) {
-
+                    
                     calories = homeViewModel.calories
                     caloriesGoals = homeViewModel.caloriesGoal
                     let caloriesProgress: CGFloat = CGFloat(CGFloat(calories) / CGFloat(caloriesGoals) * 100)
@@ -127,16 +143,16 @@ struct DailyRingView: View {
                 .onChange(of: homeViewModel.exercise) {
                     exercise = homeViewModel.exercise
                     exerciseGoals = homeViewModel.activeGoal
-                
+                    
                     let exerciseProgress: CGFloat = CGFloat(CGFloat(exercise) / CGFloat(exerciseGoals) * 100)
-
+                    
                     print("Exercise: \(exerciseProgress)")
                     healthRing.setInput("exercise", value: exerciseProgress)
                 }
                 .onChange(of: homeViewModel.stand) {
                     stand = homeViewModel.stand
                     standGoals = homeViewModel.standGoal
-
+                    
                     let standProgress: CGFloat = CGFloat(CGFloat(stand) / CGFloat(standGoals) * 100)
                     
                     print("Stand: \(standProgress)")
@@ -151,7 +167,7 @@ struct DailyRingView: View {
                     Text("\(calories)/\(caloriesGoals)")
                         .font(Font.custom("SF Pro", size: 12))
                         .foregroundColor(.white)
-
+                    
                     
                     Rectangle()
                         .frame(height: 0.02)
@@ -174,6 +190,7 @@ struct DailyRingView: View {
                     Text("\(stand)/\(standGoals)")
                         .font(Font.custom("SF Pro", size: 12))
                         .foregroundColor(.white)
+                
                 }
             }
         }
@@ -914,6 +931,6 @@ extension Double {
 }
 
 
-#Preview {
-    YouView()
-}
+//#Preview {
+//    YouView()
+//}
