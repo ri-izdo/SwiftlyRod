@@ -24,7 +24,7 @@ struct MonthWorkoutsGraph: View {
         GeometryReader { geometry in
             VStack {
                 VStack {
-                    Text("\(currentMonth) Activities | Total \(chartsViewModel.oneMonthTotal)")
+                    Text("\(currentMonth) Total Steps \(chartsViewModel.oneMonthTotal)")
                         .font(Font.custom("SF Pro", size: 18))
                         .foregroundColor(.white)
                         .padding()

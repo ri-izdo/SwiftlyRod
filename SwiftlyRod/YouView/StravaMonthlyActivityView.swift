@@ -39,7 +39,6 @@ struct StravaMonthlyActivityView: View {
                         Text("Monthly HIIT Activity")
                             .font(.title.bold())
                             .padding()
-                        Spacer()
                     }
                     Spacer()
                 }

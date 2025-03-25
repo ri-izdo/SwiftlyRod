@@ -90,51 +90,38 @@ struct DailyRingView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            let barHeight = geometry.size.height * 0.8
-            let progressRatio = min(Double(stepCount) / Double(stepGoal), 1.0)
+            let barHeight = geometry.size.height * 0.75
+            let progressRatio = Double(stepGoal) > 0 ? min(Double(stepCount) / Double(stepGoal), 1.0) : 0
+            let progressHeight: Double = Double(barHeight) * Double(progressRatio)
             ZStack {
-//                VStack {
-//                    Text("Daily Summary")
-//                        .font(Font.custom("SF Pro", size: 18))
-//                        .foregroundColor(.white)
-//                        .padding()
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//
-//                    Divider()
-//                        .frame(height: 0.3)
-//                        .background(Color.white)
-//                        .offset(y: -15)
-//
-//                }
-//                Spacer()
-                DailyActivityView()
-                
+
                 HStack(spacing:20) {
-                    ZStack(alignment: .bottom) {
-                        // Goal background bar
-                        Rectangle()
-                            .frame(width: 30, height: barHeight)
-                            .foregroundColor(.gray.opacity(0.2))
-                            .cornerRadius(5)
+                    VStack {
+                        ZStack(alignment: .bottom) {
+                            // Goal background bar
+                            Rectangle()
+                                .frame(width: 30, height: barHeight)
+                                .foregroundColor(.orange.opacity(0.2))
+                                .cornerRadius(20)
+                            
+                            Rectangle()
+                                .frame(width: 30, height: progressHeight)
+                                .foregroundColor(.orange)
+                                .cornerRadius(20)
+                                .animation(.easeInOut(duration: 0.4), value: progressRatio)
+                        }
                         
-                        Rectangle()
-                            .frame(width: 30, height: barHeight * progressRatio)
-                            .foregroundColor(.green)
-                            .cornerRadius(5)
-                            .animation(.easeInOut(duration: 0.4), value: progressRatio)
+                        Text("Steps")
+                            .font(Font.custom("SF Pro", size: 12))
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundColor(.gray.opacity(0.8))
+                        Text("\(stepCount)/\(stepGoal)")
+                            .font(Font.custom("SF Pro", size: 14))
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundColor(.gray.opacity(0.8))
                     }
-//                    VStack {
-//                        Rectangle()
-//                            .frame(width: 30, height:geometry.size.height * 0.8)
-//                            .foregroundColor(.green)
-//                            .cornerRadius(5.0)
-//                    }
-//                    
-//                    Rectangle()
-//                        .frame(width: 30, height:geometry.size.height * 0.8)
-//                        .foregroundColor(.blue)
-//                        .cornerRadius(5.0)
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .offset(x:-135)
                 
                 showActivityRings()
@@ -234,10 +221,10 @@ struct DailyRingView: View {
                         .opacity(0.0)
                     
                     Image(systemName: "chevron.up.2")
-                        .foregroundColor(Color(hex: "00D9FF"))
+                        .foregroundColor(Color(hex: "D0C7C0"))
                     Text("\(stand)/\(standGoals)")
                         .font(Font.custom("SF Pro", size: 12))
-                        .foregroundColor(Color(hex: "00D9FF"))
+                        .foregroundColor(Color(hex: "D0C7C0"))
                 
                 }
             }

@@ -73,19 +73,28 @@ struct YouView: View {
                             .opacity(showTitle ? 1 : 0)
                             .animation(.easeIn(duration: animationDuration), value: showTitle)
                         
-    
                             
-                            DailyRingView()
-                                .frame(maxWidth: .infinity, minHeight: 275)
-                                .cornerRadius(sectionRadius)
-                                .opacity(showDailyingRingSection ? 1 : 0)
-                                .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
-        
-                        
-                        WeeklyWalkView()
-                            .frame(maxWidth: .infinity, minHeight: 250)
+                        DailyRingView()
+                            .frame(maxWidth: .infinity, minHeight: 275)
                             .cornerRadius(sectionRadius)
+                            .opacity(showDailyingRingSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
                         
+//                        awardSection()
+//                            .frame(maxWidth: .infinity, minHeight: 200)
+//                            .cornerRadius(sectionRadius)
+//                            .opacity(showAwardSection ? 1 : 0)
+//                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
+        
+                        HIITActivitiesView()
+                            .frame(maxWidth: .infinity, minHeight: 275)
+                            .cornerRadius(sectionRadius)
+                            .opacity(showDailyingRingSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
+                        
+//                        WeeklyWalkView()
+//                            .frame(maxWidth: .infinity, minHeight: 250)
+//                            .cornerRadius(sectionRadius)
                         
                         StravaMonthlyActivityView(token: token)
                             .frame(maxWidth: .infinity, minHeight: 300)
@@ -95,32 +104,24 @@ struct YouView: View {
                             .frame(maxWidth: .infinity, minHeight: 500)
                             .cornerRadius(sectionRadius)
                         
-                        MonthWorkoutsGraph()
-                            .frame(maxWidth: .infinity, minHeight: 250)
-                            .cornerRadius(sectionRadius)
-                            .opacity(showWalkSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
+//                        MonthWorkoutsGraph()
+//                            .frame(maxWidth: .infinity, minHeight: 250)
+//                            .cornerRadius(sectionRadius)
+//                            .opacity(showWalkSection ? 1 : 0)
+//                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
                         
-                        awardSection()
-                            .frame(maxWidth: .infinity, minHeight: 200)
-                            .cornerRadius(sectionRadius)
-                            .opacity(showAwardSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
-        
-                        WalkStatsView()
-                            .frame(maxWidth: .infinity, minHeight: 600)
-                            .cornerRadius(sectionRadius)
-                            .opacity(showWalkSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
+//                        WalkStatsView()
+//                            .frame(maxWidth: .infinity, minHeight: 600)
+//                            .cornerRadius(sectionRadius)
+//                            .opacity(showWalkSection ? 1 : 0)
+//                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
                         
                         
-                        
-
-                        MonthWorkoutsView()
-                            .frame(maxWidth: .infinity, minHeight: 250)
-                            .cornerRadius(sectionRadius)
-                            .opacity(showWalkSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
+//                        MonthWorkoutsView()
+//                            .frame(maxWidth: .infinity, minHeight: 250)
+//                            .cornerRadius(sectionRadius)
+//                            .opacity(showWalkSection ? 1 : 0)
+//                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
                     }
                     .blur(radius: showSpline ? 10 : 0)
                     .padding(.horizontal, 10)
@@ -207,7 +208,7 @@ struct YouView: View {
                 .offset(y: -10)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.gray.opacity(0.3))
+            .background(Color.gray.opacity(0.1))
             .onAppear {
                 self.viewWidth = geometry.size.width
                 self.viewHeight = geometry.size.height

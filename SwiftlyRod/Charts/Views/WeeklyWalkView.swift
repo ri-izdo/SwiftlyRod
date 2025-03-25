@@ -35,10 +35,10 @@ struct WeeklyWalkView: View {
                         .offset(y: -15)
                 }
                 ZStack {
-                    DailyActivityView()
-                        .frame(width: 200, height: 200)
-                        .offset(x:-250)
-                        .scaleEffect(0.6)
+//                    DailyActivityView()
+//                        .frame(width: 200, height: 200)
+//                        .offset(x:-250)
+//                        .scaleEffect(0.6)
                     VStack {
                         riveWeeklyChart.view()
                             .scaleEffect(1.5)
