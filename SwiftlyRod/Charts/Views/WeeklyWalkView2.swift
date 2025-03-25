@@ -120,6 +120,7 @@ struct InteractiveLineChartView: View {
             }
             .padding(.top)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.gray.opacity(0.1))
         .cornerRadius(25.0)
         .onAppear {

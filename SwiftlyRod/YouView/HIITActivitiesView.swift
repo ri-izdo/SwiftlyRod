@@ -17,10 +17,13 @@ struct HIITActivitiesView: View {
     @StateObject private var homeViewModel = MonthWorkoutsViewModel()
     @State private var HIITCaloriesWorkout: [HIITChartData] = []
     @State private var HIITCaloriesData: [HIITChartData] = []
+    @State private var chartVisible = false
 
+    
+    @State private var monthName: String = ""
     let calendar = Calendar.current
     let today = Date()
-
+    
     // 🔥 Highlight the highest-calorie day
     var highestCalorieEntry: HIITChartData? {
         HIITCaloriesData.max(by: { $0.value < $1.value })
@@ -45,9 +48,14 @@ struct HIITActivitiesView: View {
             ZStack {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("HIIT Stats")
+                        Text("HIIT \(monthName) Summary")
                             .font(.title.bold())
                             .padding()
+                            .onAppear {
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "MMMM" // or "MMM" for short version
+                                monthName = formatter.string(from: today)
+                            }
                     }
                     Spacer()
                 }
@@ -79,56 +87,34 @@ struct HIITActivitiesView: View {
                             )
                         }
                     }
+                    .opacity(chartVisible ? 1 : 0)
+                    .animation(.easeOut(duration: 0.6), value: chartVisible)
                     .chartXAxis(.hidden)
                     .chartYAxis(.hidden)
                     .chartOverlay { proxy in
                         GeometryReader { geo in
-                            
-                            // 🔵 End-of-line pulse
-                            if let last = HIITCaloriesData.last,
-                               let x = proxy.position(forX: last.category),
-                               let y = proxy.position(forY: last.value) {
-                                
-                                ZStack {
-                                    Circle()
-                                        .fill(Color.orange.opacity(0.4))
-                                        .frame(width: 24, height: 24)
-                                        .blur(radius: 8)
-                                    
-                                    Circle()
-                                        .fill(Color.orange)
-                                        .frame(width: 12, height: 12)
-                                        .shadow(color: Color.orange.opacity(0.6), radius: 6)
-                                }
-                                .position(x: x, y: y - 5)
-                            }
-                            
-                            // 🟢 Highlight highest-calorie day
                             if let maxItem = highestCalorieEntry,
                                let x = proxy.position(forX: maxItem.category),
                                let y = proxy.position(forY: maxItem.value) {
-                                
-                                ZStack {
-                                    Circle()
-                                        .fill(Color.green.opacity(0.4))
-                                        .frame(width: 28, height: 28)
-                                        .blur(radius: 10)
-                                    
-                                    Circle()
-                                        .fill(Color.green)
-                                        .frame(width: 14, height: 14)
-                                        .shadow(color: Color.green.opacity(0.6), radius: 6)
-                                    
-                                    Text("\(Int(maxItem.value))")
-                                        .font(.caption2.bold())
-                                        .foregroundColor(.green)
-                                        .offset(y: -25)
-                                }
-                                .position(x: x, y: y - 5)
+                                HIITChartCallout(x: x, y: y, chartWidth: geo.size.width, value: Int(maxItem.value))
                             }
                         }
                     }
+                    .offset(y:20)
+
                     .frame(height: 150)
+                    
+                    // Show 5 date labels below the chart
+                    HStack {
+                        ForEach(spacedDateLabels, id: \.self) { label in
+                            Text(label)
+                                .font(.caption2)
+                                .foregroundColor(.gray)
+                                .frame(maxWidth: .infinity)
+                        }
+                    }
+                    .padding(.horizontal, 8)
+                    .offset(y:30)
                     
 
                     
@@ -140,18 +126,15 @@ struct HIITActivitiesView: View {
                     updateHIITData()
                 }
                 
-                // Show 5 date labels below the chart
-                HStack {
-                    ForEach(spacedDateLabels, id: \.self) { label in
-                        Text(label)
-                            .font(.caption2)
-                            .foregroundColor(.gray)
-                            .frame(maxWidth: .infinity)
+            }
+            .onAppear {
+                updateHIITData()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    withAnimation {
+                        chartVisible = true
                     }
                 }
-                .padding(.horizontal, 8)
             }
-
         }
     }
 
@@ -197,4 +180,78 @@ struct HIITActivitiesView: View {
             }
         }
     }
+    
+    @ViewBuilder
+    func makeCalloutLabel(value: Int) -> some View {
+        RoundedRectangle(cornerRadius: 6)
+            .fill(Color.white)
+            .overlay(
+                Text("\(value) kcal")
+                    .font(.caption2.bold())
+                    .foregroundColor(.orange)
+                    .padding(.horizontal, 8)
+            )
+            .frame(width: 80, height: 24)
+    }
 }
+
+struct HIITChartCallout: View {
+    let x: CGFloat
+    let y: CGFloat
+    let chartWidth: CGFloat
+    let value: Int
+
+    var body: some View {
+        let lineY = y - 5
+        let labelWidth: CGFloat = 80
+        let labelPadding: CGFloat = 8
+        let labelX = min(x + 70, chartWidth - labelWidth - labelPadding)
+
+        return ZStack(alignment: .topLeading) {
+            // 🟠 Highlighted dot
+            ZStack {
+                Circle()
+                    .fill(Color.orange.opacity(0.4))
+                    .frame(width: 28, height: 28)
+                    .blur(radius: 10)
+
+                Circle()
+                    .fill(Color.orange)
+                    .frame(width: 14, height: 14)
+                    .shadow(color: Color.orange.opacity(0.6), radius: 6)
+            }
+            .position(x: x, y: lineY)
+
+            // ➖ Horizontal dashed line
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: lineY))
+                path.addLine(to: CGPoint(x: labelX - 4, y: lineY))
+            }
+            .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+            .foregroundColor(Color.orange.opacity(0.5))
+
+            // ⬇️ Vertical dashed line
+            Path { path in
+                path.move(to: CGPoint(x: x, y: lineY + 5))
+                path.addLine(to: CGPoint(x: x, y: 150)) // assume chart height
+            }
+            .stroke(style: StrokeStyle(lineWidth: 1, dash: [3]))
+            .foregroundColor(Color.orange.opacity(0.4))
+
+            // 📍 Animated Label
+            RoundedRectangle(cornerRadius: 6)
+                .fill(Color.white)
+                .overlay(
+                    Text("\(value) kcal")
+                        .font(.caption2.bold())
+                        .foregroundColor(.orange)
+                        .padding(.horizontal, 8)
+                )
+                .frame(width: labelWidth, height: 24)
+                .position(x: labelX + labelWidth / 2, y: lineY - 1)
+                .transition(.opacity.combined(with: .move(edge: .top)))
+                .animation(.easeOut(duration: 0.4), value: value)
+        }
+    }
+}
+

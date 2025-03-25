@@ -196,7 +196,7 @@ struct StravaMonthlyActivityView: View {
                     stravaViewModel.fetchActivities()
                 }
             }
-            .offset(y:50)
+//            .offset(y:50)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.gray.opacity(0.1))
             .onAppear {
