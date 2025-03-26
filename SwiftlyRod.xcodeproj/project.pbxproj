@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F594944D2D9452360009808E /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = F594944C2D9452360009808E /* SwiftUIX */; };
 		F5AEB41A2D8D35A000B63D29 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F5AEB4192D8D35A000B63D29 /* RiveRuntime */; };
 		F5AEB41D2D8D35AD00B63D29 /* SplineRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F5AEB41C2D8D35AD00B63D29 /* SplineRuntime */; };
 		F5AEB4202D8D35B700B63D29 /* StravaSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F5AEB41F2D8D35B700B63D29 /* StravaSwift */; };
@@ -54,6 +55,7 @@
 				F5E65F5D2D8E0BB2008B6BD9 /* SplineRuntime in Frameworks */,
 				F5E65F5C2D8E0BB2008B6BD9 /* SplineRuntime in Frameworks */,
 				F5E65F5B2D8E0BB2008B6BD9 /* RiveRuntime in Frameworks */,
+				F594944D2D9452360009808E /* SwiftUIX in Frameworks */,
 				F5E65F5A2D8E0BB2008B6BD9 /* RiveRuntime in Frameworks */,
 				F5E65F592D8E0BB2008B6BD9 /* StravaSwift in Frameworks */,
 				F5AEB4232D8D361600B63D29 /* StravaSwift in Frameworks */,
@@ -123,6 +125,7 @@
 				F5AEB41F2D8D35B700B63D29 /* StravaSwift */,
 				F5AEB4222D8D361600B63D29 /* StravaSwift */,
 				F5AEB4252D8D363100B63D29 /* StravaSwift */,
+				F594944C2D9452360009808E /* SwiftUIX */,
 			);
 			productName = SwiftlyRod;
 			productReference = F52851E22D7A3B5700F13741 /* SwiftlyRod.app */;
@@ -157,6 +160,7 @@
 				F5AEB41B2D8D35AD00B63D29 /* XCRemoteSwiftPackageReference "spline-ios" */,
 				F5AEB4242D8D363000B63D29 /* XCRemoteSwiftPackageReference "StravaSwift" */,
 				F54905232D8E1E4900958F2B /* XCRemoteSwiftPackageReference "purchases-ios" */,
+				F594944B2D9452360009808E /* XCLocalSwiftPackageReference "../../iOS Packages/SwiftUIX" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F52851E32D7A3B5700F13741 /* Products */;
@@ -409,6 +413,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		F594944B2D9452360009808E /* XCLocalSwiftPackageReference "../../iOS Packages/SwiftUIX" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../iOS Packages/SwiftUIX";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		F54905232D8E1E4900958F2B /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -460,6 +471,10 @@
 		F574CDBE2D8D089C002D8E2D /* SplineRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SplineRuntime;
+		};
+		F594944C2D9452360009808E /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftUIX;
 		};
 		F5AEB4192D8D35A000B63D29 /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -9,9 +9,14 @@ import SwiftUI
 import StravaSwift
 import RiveRuntime
 import SplineRuntime
+import SwiftUIX
 
 
 struct SplashView: View {
+    @State private var selection = 0
+    @State private var isContinue = false
+    @State private var loginButton = RiveViewModel(fileName: "login_buttonSTART", stateMachineName: "State Machine 1")
+    @State private var loginText = ""
     @State private var isLoading = false
     @State private var token: OAuthToken?
     @State private var athlete: Athlete? // Store athlete separately
@@ -46,85 +51,127 @@ struct SplashView: View {
                 } else {
                     ZStack {
                         
-                        LinearGradient(gradient: Gradient(colors: [.topColor,.centerColor,.bottomColor]),
-                                       startPoint: .topLeading,
-                                       endPoint: .bottom)
-                        .edgesIgnoringSafeArea(.all)
-                        
-                        
-                        
-                        loadingAnimation.view()
-                            .onAppear {
-                                loadingAnimation.setInput("isRunning", value: false)
+                        TabView(selection: $selection) {
+                            CardView(selection: selection).tag(0)
+                            CardView(selection: selection).tag(1)
+                            CardView(selection: selection).tag(2)
+                        }
+                        .tabViewStyle(PageTabViewStyle())
+                        .background(
+                            ZStack {
+                                FaceGraphic(selection: $selection)
+                                Blob1Graphic(selection: $selection)
+                                Blob2Graphic(selection: $selection)
                             }
+                        )
                         
-                        Image("strava_title")
-                            .resizable()
-                            .scaledToFit()
-                            .padding()
-                            .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottom)
-                            .scaleEffect(0.9)
-                            .offset(y:-650)
                         
-                        if isReady {
-                            Text("Get Started to join!")
-                                .font(.system(size: 16, weight: .bold)) // Match text style
-                                .foregroundColor(.white)
-                                .offset(y:-200)
-                            Button("Get Started!") {
-                                DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                    login()
+                        if selection == 2 {
+              
+                            ZStack {
+                                loginButton.view()
+                                    .scaleEffect(1.2)
+                                    .onAppear {
+                                        loginButton.setInput("active", value: false)
+                                        loginText = "CONTINUE"
+                                    }
+                                if !isContinue {
+                                    Button(loginText) {
+                                        loginButton.setInput("active", value: true)
+                                        loginText = ""
+                                        DispatchQueue.main.asyncAfter(deadline: .now()+1.5) {
+                                            login()
+                                        }
+                                    }
                                 }
+
                             }
-                            .font(.system(size: 16, weight: .bold)) // Match text style
-                            .foregroundColor(.white)
-                            .frame(width: 280, height: 50) // Increase button size
-                            .background(
-                                LinearGradient(gradient: Gradient(colors: [Color.orange.opacity(0.9), Color(red: 252/255, green: 82/255, blue: 0/255)]),
-                                               startPoint: .topLeading,
-                                               endPoint: .bottomTrailing)
-                            )
-                            .cornerRadius(10) // Rounded edges
-                            .offset(y:300)
-                            .shadow(color: Color.orange.opacity(isGlowing ? 3 : 0.4), radius: isGlowing ? 30 : 10)
-                            .scaleEffect(isPressed ? 0.55 : (isGlowing ? 1.05 : 1.0))
-                            .animation(.easeInOut(duration: 3).repeatForever(autoreverses: true), value: isGlowing)
-                            .animation(.easeInOut(duration: 0.3), value: isPressed)
-                            .gesture(pressGesture)
-                            .onAppear {
-                                isGlowing = true
-                            }
-                        } else {
-                            Text("I'm here to help with your fitness journey.")
-                                .font(.system(size: 16, weight: .bold)) // Match text style
-                                .foregroundColor(.white)
-                                .offset(y:-200)
+                            .offset(y:250)
                             
-                            Button("Continue") {
-                                isReady = true
-                                
-                            }
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(.white)
-                            .frame(width: 280, height: 50) // Increase button size
-                            .background(
-                                LinearGradient(gradient: Gradient(colors: [Color.orange.opacity(0.9), Color(red: 252/255, green: 82/255, blue: 0/255)]),
-                                               startPoint: .topLeading,
-                                               endPoint: .bottomTrailing)
-                            )
-                            .cornerRadius(10)
-                            .offset(y:300)
-                            .shadow(color: Color.orange.opacity(isGlowing ? 3 : 0.4), radius: isGlowing ? 30 : 10)
-                            .scaleEffect(isPressed ? 0.55 : (isGlowing ? 1.05 : 1.0))
-                            .animation(.easeInOut(duration: 3).repeatForever(autoreverses: true), value: isGlowing)
-                            .animation(.easeInOut(duration: 0.3), value: isPressed)
-                            .gesture(pressGesture)
-                            .onAppear {
-                                isGlowing = true
-                            }
                         }
                     }
                 }
+//                    ZStack {
+//                        
+//                        LinearGradient(gradient: Gradient(colors: [.topColor,.centerColor,.bottomColor]),
+//                                       startPoint: .topLeading,
+//                                       endPoint: .bottom)
+//                        .edgesIgnoringSafeArea(.all)
+//                        
+//                        
+//                        
+//                        loadingAnimation.view()
+//                            .onAppear {
+//                                loadingAnimation.setInput("isRunning", value: false)
+//                            }
+//                        
+//                        Image("strava_title")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .padding()
+//                            .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottom)
+//                            .scaleEffect(0.9)
+//                            .offset(y:-650)
+//                        
+//                        if isReady {
+//                            Text("Get Started to join!")
+//                                .font(.system(size: 16, weight: .bold)) // Match text style
+//                                .foregroundColor(.white)
+//                                .offset(y:-200)
+//                            Button("Get Started!") {
+//                                DispatchQueue.main.asyncAfter(deadline: .now()) {
+//                                    login()
+//                                }
+//                            }
+//                            .font(.system(size: 16, weight: .bold)) // Match text style
+//                            .foregroundColor(.white)
+//                            .frame(width: 280, height: 50) // Increase button size
+//                            .background(
+//                                LinearGradient(gradient: Gradient(colors: [Color.orange.opacity(0.9), Color(red: 252/255, green: 82/255, blue: 0/255)]),
+//                                               startPoint: .topLeading,
+//                                               endPoint: .bottomTrailing)
+//                            )
+//                            .cornerRadius(10) // Rounded edges
+//                            .offset(y:300)
+//                            .shadow(color: Color.orange.opacity(isGlowing ? 3 : 0.4), radius: isGlowing ? 30 : 10)
+//                            .scaleEffect(isPressed ? 0.55 : (isGlowing ? 1.05 : 1.0))
+//                            .animation(.easeInOut(duration: 3).repeatForever(autoreverses: true), value: isGlowing)
+//                            .animation(.easeInOut(duration: 0.3), value: isPressed)
+//                            .gesture(pressGesture)
+//                            .onAppear {
+//                                isGlowing = true
+//                            }
+//                        } else {
+//                            Text("I'm here to help with your fitness journey.")
+//                                .font(.system(size: 16, weight: .bold)) // Match text style
+//                                .foregroundColor(.white)
+//                                .offset(y:-200)
+//                            
+//                            Button("Continue") {
+//                                isReady = true
+//                                
+//                            }
+//                            .font(.system(size: 14, weight: .bold))
+//                            .foregroundColor(.white)
+//                            .frame(width: 280, height: 50) // Increase button size
+//                            .background(
+//                                LinearGradient(gradient: Gradient(colors: [Color.orange.opacity(0.9), Color(red: 252/255, green: 82/255, blue: 0/255)]),
+//                                               startPoint: .topLeading,
+//                                               endPoint: .bottomTrailing)
+//                            )
+//                            .cornerRadius(10)
+//                            .offset(y:300)
+//                            .shadow(color: Color.orange.opacity(isGlowing ? 3 : 0.4), radius: isGlowing ? 30 : 10)
+//                            .scaleEffect(isPressed ? 0.55 : (isGlowing ? 1.05 : 1.0))
+//                            .animation(.easeInOut(duration: 3).repeatForever(autoreverses: true), value: isGlowing)
+//                            .animation(.easeInOut(duration: 0.3), value: isPressed)
+//                            .gesture(pressGesture)
+//                            .onAppear {
+//                                isGlowing = true
+//                            }
+//                        }
+//                    }
+//                }
             }
             .fullScreenCover(isPresented: $navigateToMain) {
                 if let token = token {
@@ -220,5 +267,137 @@ struct SplashView: View {
                 self.errorMessage = AuthError(message: error.localizedDescription)
             }
         })
+    }
+}
+
+
+import SwiftUIX
+struct CardView: View {
+    var selection: Int?
+    @State private var bodyBlurb: String = ""
+    @State private var titleText: String = ""
+    @State private var titleText_0  = "Explore. \nTranslate. \nMove."
+    @State private var titleText_1 = ""
+    @State private var titleText_2 = ""
+    @State private var animate = false
+    
+    @State private var color0_0 = Color(#colorLiteral(red: 0.03333336114883423, green: 0.5024509429931641, blue: 1, alpha: 1))
+    @State private var color0_1 = Color(#colorLiteral(red: 0.7291666269302368, green: 0.7562500238418579, blue: 1, alpha: 1))
+    @State private var color0_2 = Color(#colorLiteral(red: 1, green: 0.6083333492279053, blue: 0.8732843995094299, alpha: 1))
+    
+    @State private var color1_0 = Color(#colorLiteral(red: 0.03333336114883423, green: 0.5024509429931641, blue: 1, alpha: 1))
+    @State private var color1_1 = Color(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1))
+    @State private var color1_2 = Color(#colorLiteral(red: 0.7556235194, green: 0.6234368086, blue: 0.8990190625, alpha: 1))
+    
+    @State private var color2_0 = Color(#colorLiteral(red: 1, green: 0.6041869521, blue: 0.3433918357, alpha: 1))
+    @State private var color2_1 = Color(#colorLiteral(red: 1, green: 0.3883444667, blue: 0.2500864267, alpha: 1))
+    @State private var color2_2 = Color(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1))
+    
+    @State private var color0 = Color(#colorLiteral(red: 0.03333336114883423, green: 0.5024509429931641, blue: 1, alpha: 1))
+    @State private var color1 = Color(#colorLiteral(red: 0.7291666269302368, green: 0.7562500238418579, blue: 1, alpha: 1))
+    @State private var color2 = Color(#colorLiteral(red: 1, green: 0.6083333492279053, blue: 0.8732843995094299, alpha: 1))
+    
+    let blurb_0 = "A prototype built to explore ideas, translate complexity into clarity, and embody the spirit of motion and progress."
+    let blurb_1 = "Designed to help users better understand their habits, celebrate their progress, and stay motivated on their journey."
+    let blurb_2 = "Visual data is precise and purposeful, so you can focus on what matters most: your progress."
+    var body: some View {
+        ZStack {
+            VStack {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Strava + HealthKit".uppercased())
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                        .foregroundColor(Color.white.opacity(0.7))
+                    
+                    LinearGradient(
+                        gradient: Gradient(stops: [
+                            .init(color: color0, location: 0),
+                            .init(color: color1, location: 0.5629924535751343),
+                            .init(color: color2, location: 1)]),
+                        startPoint: animate ? UnitPoint(x: 1, y: 1) : UnitPoint(x: 1.0125392039427847, y: 1.0175438863216821),
+                        endPoint: animate ? UnitPoint(x: 0, y: 0) : UnitPoint(x: 1, y: 1)
+                    )
+                    .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: animate)
+                    .frame(maxHeight: 160)
+                    .mask(Text(titleText)
+                        .font(.largeTitle)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading))
+                    Text(bodyBlurb)
+                        .font(.subheadline)
+                        .foregroundColor(Color.white.opacity(0.8))
+                        
+                }
+                .padding(30)
+                .background(LinearGradient(
+                    gradient: Gradient(stops: [
+                        .init(color: Color(#colorLiteral(red: 0.14509804546833038, green: 0.12156862765550613, blue: 0.2549019753932953, alpha: 1)), location: 0),
+                        .init(color: Color(#colorLiteral(red: 0.14509804546833038, green: 0.12156862765550613, blue: 0.2549019753932953, alpha: 0)), location: 1)]),
+                    startPoint: UnitPoint(x: 0.49999988837676157, y: 2.9497591284275417e-15),
+                    endPoint: UnitPoint(x: 0.4999999443689973, y: 0.9363635917143408)))
+                .mask(RoundedRectangle(cornerRadius: 30, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 30, style: .continuous)
+                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.8), Color.white.opacity(0.2), Color.white.opacity(0)]), startPoint: .top, endPoint: .bottom), lineWidth: 1)
+                        .blendMode(.overlay)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 30, style: .continuous)
+                                .stroke(LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.8), Color.white.opacity(0.2), Color.white.opacity(0)]), startPoint: .top, endPoint: .bottom), lineWidth: 1)
+                                .blur(radius: 8)
+                        )
+                )
+                .padding(20)
+            }
+            .onAppear {
+                titleText = titleText_0
+                bodyBlurb = blurb_0
+                animate = true
+                
+            }
+            .onChange(of: selection) {
+                if selection == 0 {
+                    titleText = titleText_1
+                    bodyBlurb = blurb_0
+                    
+                } else if selection == 1 {
+                    bodyBlurb = blurb_1
+                    color0 = color1_0
+                    color1 = color1_1
+                    color2 = color1_2
+                } else if selection == 2 {
+                    bodyBlurb = blurb_2
+                    color0 = color2_0
+                    color1 = color2_1
+                    color2 = color2_2
+                }
+            }
+            .frame(height: 500)
+            .background(LinearGradient(
+                gradient: Gradient(stops: [
+                    .init(color: Color(#colorLiteral(red: 0.15701383352279663, green: 0.10772569477558136, blue: 0.3541666567325592, alpha: 0)), location: 0),
+                    .init(color: Color(#colorLiteral(red: 0.15701383352279663, green: 0.10772569477558136, blue: 0.3541666567325592, alpha: 1)), location: 1)]),
+                startPoint: UnitPoint(x: 0.5, y: 0.30500000480115429),
+                endPoint: UnitPoint(x: 0.5, y: 1.0000000400096194)))
+            .mask(RoundedRectangle(cornerRadius: 30))
+//            .overlay(
+//                RoundedRectangle(cornerRadius: 30, style: .continuous)
+//                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0), Color.white.opacity(0.2), Color.white.opacity(0.8)]), startPoint: .top, endPoint: .bottom), lineWidth: 1)
+//                    .blendMode(.overlay)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 30, style: .continuous)
+//                            .stroke(LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.8), Color.white.opacity(0.2), Color.white.opacity(0)]), startPoint: .top, endPoint: .bottom), lineWidth: 1)
+//                            .blur(radius: 8)
+//                    )
+//            )
+//            .background(
+//                VisualEffectBlurView(blurStyle: .systemUltraThinMaterialDark)
+//                    .mask(RoundedRectangle(cornerRadius: 30, style: .continuous))
+//                    .blur(radius: 30)
+//                    .padding(.top, 80)
+//            )
+            .padding(8)
+        
+        }
+
     }
 }

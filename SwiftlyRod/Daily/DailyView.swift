@@ -71,7 +71,8 @@ extension HKWorkoutActivityType {
 struct DailyRingView: View {
     @State private var sectionRadius: CGFloat = 15.0
     @StateObject var homeViewModel = HomeViewModel()
-
+    @State var val = 0.0
+    @State var scale = 0.2
     
     @StateObject var healthRing = RiveViewModel(fileName: "radial_bar_animation", stateMachineName: "State Machine 1")
     
@@ -128,6 +129,7 @@ struct DailyRingView: View {
                 showActivityRings()
                     .offset(x:50)
                     .padding()
+
             
 
             

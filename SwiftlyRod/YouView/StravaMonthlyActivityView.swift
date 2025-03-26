@@ -106,8 +106,8 @@ struct StravaMonthlyActivityView: View {
                                     .foregroundStyle(
                                         .linearGradient(
                                             Gradient(stops: [
-                                                .init(color: Color(hex: "D0C7C0").opacity(0.0), location: 0),
-                                                .init(color: Color(hex: "D0C7C0").opacity(0.0), location: 1)
+                                                .init(color: Color(hex: "D0C7C0").opacity(0.6), location: 0),
+                                                .init(color: Color(hex: "D0C7C0").opacity(0.0), location: 0.5)
                                             ]),
                                             startPoint: .top,
                                             endPoint: .bottom
@@ -159,8 +159,8 @@ struct StravaMonthlyActivityView: View {
                                     .foregroundStyle(
                                         .linearGradient(
                                             Gradient(stops: [
-                                                .init(color: Color(hex: "FC5200").opacity(0.0), location: 0),
-                                                .init(color: Color(hex: "FC5200").opacity(0.0), location: 1)
+                                                .init(color: Color(hex: "FC5200").opacity(0.6), location: 0),
+                                                .init(color: Color(hex: "FC5200").opacity(0.0), location: 0.5)
                                             ]),
                                             startPoint: .top,
                                             endPoint: .bottom

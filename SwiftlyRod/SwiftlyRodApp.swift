@@ -17,6 +17,7 @@ struct StravaApp: App {
             if let token = StravaClient.sharedInstance.token {
                 LoadingAnimationView(token: token)
             } else {
+//                OnBoardView()
                 SplashView()
 //                YouView()
             }
