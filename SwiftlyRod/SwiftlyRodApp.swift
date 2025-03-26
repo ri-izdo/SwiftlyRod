@@ -14,13 +14,12 @@ struct StravaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if let token = StravaClient.sharedInstance.token {
-                LoadingAnimationView(token: token)
-            } else {
-//                OnBoardView()
-                SplashView()
+//            if let token = StravaClient.sharedInstance.token {
+//                LoadingAnimationView(token: token)
+//            } else {
+            SplashView()
 //                YouView()
-            }
+//            }
         }
     }
 }

@@ -48,7 +48,7 @@ struct LoadingAnimationView: View {
                     .scaleEffect(0.9)
                 
                 if isTransitioning {
-                    MainTabView()
+                    MainTabView(token: token)
                         .mask(CircleMaskView())
                         .animation(.easeInOut(duration: 1.0), value: isTransitioning)
                 } else {
@@ -103,42 +103,42 @@ struct CircleMaskView: View {
     }
 }
 
-
-struct LoadingRunnerView: View {
-    var runningState: Bool = false
-    @State private var scale: CGFloat = 1.0  // Image scaling state
-    @State private var duration: Double = 0.3 // Initial animation duration
-    @State private var loadingAnimation = RiveViewModel(fileName: "runner_character", stateMachineName: "State Machine 1")
-    
-    @State private var isTransitioning = false
-    
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                LinearGradient(gradient: Gradient(colors: [.topColor,.centerColor,.bottomColor]),
-                               startPoint: .topLeading,
-                               endPoint: .bottom)
-                .edgesIgnoringSafeArea(.all)
-                
-//                Image("strava_title")
-//                    .resizable()
-//                    .scaledToFit()
-//                    .padding()
-//                    .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottom)
-//                    .scaleEffect(0.9)
-                
-                if isTransitioning {
-                    MainTabView()
-                        .mask(CircleMaskView())
-                        .animation(.easeInOut(duration: 1.0), value: isTransitioning)
-                } else {
-                    
-                    loadingAnimation.view()
-                        .onAppear {
-                            loadingAnimation.setInput("isRunning", value: runningState)
-                        }
-                }
-            }
-        }
-    }
-}
+//
+//struct LoadingRunnerView: View {
+//    var runningState: Bool = false
+//    @State private var scale: CGFloat = 1.0  // Image scaling state
+//    @State private var duration: Double = 0.3 // Initial animation duration
+//    @State private var loadingAnimation = RiveViewModel(fileName: "runner_character", stateMachineName: "State Machine 1")
+//    
+//    @State private var isTransitioning = false
+//    
+//    var body: some View {
+//        GeometryReader { geometry in
+//            ZStack {
+//                LinearGradient(gradient: Gradient(colors: [.topColor,.centerColor,.bottomColor]),
+//                               startPoint: .topLeading,
+//                               endPoint: .bottom)
+//                .edgesIgnoringSafeArea(.all)
+//                
+////                Image("strava_title")
+////                    .resizable()
+////                    .scaledToFit()
+////                    .padding()
+////                    .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottom)
+////                    .scaleEffect(0.9)
+//                
+//                if isTransitioning {
+//                    MainTabView()
+//                        .mask(CircleMaskView())
+//                        .animation(.easeInOut(duration: 1.0), value: isTransitioning)
+//                } else {
+//                    
+//                    loadingAnimation.view()
+//                        .onAppear {
+//                            loadingAnimation.setInput("isRunning", value: runningState)
+//                        }
+//                }
+//            }
+//        }
+//    }
+//}

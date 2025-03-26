@@ -12,24 +12,21 @@ import RiveRuntime
 
 struct MainTabView: View {
     var token: OAuthToken?
-    @State private var selectedTab = 2
+    @State private var selectedTab = 1
     @State private var stateMachine: String = "State Machine 1"
 
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
-                LoadingAnimationView(token: token)
-                    .tag(0)
                 CelebrationView()
-                    .tag(1)
+                    .tag(0)
                 YouView(token: token)
-                    .tag(2)
+                    .tag(1)
             }
             .background(Color.gray.opacity(0.3))
+//            .tabViewStyle(PageTabViewStyle())
             
             HStack {
-                Spacer()
-                TabButton(selectedTab: $selectedTab, tab: 0, riveFile: "restart_icon", stateMachine: stateMachine, text: "Splash")
                 Spacer()
                 TabButton(selectedTab: $selectedTab, tab: 1, riveFile: "home_icon", stateMachine: stateMachine, text: "Celebrations")
                 Spacer()
@@ -37,10 +34,10 @@ struct MainTabView: View {
                 Spacer()
             }
         }
-        .onAppear {
-            if selectedTab != 2 {
-                YouView().resetAnimations()
-            }
-        }
+//        .onAppear {
+//            if selectedTab != 2 {
+//                YouView().resetAnimations()
+//            }
+//        }
     }
 }
