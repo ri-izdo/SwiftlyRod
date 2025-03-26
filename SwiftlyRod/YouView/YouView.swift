@@ -76,7 +76,7 @@ struct YouView: View {
                             
                         DailyRingView()
                             .frame(maxWidth: .infinity, minHeight: 275)
-                            .cornerRadius(sectionRadius)
+//                            .cornerRadius(sectionRadius)
                             .opacity(showDailyingRingSection ? 1 : 0)
                             .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
                         
@@ -88,7 +88,7 @@ struct YouView: View {
         
                         HIITActivitiesView()
                             .frame(maxWidth: .infinity, minHeight: 275)
-                            .cornerRadius(sectionRadius)
+//                            .cornerRadius(sectionRadius)
                             .opacity(showDailyingRingSection ? 1 : 0)
                             .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
                         
@@ -98,11 +98,11 @@ struct YouView: View {
                         
                         StravaMonthlyActivityView(token: token)
                             .frame(maxWidth: .infinity, minHeight: 300)
-                            .cornerRadius(sectionRadius)
+//                            .cornerRadius(sectionRadius)
 
                         InteractiveLineChartView()
                             .frame(maxWidth: .infinity, minHeight: 500)
-                            .cornerRadius(sectionRadius)
+//                            .cornerRadius(sectionRadius)
                         
 //                        MonthWorkoutsGraph()
 //                            .frame(maxWidth: .infinity, minHeight: 250)
@@ -124,7 +124,7 @@ struct YouView: View {
 //                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
                     }
                     .blur(radius: showSpline ? 10 : 0)
-                    .padding(.horizontal, 10)
+//                    .padding(.horizontal, 10)
                     
                     
                     

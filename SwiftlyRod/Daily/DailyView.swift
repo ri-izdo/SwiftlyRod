@@ -90,23 +90,24 @@ struct DailyRingView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            let barHeight = geometry.size.height * 0.75
+            let barHeight = geometry.size.height * 0.5
             let progressRatio = Double(stepGoal) > 0 ? min(Double(stepCount) / Double(stepGoal), 1.0) : 0
             let progressHeight: Double = Double(barHeight) * Double(progressRatio)
             ZStack {
 
+                // Vertical progress bar for steps
                 HStack(spacing:20) {
                     VStack {
                         ZStack(alignment: .bottom) {
                             // Goal background bar
                             Rectangle()
                                 .frame(width: 30, height: barHeight)
-                                .foregroundColor(.orange.opacity(0.2))
+                                .foregroundColor(Color(hex:"FC5200").opacity(0.2))
                                 .cornerRadius(20)
                             
                             Rectangle()
                                 .frame(width: 30, height: progressHeight)
-                                .foregroundColor(.orange)
+                                .foregroundColor(Color(hex:"FC5200"))
                                 .cornerRadius(20)
                                 .animation(.easeInOut(duration: 0.4), value: progressRatio)
                         }
@@ -114,11 +115,11 @@ struct DailyRingView: View {
                         Text("Steps")
                             .font(Font.custom("SF Pro", size: 12))
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(.gray.opacity(0.8))
+                            .foregroundColor(Color(hex: "D0C7C0"))
                         Text("\(stepCount)/\(stepGoal)")
                             .font(Font.custom("SF Pro", size: 14))
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(.gray.opacity(0.8))
+                            .foregroundColor(Color(hex: "D0C7C0"))
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -195,6 +196,7 @@ struct DailyRingView: View {
                     print("Stand: \(standProgress)")
                     healthRing.setInput("stand", value: standProgress)
                 }
+            
             
             HStack {
                 VStack {

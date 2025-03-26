@@ -78,8 +78,8 @@ struct HIITActivitiesView: View {
                             .foregroundStyle(
                                 .linearGradient(
                                     Gradient(stops: [
-                                        .init(color: Color(hex: "FF5722").opacity(0.6), location: 0),
-                                        .init(color: Color(hex: "FF5722").opacity(0.0), location: 1)
+                                        .init(color: Color(hex: "FC5200").opacity(0.6), location: 0),
+                                        .init(color: Color(hex: "FC5200").opacity(0.0), location: 1)
                                     ]),
                                     startPoint: .top,
                                     endPoint: .bottom
@@ -121,7 +121,7 @@ struct HIITActivitiesView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.gray.opacity(0.1))
-                .cornerRadius(15)
+//                .cornerRadius(15)
                 .onChange(of: homeViewModel.currentMonthWorkouts.count) {
                     updateHIITData()
                 }

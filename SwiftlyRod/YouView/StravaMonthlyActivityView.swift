@@ -10,7 +10,6 @@ import StravaSwift
 import Charts
 
 
-
 struct StravaMonthlyActivityView: View {
     var token: OAuthToken?
     @State private var thisMonthHIITData: [ChartData] = []
@@ -20,30 +19,65 @@ struct StravaMonthlyActivityView: View {
     @State private var dragLocation: CGPoint = .zero
     @State private var thisMonthHIITActivities: [ChartData] = []
     @State private var lastMonthHIITActivities: [ChartData] = []
-    
+
     @State private var thisMonthHIITTotalTime: Double = 0
     @State private var lastMonthHIITTotalTime: Double = 0
-    
+
     @State private var lastFour: String = ""
     @State private var formattedDate: String = ""
+
+    @State private var previousMonthName: String = ""
+    @State private var monthName: String = ""
     
     let calendar = Calendar.current
     let today = Date()
     
     
+    
+    
+
     var body: some View {
         GeometryReader { geometry in
+            var maxYValue: Double {
+                let allValues = thisMonthHIITData.map(\.value) + lastMonthHIITData.map(\.value)
+                return allValues.max() ?? 100
+            }
+
             ZStack {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("Monthly HIIT Activity")
+                        Text("Total Moving Time")
                             .font(.title.bold())
                             .padding()
+                    }
+                    HStack(Spacing:1) {
+                        
+                        Text("\(previousMonthName) HITT \(Int(lastMonthHIITTotalTime))")
+                            .font(Font.custom("SF Pro", size: 14))
+                            .font(.title.bold())
+                            .frame(maxWidth: .infinity, alignment:.trailing)
+                            .foregroundColor(.gray)
+
+                        Text("\(monthName) HIIT \(Int(thisMonthHIITTotalTime))")
+                            .font(Font.custom("SF Pro", size: 14))
+                            .font(.title.bold())
+                            .frame(maxWidth: .infinity, alignment:.trailing)
+                            .foregroundColor(.orange)
+                    }
+                    .onAppear {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "MMMM"
+                        monthName = formatter.string(from: today)
+                        if let previousMonthDate = calendar.date(byAdding: .month, value: -1, to: today) {
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "MMMM"
+                            previousMonthName = formatter.string(from: previousMonthDate)
+                        }
                     }
                     Spacer()
                 }
                 .offset(y:-60)
-                
+
                 VStack {
                     if stravaViewModel.isLoading {
                         LoadingAnimationView()
@@ -51,21 +85,8 @@ struct StravaMonthlyActivityView: View {
                         Text("⚠️ No Activities Found")
                             .foregroundColor(.gray)
                             .padding()
-                
-                    
                     } else {
                         ZStack {
-                            VStack {
-                                Text("Last month moving time: \(Int(lastMonthHIITTotalTime))")
-                                    .font(Font.custom("SF Pro", size: 14))
-                                    .foregroundColor(.blue)
-                                Text("This month moving time: \(Int(thisMonthHIITTotalTime))")
-                                    .font(Font.custom("SF Pro", size: 14))
-                                    .foregroundColor(.orange)
-                            }
-                            .offset(y:-100)
-                            
-                            // Last month chart
                             Chart {
                                 ForEach(lastMonthHIITData) { item in
                                     LineMark(
@@ -73,8 +94,8 @@ struct StravaMonthlyActivityView: View {
                                         y: .value("Value", item.value)
                                     )
                                     .interpolationMethod(.catmullRom)
-                                    .foregroundStyle(Color(hex: "00D9FF"))
-
+                                    .foregroundStyle(Color(hex: "D0C7C0"))
+                                    
                                     AreaMark(
                                         x: .value("Day", item.category),
                                         y: .value("Value", item.value)
@@ -83,8 +104,8 @@ struct StravaMonthlyActivityView: View {
                                     .foregroundStyle(
                                         .linearGradient(
                                             Gradient(stops: [
-                                                .init(color: Color(hex: "00D9FF").opacity(0.6), location: 0),
-                                                .init(color: Color(hex: "00D9FF").opacity(0.0), location: 1)
+                                                .init(color: Color(hex: "D0C7C0").opacity(0.0), location: 0),
+                                                .init(color: Color(hex: "D0C7C0").opacity(0.0), location: 1)
                                             ]),
                                             startPoint: .top,
                                             endPoint: .bottom
@@ -92,39 +113,33 @@ struct StravaMonthlyActivityView: View {
                                     )
                                 }
                             }
+                            .chartYScale(domain: 0...maxYValue)
                             .chartXAxis(.hidden)
-                            .chartYAxis(.hidden)
+//                            .chartYAxis(.hidden)
                             .chartPlotStyle { plotArea in
-                                plotArea
-                                    .background(.clear)
+                                plotArea.background(.clear)
                             }
                             .chartOverlay { proxy in
                                 GeometryReader { geo in
                                     if let last = lastMonthHIITData.last,
                                        let x = proxy.position(forX: last.category),
                                        let y = proxy.position(forY: last.value) {
-
                                         ZStack {
-                                            // Glowing halo
                                             Circle()
-                                                .fill(Color.blue.opacity(0.4))
+                                                .fill(Color.gray.opacity(0.4))
                                                 .frame(width: 24, height: 24)
                                                 .blur(radius: 8)
-
-                                            // Core dot
                                             Circle()
-                                                .fill(Color.blue)
+                                                .fill(Color.gray)
                                                 .frame(width: 12, height: 12)
-                                                .shadow(color: Color.blue.opacity(0.6), radius: 6, x: 0, y: 0)
+                                                .shadow(color: Color.gray.opacity(0.6), radius: 6, x: 0, y: 0)
                                         }
-                                        .position(x: x, y: y - 5) // slightly lift the dot
+                                        .position(x: x, y: y - 1)
                                     }
                                 }
                             }
-
                             .frame(height: 150)
                             
-                            // This month chart
                             Chart {
                                 ForEach(thisMonthHIITData) { item in
                                     LineMark(
@@ -132,8 +147,8 @@ struct StravaMonthlyActivityView: View {
                                         y: .value("Value", item.value)
                                     )
                                     .interpolationMethod(.catmullRom)
-                                    .foregroundStyle(Color(hex: "FF5D00"))
-
+                                    .foregroundStyle(Color(hex: "FC5200"))
+                                    
                                     AreaMark(
                                         x: .value("Day", item.category),
                                         y: .value("Value", item.value)
@@ -142,8 +157,8 @@ struct StravaMonthlyActivityView: View {
                                     .foregroundStyle(
                                         .linearGradient(
                                             Gradient(stops: [
-                                                .init(color: Color(hex: "FF5D00").opacity(0.6), location: 0),
-                                                .init(color: Color(hex: "FF5D00").opacity(0.0), location: 1)
+                                                .init(color: Color(hex: "FC5200").opacity(0.0), location: 0),
+                                                .init(color: Color(hex: "FC5200").opacity(0.0), location: 1)
                                             ]),
                                             startPoint: .top,
                                             endPoint: .bottom
@@ -151,11 +166,11 @@ struct StravaMonthlyActivityView: View {
                                     )
                                 }
                             }
+                            .chartYScale(domain: 0...maxYValue)
                             .chartXAxis(.hidden)
-                            .chartYAxis(.hidden)
+//                            .chartYAxis(.hidden)
                             .chartPlotStyle { plotArea in
-                                plotArea
-                                    .background(.clear)
+                                plotArea.background(.clear)
                             }
                             .chartOverlay { proxy in
                                 GeometryReader { geo in
@@ -163,115 +178,86 @@ struct StravaMonthlyActivityView: View {
                                        let x = proxy.position(forX: last.category),
                                        let y = proxy.position(forY: last.value) {
                                         ZStack {
-                                            // Glowing halo
                                             Circle()
                                                 .fill(Color.orange.opacity(0.4))
                                                 .frame(width: 24, height: 24)
                                                 .blur(radius: 8)
-                                            
-                                            // Core dot
                                             Circle()
                                                 .fill(Color.orange)
                                                 .frame(width: 12, height: 12)
                                                 .shadow(color: Color.orange.opacity(0.6), radius: 6, x: 0, y: 0)
                                         }
-                                        .position(x: x, y: y - 1) // slightly lift the dot
-                                        
+                                        .position(x: x, y: y - 1)
                                     }
                                 }
                             }
                             .frame(height: 150)
                         }
-//                        .padding()
-//                        
+
                         Button("Replay Animation") {
                             animateData()
                         }
-                        .offset(y:-15)
-                        .padding(.top)
-
                     }
                 }
                 .onAppear {
                     stravaViewModel.fetchActivities()
                 }
             }
-//            .offset(y:50)
+            .offset(y: 50)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.gray.opacity(0.1))
-            .onAppear {
-                animateData()
-            }
+//            .onAppear {
+//                animateData()
+//            }
             .onChange(of: stravaViewModel.activities) {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "MM/dd"
+   
+
+                
                 for activity in stravaViewModel.activities {
                     lastFour = String(activity.name?.suffix(4) ?? "")
                     
-                    if let startDate = activity.startDate {
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "MM/dd"
-                        let formattedDate = formatter.string(from: startDate)
-                        
-                        let thisMonth = formatter.string(from: today).prefix(2)
-                        if let lastMonthDate = calendar.date(byAdding: .month, value: -1, to: today) {
-                            let lastMonth = formatter.string(from: lastMonthDate).prefix(2)
-                            let activityMonth = formattedDate.prefix(2)
-                            
-                            if thisMonth == activityMonth {
-                                if lastFour == "HIIT" {
-                                    print("This month HIIT | Month: \(activityMonth) | Moving Time: \(activity.movingTime ?? 0.0)")
-                                    thisMonthHIITTotalTime += activity.movingTime ?? 0.0
-                                    thisMonthHIITActivities.append(ChartData(category: String(formattedDate), value: activity.movingTime ?? 0.0))
-                                }
-                                
-                                // Last Month
-                            } else if lastMonth == activityMonth {
-                                if lastFour == "HIIT" {
-                                    print("Last month HIIT | Month: \(activityMonth) | Moving Time: \(activity.movingTime ?? 0.0)")
-                                    lastMonthHIITTotalTime += activity.movingTime ?? 0.0
-                                    lastMonthHIITActivities.append(ChartData(category: String(formattedDate), value: activity.movingTime ?? 0.0))
-                                }
-                            }
+                    guard let startDate = activity.startDate else { continue }
+                    let formattedDate = formatter.string(from: startDate)
+                    let activityMonth = formattedDate.prefix(2)
+                    let thisMonth = formatter.string(from: today).prefix(2)
+                    let lastMonth = formatter.string(from: calendar.date(byAdding: .month, value: -1, to: today) ?? today).prefix(2)
+                    
+                    let movingTime = activity.movingTime ?? 0.0
+                    
+
+            
+                    if lastFour == "HIIT" {
+                        if thisMonth == activityMonth {
+                            //                            print("\(activity.movingTime ?? 0.0)")
+                            //                            thisMonthMap[String(formattedDate)] = (activity.movingTime ?? 0)
+                            thisMonthHIITTotalTime += Double(movingTime)
+                            thisMonthHIITActivities.append(ChartData(category: formattedDate, value: thisMonthHIITTotalTime))
+                        } else if lastMonth == activityMonth {
+                            print(formattedDate,movingTime)
+//                            lastMonthMap[String(formattedDate)] = (activity.movingTime ?? 0)
+                            lastMonthHIITTotalTime += Double(movingTime)
+                            lastMonthHIITActivities.append(ChartData(category: formattedDate, value: lastMonthHIITTotalTime))
                         }
                     }
                 }
-                
-                
-                thisMonthHIITData = thisMonthHIITActivities.map { ChartData(category: $0.category, value: 0) }
-                for (index, item) in thisMonthHIITActivities.enumerated() {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.1) {
-                        withAnimation(.easeOut(duration: 0.5)) {
-                            thisMonthHIITData[index].value = item.value
-                        }
-                    }
-                }
-                
-                lastMonthHIITData = lastMonthHIITActivities.map { ChartData(category: $0.category, value: 0) }
-                for (index, item) in lastMonthHIITActivities.enumerated() {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.1) {
-                        withAnimation(.easeOut(duration: 0.5)) {
-                            lastMonthHIITData[index].value = item.value
-                        }
-                    }
-                }
+
+                animateData()
             }
         }
     }
-    
-    // MARK: - Value interpolation
+
     func interpolatedY(atX xValue: Double, in data: [ChartData]) -> Double? {
         let indexBefore = Int(floor(xValue))
         let indexAfter = Int(ceil(xValue))
-
         guard indexBefore >= 0, indexAfter < data.count else { return nil }
-
         let y1 = data[indexBefore].value
         let y2 = data[indexAfter].value
-
         let ratio = xValue - Double(indexBefore)
         return y1 + ratio * (y2 - y1)
     }
 
-    // MARK: - Animate Data Load
     private func animateData() {
         thisMonthHIITData = thisMonthHIITActivities.map { ChartData(category: $0.category, value: 0) }
         selectedData = nil
@@ -282,16 +268,16 @@ struct StravaMonthlyActivityView: View {
                 }
             }
         }
-        
+
         lastMonthHIITData = lastMonthHIITActivities.map { ChartData(category: $0.category, value: 0) }
         selectedData = nil
         for (index, item) in lastMonthHIITActivities.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.1) {
                 withAnimation(.easeOut(duration: 0.5)) {
                     lastMonthHIITData[index].value = item.value
+                
                 }
             }
         }
     }
 }
-    
