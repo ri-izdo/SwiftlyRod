@@ -44,37 +44,39 @@ struct StravaMonthlyActivityView: View {
             }
 
             ZStack {
-                VStack(alignment: .leading) {
+                VStack {
                     HStack {
-                        Text("Total Moving Time")
-                            .font(.title.bold())
-                            .padding()
-                    }
-                    HStack(Spacing:1) {
-                        
-                        Text("\(previousMonthName) HITT \(Int(lastMonthHIITTotalTime))")
-                            .font(Font.custom("SF Pro", size: 14))
-                            .font(.title.bold())
-                            .frame(maxWidth: .infinity, alignment:.trailing)
-                            .foregroundColor(.gray)
+                        VStack {
+                            Text("Total Moving Time")
+                                .font(.title.bold())
+                                .padding()
+                            HStack{
 
-                        Text("\(monthName) HIIT \(Int(thisMonthHIITTotalTime))")
-                            .font(Font.custom("SF Pro", size: 14))
-                            .font(.title.bold())
-                            .frame(maxWidth: .infinity, alignment:.trailing)
-                            .foregroundColor(.orange)
-                    }
-                    .onAppear {
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "MMMM"
-                        monthName = formatter.string(from: today)
-                        if let previousMonthDate = calendar.date(byAdding: .month, value: -1, to: today) {
-                            let formatter = DateFormatter()
-                            formatter.dateFormat = "MMMM"
-                            previousMonthName = formatter.string(from: previousMonthDate)
+                                Text("\(previousMonthName) HITT \(Int(lastMonthHIITTotalTime))")
+                                    .font(Font.custom("SF Pro", size: 14))
+                                    .font(.title.bold())
+//                                    .frame(maxWidth: .infinity, alignment:.trailing)
+                                    .foregroundColor(.gray)
+
+                                Text("\(monthName) HIIT \(Int(thisMonthHIITTotalTime))")
+                                    .font(Font.custom("SF Pro", size: 14))
+                                    .font(.title.bold())
+//                                    .frame(maxWidth: .infinity, alignment:.trailing)
+                                    .foregroundColor(.orange)
+                            }
+                            .onAppear {
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "MMMM"
+                                monthName = formatter.string(from: today)
+                                if let previousMonthDate = calendar.date(byAdding: .month, value: -1, to: today) {
+                                    let formatter = DateFormatter()
+                                    formatter.dateFormat = "MMMM"
+                                    previousMonthName = formatter.string(from: previousMonthDate)
+                                }
+                            }
+                            Spacer()
                         }
                     }
-                    Spacer()
                 }
                 .offset(y:-60)
 

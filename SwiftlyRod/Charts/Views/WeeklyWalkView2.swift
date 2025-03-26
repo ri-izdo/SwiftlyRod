@@ -87,6 +87,11 @@ struct InteractiveLineChartView: View {
                         if let selected = selectedData {
                             // Tooltip and glowing dot
                             VStack(spacing: 4) {
+                                Text("\(Int(selected.category))")
+                                    .font(.caption)
+                                    .padding(6)
+                                    .background(Color.black.opacity(0.8))
+                                    .cornerRadius(6)
                                 Text("Steps: \(Int(selected.value))")
                                     .font(.caption)
                                     .padding(6)
