@@ -601,7 +601,7 @@ final class HealthManager: HealthManagerType {
             // Only tracking acitivties we are interested in
             var runningCount: Int = 0
             var strengthCount: Int = 0
-            var soccerCount: Int = 0
+            var yogaCount: Int = 0
             var basketballCount: Int = 0
             var stairsCount: Int = 0
             var kickboxingCount: Int = 0
@@ -612,8 +612,8 @@ final class HealthManager: HealthManagerType {
                     runningCount += duration
                 } else if workout.workoutActivityType == .traditionalStrengthTraining {
                     strengthCount += duration
-                } else if workout.workoutActivityType == .soccer {
-                    soccerCount += duration
+                } else if workout.workoutActivityType == .yoga {
+                    yogaCount += duration
                 } else if workout.workoutActivityType == .basketball {
                     basketballCount += duration
                 } else if workout.workoutActivityType == .stairClimbing {
@@ -623,7 +623,7 @@ final class HealthManager: HealthManagerType {
                 }
             }
             
-            completion(.success(self.generateActivitiesFromDurations(running: runningCount, strength: strengthCount, soccer: soccerCount, basketball: basketballCount, stairs: stairsCount, kickboxing: kickboxingCount)))
+            completion(.success(self.generateActivitiesFromDurations(running: runningCount, strength: strengthCount, yoga: yogaCount, basketball: basketballCount, stairs: stairsCount, kickboxing: kickboxingCount)))
         }
         
         healthStore.execute(query)
@@ -632,11 +632,11 @@ final class HealthManager: HealthManagerType {
     /// Generates `Activity` objects from workout durations.
     ///
     /// This helper function creates `Activity` objects for various types of workouts based on their durations.
-    private func generateActivitiesFromDurations(running: Int, strength: Int, soccer: Int, basketball: Int, stairs: Int, kickboxing: Int) -> [ActivityItems] {
+    private func generateActivitiesFromDurations(running: Int, strength: Int, yoga: Int, basketball: Int, stairs: Int, kickboxing: Int) -> [ActivityItems] {
         return [
             ActivityItems(title: "Running", subtitle: "This week", image: "figure.run", tintColor: .green, amount: "\(running) mins"),
             ActivityItems(title: "Strength Training", subtitle: "This week", image: "dumbbell", tintColor: .blue, amount: "\(strength) mins"),
-            ActivityItems(title: "Soccer", subtitle: "This week", image: "figure.soccer", tintColor: .indigo, amount: "\(soccer) mins"),
+            ActivityItems(title: "Yoga", subtitle: "This week", image: "figure.yoga", tintColor: .indigo, amount: "\(yoga) mins"),
             ActivityItems(title: "Basketball", subtitle: "This week", image: "figure.basketball", tintColor: .green, amount: "\(basketball) mins"),
             ActivityItems(title: "Stairstepper", subtitle: "This week", image: "figure.stairs", tintColor: .green, amount: "\(stairs) mins"),
             ActivityItems(title: "Kickboxing", subtitle: "This week", image: "figure.kickboxing", tintColor: .green, amount: "\(kickboxing) mins"),

@@ -16,7 +16,8 @@ struct ActivityCard: View {
             VStack {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(activity.title)
+                        let activityTitle = String(activity.title).replacingOccurrences(of: "Other", with: "High Intensity Interval Training")
+                        Text(activityTitle)
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                     }

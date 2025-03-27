@@ -66,7 +66,7 @@ struct WorkoutTabView: View {
                     
                     ScrollView {
 
-                        Text("HealthKit Activity Summary")
+                        Text("Activities Summary")
                             .font(Font.custom("SF Pro", size: 30))
                             .frame(maxWidth: .infinity, alignment: .center)
                             .foregroundColor(.white)

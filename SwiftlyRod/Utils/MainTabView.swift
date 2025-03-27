@@ -24,6 +24,8 @@ struct MainTabView: View {
                     .tag(1)
                 WorkoutTabView(token: token)
                     .tag(2)
+                StravaActivitiesView(token: token)
+                    .tag(3)
             }
             .background(Color.gray.opacity(0.3))
 //            .tabViewStyle(PageTabViewStyle())
@@ -35,6 +37,8 @@ struct MainTabView: View {
                 TabButton(selectedTab: $selectedTab, tab: 1, riveFile: "usericon", stateMachine: stateMachine, text: "You")
                 Spacer()
                 TabButton(selectedTab: $selectedTab, tab: 2, riveFile: "restart_icon", stateMachine: stateMachine, text: "Workouts")
+                Spacer()
+                TabButton(selectedTab: $selectedTab, tab: 3, riveFile: "social_icon", stateMachine: stateMachine, text: "Activities")
                 Spacer()
             }
         }
