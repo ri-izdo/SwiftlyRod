@@ -28,9 +28,9 @@ struct MainTabView: View {
             
             HStack {
                 Spacer()
-                TabButton(selectedTab: $selectedTab, tab: 1, riveFile: "home_icon", stateMachine: stateMachine, text: "Celebrations")
+                TabButton(selectedTab: $selectedTab, tab: 0, riveFile: "home_icon", stateMachine: stateMachine, text: "Celebrations")
                 Spacer()
-                TabButton(selectedTab: $selectedTab, tab: 2, riveFile: "usericon", stateMachine: stateMachine, text: "You")
+                TabButton(selectedTab: $selectedTab, tab: 1, riveFile: "usericon", stateMachine: stateMachine, text: "You")
                 Spacer()
             }
         }

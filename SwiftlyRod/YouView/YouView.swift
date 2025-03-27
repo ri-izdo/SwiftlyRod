@@ -47,7 +47,7 @@ struct YouView: View {
     @State private var showDailyingRingSection = false
     @State private var isWalkingViewSection = false
     
-    @State private var animationDuration = 0.0
+    @State private var animationDuration = 2.0
     
     @State private var sectionRadius: CGFloat = 25.0
     
@@ -77,8 +77,8 @@ struct YouView: View {
                         DailyRingView()
                             .frame(maxWidth: .infinity, minHeight: 275)
 //                            .cornerRadius(sectionRadius)
-                            .opacity(showDailyingRingSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
+                            .opacity(showAwardSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
                         
 //                        awardSection()
 //                            .frame(maxWidth: .infinity, minHeight: 200)
@@ -89,8 +89,8 @@ struct YouView: View {
                         HIITActivitiesView()
                             .frame(maxWidth: .infinity, minHeight: 275)
 //                            .cornerRadius(sectionRadius)
-                            .opacity(showDailyingRingSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
+                            .opacity(showGoalsSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showGoalsSection)
                         
 //                        WeeklyWalkView()
 //                            .frame(maxWidth: .infinity, minHeight: 250)
@@ -98,11 +98,18 @@ struct YouView: View {
                         
                         StravaMonthlyActivityView(token: token)
                             .frame(maxWidth: .infinity, minHeight: 300)
+                            .opacity(showWalkSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
 //                            .cornerRadius(sectionRadius)
 
                         InteractiveLineChartView()
-                            .frame(maxWidth: .infinity, minHeight: 500)
+                            .frame(maxWidth: .infinity, minHeight: 250)
+                            .opacity(showDailyingRingSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
 //                            .cornerRadius(sectionRadius)
+                        
+                        RestDayTrendView(token: token)
+                            .frame(maxWidth: .infinity, minHeight: 250)
                         
 //                        MonthWorkoutsGraph()
 //                            .frame(maxWidth: .infinity, minHeight: 250)
@@ -250,17 +257,16 @@ struct YouView: View {
     func resetAndAnimateSections() {
         resetAnimations()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            animationDuration = 1.0
+            animationDuration = 2.0
             showAwardSection = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 showGoalsSection = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     showWalkSection = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                         showDailyingRingSection = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                             showTitle = true
-                            isWalkingViewSection = true
                         }
                     }
                 }

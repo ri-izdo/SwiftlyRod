@@ -46,40 +46,40 @@ struct StravaMonthlyActivityView: View {
             ZStack {
                 VStack {
                     HStack {
-                        VStack {
-                            Text("Total Moving Time")
-                                .font(.title.bold())
-                                .padding()
-                            HStack{
-
-                                Text("\(previousMonthName) HITT \(Int(lastMonthHIITTotalTime))")
-                                    .font(Font.custom("SF Pro", size: 14))
-                                    .font(.title.bold())
-//                                    .frame(maxWidth: .infinity, alignment:.trailing)
-                                    .foregroundColor(.gray)
-
-                                Text("\(monthName) HIIT \(Int(thisMonthHIITTotalTime))")
-                                    .font(Font.custom("SF Pro", size: 14))
-                                    .font(.title.bold())
-//                                    .frame(maxWidth: .infinity, alignment:.trailing)
-                                    .foregroundColor(.orange)
-                            }
-                            .onAppear {
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = "MMMM"
-                                monthName = formatter.string(from: today)
-                                if let previousMonthDate = calendar.date(byAdding: .month, value: -1, to: today) {
-                                    let formatter = DateFormatter()
-                                    formatter.dateFormat = "MMMM"
-                                    previousMonthName = formatter.string(from: previousMonthDate)
-                                }
-                            }
-                            Spacer()
-                        }
+                        Spacer()
+                        Text("Total Moving Time")
+                            .font(.title.bold())
+                            .padding()
+                        Spacer()
+                    }
+                    HStack {
+                        Text("\(previousMonthName) HITT \(Int(lastMonthHIITTotalTime))")
+                            .font(Font.custom("SF Pro", size: 14))
+                            .font(.title.bold())
+                        //                                    .frame(maxWidth: .infinity, alignment:.trailing)
+                            .foregroundColor(.gray)
+                        
+                        Text("\(monthName) HIIT \(Int(thisMonthHIITTotalTime))")
+                            .font(Font.custom("SF Pro", size: 14))
+                            .font(.title.bold())
+                        //                                    .frame(maxWidth: .infinity, alignment:.trailing)
+                            .foregroundColor(.orange)
                     }
                 }
-                .offset(y:-60)
-
+                .onAppear {
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "MMMM"
+                    monthName = formatter.string(from: today)
+                    if let previousMonthDate = calendar.date(byAdding: .month, value: -1, to: today) {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "MMMM"
+                        previousMonthName = formatter.string(from: previousMonthDate)
+                    }
+                }
+                    Spacer()
+            }
+            
+            ZStack {
                 VStack {
                     if stravaViewModel.isLoading {
                         LoadingAnimationView()
@@ -195,9 +195,19 @@ struct StravaMonthlyActivityView: View {
                             }
                             .frame(height: 150)
                         }
-
-                        Button("Replay Animation") {
-                            animateData()
+                        
+                        
+                        HStack(spacing: 10) {
+                            Button(action: {
+                                animateData()
+                            }) {
+                                Image(systemName: "arrow.clockwise")
+                                    .font(.title) // Makes it bigger
+                                    .foregroundColor(.orange.opacity(0.3))
+                            }
+                            .padding(.top)
+                            .offset(x:10,y:-10)
+                            Spacer()
                         }
                     }
                 }
@@ -228,17 +238,14 @@ struct StravaMonthlyActivityView: View {
                     
                     let movingTime = activity.movingTime ?? 0.0
                     
-
-            
                     if lastFour == "HIIT" {
                         if thisMonth == activityMonth {
-                            //                            print("\(activity.movingTime ?? 0.0)")
-                            //                            thisMonthMap[String(formattedDate)] = (activity.movingTime ?? 0)
+
                             thisMonthHIITTotalTime += Double(movingTime)
                             thisMonthHIITActivities.append(ChartData(category: formattedDate, value: thisMonthHIITTotalTime))
                         } else if lastMonth == activityMonth {
                             print(formattedDate,movingTime)
-//                            lastMonthMap[String(formattedDate)] = (activity.movingTime ?? 0)
+
                             lastMonthHIITTotalTime += Double(movingTime)
                             lastMonthHIITActivities.append(ChartData(category: formattedDate, value: lastMonthHIITTotalTime))
                         }

@@ -23,70 +23,77 @@ struct InteractiveLineChartView: View {
 
     var body: some View {
         GeometryReader { geometry in
+            ZStack {
+                VStack {
+                    HStack {
+                        Spacer()
+                        Text("Weekly Step Summary")
+                            .font(.title.bold())
+                            .padding()
+                        Spacer()
+                    }
+                    Spacer()
+                }
+            }
             VStack {
-                Text("Weekly Step Summary")
-                    .font(.title.bold())
-                    .padding()
-                
                 ZStack {
                     HStack {
-                    Chart {
-                        ForEach(data) { item in
-                            LineMark(
-                                x: .value("Day", item.category),
-                                y: .value("Value", item.value)
-                            )
-                            .interpolationMethod(.catmullRom)
-                            .foregroundStyle(.orange)
-                            
-                            AreaMark(
-                                x: .value("Day", item.category),
-                                y: .value("Value", item.value)
-                            )
-                            .interpolationMethod(.catmullRom)
-                            .foregroundStyle(
-                                .linearGradient(
-                                    Gradient(stops: [
-                                        .init(color: Color(hex: "FF5D00").opacity(0.6), location: 0),
-                                        .init(color: Color(hex: "FF5D00").opacity(0.0), location: 1)
-                                    ]),
-                                    startPoint: .top,
-                                    endPoint: .bottom
+                        Chart {
+                            ForEach(data) { item in
+                                LineMark(
+                                    x: .value("Day", item.category),
+                                    y: .value("Value", item.value)
                                 )
-                            )
+                                .interpolationMethod(.catmullRom)
+                                .foregroundStyle(.orange)
+                                
+                                AreaMark(
+                                    x: .value("Day", item.category),
+                                    y: .value("Value", item.value)
+                                )
+                                .interpolationMethod(.catmullRom)
+                                .foregroundStyle(
+                                    .linearGradient(
+                                        Gradient(stops: [
+                                            .init(color: Color(hex: "FF5D00").opacity(0.6), location: 0),
+                                            .init(color: Color(hex: "FF5D00").opacity(0.0), location: 1)
+                                        ]),
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    )
+                                )
+                            }
                         }
-                    }
-                    .frame(width: geometry.size.width, height: 150)
-                    .chartXAxis(.hidden)
-                    .chartYAxis(.hidden)
-                    .chartOverlay { proxy in
-                        GeometryReader { geo in
-                            Rectangle()
-                                .fill(Color.clear)
-                                .contentShape(Rectangle())
-                                .gesture(
-                                    DragGesture(minimumDistance: 0)
-                                        .onChanged { value in
-                                            let location = value.location
-                                            
-                                            if let xCategory: String = proxy.value(atX: location.x) {
-                                                let allCategories = sampleData.map { $0.category }
-                                                guard let xIndex = allCategories.firstIndex(of: xCategory) else { return }
+                        .chartXAxis(.hidden)
+                        .chartYAxis(.hidden)
+                        .chartOverlay { proxy in
+                            GeometryReader { geo in
+                                Rectangle()
+                                    .fill(Color.clear)
+                                    .contentShape(Rectangle())
+                                    .gesture(
+                                        DragGesture(minimumDistance: 0)
+                                            .onChanged { value in
+                                                let location = value.location
                                                 
-                                                let xPos = Double(xIndex)
-                                                if let yVal = interpolatedY(atX: xPos, in: sampleData),
-                                                   let posX = proxy.position(forX: xCategory),
-                                                   let posY = proxy.position(forY: yVal) {
+                                                if let xCategory: String = proxy.value(atX: location.x) {
+                                                    let allCategories = sampleData.map { $0.category }
+                                                    guard let xIndex = allCategories.firstIndex(of: xCategory) else { return }
                                                     
-                                                    withAnimation(.easeInOut(duration: 0.15)) {
-                                                        self.selectedData = ChartData(category: xCategory, value: yVal)
-                                                        self.dragLocation = CGPoint(x: posX, y: posY - 13)
+                                                    let xPos = Double(xIndex)
+                                                    if let yVal = interpolatedY(atX: xPos, in: sampleData),
+                                                       let posX = proxy.position(forX: xCategory),
+                                                       let posY = proxy.position(forY: yVal) {
+                                                        
+                                                        withAnimation(.easeInOut(duration: 0.15)) {
+                                                            self.selectedData = ChartData(category: xCategory, value: yVal)
+                                                            self.dragLocation = CGPoint(x: posX, y: posY - 13)
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
-                                )
-                        }
+                                    )
+                            }
                             
                             if let selected = selectedData {
                                 // Tooltip and glowing dot
@@ -119,12 +126,23 @@ struct InteractiveLineChartView: View {
                     }
                 }
                 .padding()
+                .frame(width: geometry.size.width*1.25, height: 150)
+                .offset(x:-50,y:50)
                 
-                Button("Replay Animation") {
-                    animateData()
+                HStack(spacing: 10) {
+                    Button(action: {
+                        animateData()
+                    }) {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.title) // Makes it bigger
+                            .foregroundColor(.orange.opacity(0.3))
+                    }
+                    .padding(.top)
+                    .offset(x:10,y:10)
+                    Spacer()
                 }
-                .padding(.top)
             }
+                
             
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.gray.opacity(0.1))

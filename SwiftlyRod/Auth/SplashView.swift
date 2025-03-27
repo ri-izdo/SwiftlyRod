@@ -93,7 +93,7 @@ struct SplashView: View {
                                             loginButton.setInput("active", value: true)
                                             isContinue = true
                                             loginText = ""
-                                            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                            DispatchQueue.main.asyncAfter(deadline: .now()+2) {
                                                 login()
                                             }
                                         }

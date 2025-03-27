@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F50507182D94DAB6005B7344 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = F50507172D94DAB6005B7344 /* ConfettiSwiftUI */; };
 		F594944D2D9452360009808E /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = F594944C2D9452360009808E /* SwiftUIX */; };
 		F5AEB41A2D8D35A000B63D29 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F5AEB4192D8D35A000B63D29 /* RiveRuntime */; };
 		F5AEB41D2D8D35AD00B63D29 /* SplineRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F5AEB41C2D8D35AD00B63D29 /* SplineRuntime */; };
@@ -64,6 +65,7 @@
 				F5AEB41D2D8D35AD00B63D29 /* SplineRuntime in Frameworks */,
 				F5AEB41A2D8D35A000B63D29 /* RiveRuntime in Frameworks */,
 				F5AEB4262D8D363100B63D29 /* StravaSwift in Frameworks */,
+				F50507182D94DAB6005B7344 /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +128,7 @@
 				F5AEB4222D8D361600B63D29 /* StravaSwift */,
 				F5AEB4252D8D363100B63D29 /* StravaSwift */,
 				F594944C2D9452360009808E /* SwiftUIX */,
+				F50507172D94DAB6005B7344 /* ConfettiSwiftUI */,
 			);
 			productName = SwiftlyRod;
 			productReference = F52851E22D7A3B5700F13741 /* SwiftlyRod.app */;
@@ -161,6 +164,7 @@
 				F5AEB4242D8D363000B63D29 /* XCRemoteSwiftPackageReference "StravaSwift" */,
 				F54905232D8E1E4900958F2B /* XCRemoteSwiftPackageReference "purchases-ios" */,
 				F594944B2D9452360009808E /* XCLocalSwiftPackageReference "../../iOS Packages/SwiftUIX" */,
+				F50507162D94DAB6005B7344 /* XCLocalSwiftPackageReference "../../iOS Packages/ConfettiSwiftUI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F52851E32D7A3B5700F13741 /* Products */;
@@ -414,6 +418,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		F50507162D94DAB6005B7344 /* XCLocalSwiftPackageReference "../../iOS Packages/ConfettiSwiftUI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../iOS Packages/ConfettiSwiftUI";
+		};
 		F594944B2D9452360009808E /* XCLocalSwiftPackageReference "../../iOS Packages/SwiftUIX" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../iOS Packages/SwiftUIX";
@@ -456,6 +464,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F50507172D94DAB6005B7344 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ConfettiSwiftUI;
+		};
 		F522B6AF2D825F2C002DD07A /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RiveRuntime;
