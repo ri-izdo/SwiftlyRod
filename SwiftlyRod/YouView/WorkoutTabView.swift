@@ -1,17 +1,17 @@
 //
-//  YouView.swift
+//  WorkoutTabView.swift
 //  SwiftlyRod
 //
-//  Created by Roderick Lizardo on 3/7/25.
+//  Created by Roderick Lizardo on 3/27/25.
 //
-//
+
 
 import SwiftUI
 import StravaSwift
 import SplineRuntime
 import CoreLocation
 
-struct YouView: View {
+struct WorkoutTabView: View {
     var token: OAuthToken?
     @StateObject var hkHomeViewModel = HomeViewModel()
     @State private var isMedal1 = false
@@ -66,7 +66,7 @@ struct YouView: View {
                     
                     ScrollView {
 
-                        Text("My HQ")
+                        Text("HealthKit Activity Summary")
                             .font(Font.custom("SF Pro", size: 30))
                             .frame(maxWidth: .infinity, alignment: .center)
                             .foregroundColor(.white)
@@ -75,39 +75,39 @@ struct YouView: View {
                             .animation(.easeIn(duration: animationDuration), value: showTitle)
                         
                             
-                        DailyRingView()
-                            .frame(maxWidth: .infinity, minHeight: 275)
+//                        DailyRingView()
+//                            .frame(maxWidth: .infinity, minHeight: 275)
 //                            .cornerRadius(sectionRadius)
-                            .opacity(showAwardSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
-                        
-        
-                        HIITActivitiesView()
-                            .frame(maxWidth: .infinity, minHeight: 275)
-//                            .cornerRadius(sectionRadius)
-                            .opacity(showGoalsSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showGoalsSection)
-                        
-//                        WeeklyWalkView()
+//                            .opacity(showAwardSection ? 1 : 0)
+//                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
+//                        
+//        
+//                        HIITActivitiesView()
+//                            .frame(maxWidth: .infinity, minHeight: 275)
+////                            .cornerRadius(sectionRadius)
+//                            .opacity(showGoalsSection ? 1 : 0)
+//                            .animation(.easeIn(duration: animationDuration), value: showGoalsSection)
+//                        
+////                        WeeklyWalkView()
+////                            .frame(maxWidth: .infinity, minHeight: 250)
+////                            .cornerRadius(sectionRadius)
+//                        
+//                        StravaMonthlyActivityView(token: token)
+//                            .frame(maxWidth: .infinity, minHeight: 300)
+//                            .opacity(showWalkSection ? 1 : 0)
+//                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
+////                            .cornerRadius(sectionRadius)
+//
+//                        InteractiveLineChartView()
 //                            .frame(maxWidth: .infinity, minHeight: 250)
-//                            .cornerRadius(sectionRadius)
-                        
-                        StravaMonthlyActivityView(token: token)
-                            .frame(maxWidth: .infinity, minHeight: 300)
-                            .opacity(showWalkSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
-//                            .cornerRadius(sectionRadius)
-
-                        InteractiveLineChartView()
-                            .frame(maxWidth: .infinity, minHeight: 250)
-                            .opacity(showDailyingRingSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
-//                            .cornerRadius(sectionRadius)
-                        
-                        RestDayTrendView(token: token)
-                            .frame(maxWidth: .infinity, minHeight: 300)
-                            .opacity(isRestDayTrendSection ? 1 : 0)
-                            .animation(.easeIn(duration: animationDuration), value: isRestDayTrendSection)
+//                            .opacity(showDailyingRingSection ? 1 : 0)
+//                            .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
+////                            .cornerRadius(sectionRadius)
+//                        
+//                        RestDayTrendView(token: token)
+//                            .frame(maxWidth: .infinity, minHeight: 300)
+//                            .opacity(isRestDayTrendSection ? 1 : 0)
+//                            .animation(.easeIn(duration: animationDuration), value: isRestDayTrendSection)
 
                         
                         
@@ -124,23 +124,23 @@ struct YouView: View {
 //                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
                         
                         
-//                        awardSection()
-//                            .frame(maxWidth: .infinity, minHeight: 200)
-//                            .cornerRadius(sectionRadius)
-//                            .opacity(showAwardSection ? 1 : 0)
-//                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
-//                        
-//                        HealthKitWorkoutView()
-//                            .frame(maxWidth: .infinity, minHeight: 250)
-//                            .opacity(isRestDayTrendSection ? 1 : 0)
-//                            .animation(.easeIn(duration: animationDuration), value: isRestDayTrendSection)
-//                        
-//                        MonthWorkoutsView()
-//                            .frame(maxWidth: .infinity, minHeight: 250)
-//                            .cornerRadius(sectionRadius)
-//                            .opacity(showWalkSection ? 1 : 0)
-//                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
-//                        
+                        awardSection()
+                            .frame(maxWidth: .infinity, minHeight: 200)
+                            .cornerRadius(sectionRadius)
+                            .opacity(showAwardSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
+                        
+                        HealthKitWorkoutView()
+                            .frame(maxWidth: .infinity, minHeight: 250)
+                            .opacity(showGoalsSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showGoalsSection)
+                        
+                        MonthWorkoutsView()
+                            .frame(maxWidth: .infinity, minHeight: 250)
+                            .cornerRadius(sectionRadius)
+                            .opacity(showWalkSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
+                        
                                             
                     }
                     .blur(radius: showSpline ? 10 : 0)
@@ -303,214 +303,3 @@ struct YouView: View {
         }
     }
 }
-
-
-// MARK: - Medal Button Component
-struct MedalButton: View {
-    let imageName: String
-    let text: String
-    let imageSize: CGFloat
-    var action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            VStack {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: imageSize, height: imageSize)
-                Text(text)
-                    .foregroundColor(.white)
-                    .font(.system(size: 14))
-                    .offset(y: -5)
-            }
-        }
-        .buttonStyle(PlainButtonStyle())
-    }
-}
-
-struct SplineOverlayView: View {
-    let url: String
-    let onClose: () -> Void
-    var startPosition: CGPoint
-    var endPosition: CGPoint
-    var width: CGFloat
-    var height: CGFloat
-    var scale: CGFloat
-    var opacity: Double
-    var medalName: String
-    var caption: String
-    @State private var showText: Bool = false
-    @State private var animationDuration = 0.0
-
-    var body: some View {
-        ZStack {
-            Color.black.opacity(0.5)
-                .edgesIgnoringSafeArea(.all)
-                .onTapGesture {
-                    DispatchQueue.main.asyncAfter(deadline: .now()) {
-                        animationDuration = 1.0
-                        showText = false
-                    }
-                    onClose()
-                }
-            
-            VStack {
-                let sceneURL = URL(string: url)!
-                
-                SplineView(sceneFileURL: sceneURL)
-                    .cornerRadius(20)
-                    .scaleEffect(0.95)
-                    .opacity(opacity)
-                    .offset(y: height * 0.05) // Move slightly down for centering
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            animationDuration = 1.5
-                            showText = true
-                        }
-                        
-                    }
-                    .onDisappear {
-                        DispatchQueue.main.asyncAfter(deadline: .now()) {
-                            animationDuration = 1.0
-                            showText = false
-                        }
-                    }
-                
-                VStack {
-                    Text(medalName)
-                        .foregroundColor(.white)
-                        .font(.system(size: 18))
-                        .padding(.top, 10)
-                    
-                    Text(caption)
-                        .foregroundColor(.gray.opacity(0.7))
-                        .font(.system(size: 14))
-                }
-                .transition(.opacity)
-                .offset(y:-200)
-                .opacity(showText ? 1 : 0)
-                .animation(.easeIn(duration: animationDuration), value: showText)
-                //            .frame(maxWidth: .infinity, maxHeight: height * 0.9)
-            }
-            .transition(.opacity)
-            //        .frame(maxWidth: .infinity, maxHeight: height)
-        }
-    }
-}
-
-// MARK: - PreferenceKeys for Medal Positions
-struct Medal1PositionKey: PreferenceKey {
-    static var defaultValue: CGRect = .zero
-    static func reduce(value: inout CGRect, nextValue: () -> CGRect) { value = nextValue() }
-}
-
-struct Medal2PositionKey: PreferenceKey {
-    static var defaultValue: CGRect = .zero
-    static func reduce(value: inout CGRect, nextValue: () -> CGRect) { value = nextValue() }
-}
-
-struct Medal3PositionKey: PreferenceKey {
-    static var defaultValue: CGRect = .zero
-    static func reduce(value: inout CGRect, nextValue: () -> CGRect) { value = nextValue() }
-}
-
-struct StepDistanceView: View {
-    var body: some View {
-        ZStack(alignment: .topLeading) {
-            Color(.gray.opacity(0.15))
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Step Distance")
-                    .font(Font.custom("SF Pro", size: 15))
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 15)
-                Divider()
-                    .frame(height: 0.4)
-                    .background(Color.gray)
-//                    .offset(y: -15)
-            }
-            .offset(y:10)
-        }
-    }
-}
-
-
-struct WeatherResponse: Decodable {
-    struct Main: Decodable {
-        let temp: Double
-    }
-    struct Weather: Decodable {
-        let description: String
-    }
-    let name: String
-    let main: Main
-    let weather: [Weather]
-}
-
-class WeatherViewModel: ObservableObject {
-    @Published var temperature: String = "--"
-    @Published var description: String = "--"
-    @Published var cityName: String = "--"
-
-    let apiKey = "267001f0391eeb52d18f536fce6ed811"
-
-    func fetchWeather(for city: String) {
-        let query = city.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? city
-        guard let url = URL(string:
-            "https://api.openweathermap.org/data/2.5/weather?q=\(query)&appid=\(apiKey)&units=metric"
-        ) else { return }
-
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data else { return }
-
-            if let decoded = try? JSONDecoder().decode(WeatherResponse.self, from: data) {
-                DispatchQueue.main.async {
-                    self.temperature = String(format: "%.1f ℃", decoded.main.temp)
-                    self.description = decoded.weather.first?.description.capitalized ?? "--"
-                    self.cityName = decoded.name
-                }
-            }
-        }.resume()
-    }
-}
-
-struct WeatherContentView: View {
-    @StateObject var viewModel = WeatherViewModel()
-    @State private var city = "San Jose"
-
-    var body: some View {
-        VStack {
-//            TextField("Enter city", text: $city, onCommit: {
-//                viewModel.fetchWeather(for: city)
-//            })
-//            .textFieldStyle(RoundedBorderTextFieldStyle())
-//            .padding()
-
-            Text(viewModel.cityName)
-                .font(.system(size: 18))
-                .font(.largeTitle)
-                .bold()
-
-            Text(viewModel.temperature)
-                .font(.system(size: 14))
-                .bold()
-
-            Text(viewModel.description)
-                .font(.system(size: 12))
-                .font(.title2)
-                .foregroundColor(.gray)
-
-            Spacer()
-        }
-//        .scaleEffect(0.5)
-        
-        .padding()
-        .onAppear {
-            viewModel.fetchWeather(for: city)
-        }
-    }
-}
-
-//#Preview {
-//    YouView()
-//}

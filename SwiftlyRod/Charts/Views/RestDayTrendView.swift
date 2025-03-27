@@ -100,36 +100,44 @@ struct RestDayTrendView: View {
                             .scaleEffect(0.75)
                             .padding()
                     }
-                    Text("Total Training: \(totalTrainingDays) | Total Rest days: \(totalRestDays)")
-                        .font(Font.custom("SF Pro", size: 14))
-                        .foregroundColor(.white)
-                        .offset(y:-40)
                 }
-                
-                VStack {
-                    HStack {
-                        Text("Rest Day")
+                HStack {
+                    Spacer()
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Text("Rest Day")
+                                .font(Font.custom("SF Pro", size: 14))
+                                .font(.title.bold())
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .foregroundColor(.white)
+                            Rectangle()
+                                .frame(width: 20, height: 10)
+                                .foregroundColor(.gray)
+                            
+                        }
+                        .offset(x:-25,y:-5)
+                        
+                        
+                        HStack {
+                            Text("Active Day")
+                                .font(Font.custom("SF Pro", size: 14))
+                                .font(.title.bold())
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .foregroundColor(.white)
+                            Rectangle()
+                                .frame(width: 20, height: 10)
+                                .foregroundColor(Color(hex: "FF5722"))
+                            
+                        }
+                        .offset(x:-25,y:-5)
+                        
+                        Text("Total Training: \(totalTrainingDays) | Total Rest days: \(totalRestDays)")
                             .font(Font.custom("SF Pro", size: 14))
-                            .font(.title.bold())
                             .foregroundColor(.white)
-                        Rectangle()
-                            .frame(width: 20, height: 10)
-                            .foregroundColor(.gray)
                         
                     }
-                    .offset(x:65 ,y:65)
-                    
-                    HStack {
-                        Text("Active Day")
-                            .font(Font.custom("SF Pro", size: 14))
-                            .font(.title.bold())
-                            .foregroundColor(.white)
-                        Rectangle()
-                            .frame(width: 20, height: 10)
-                            .foregroundColor(Color(hex: "FF5722"))
-                        
-                    }
-                    .offset(x:70 ,y:70)
+                    .padding()
                 }
             }
             .onAppear {

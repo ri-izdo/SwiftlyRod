@@ -22,6 +22,8 @@ struct MainTabView: View {
                     .tag(0)
                 YouView(token: token)
                     .tag(1)
+                WorkoutTabView(token: token)
+                    .tag(2)
             }
             .background(Color.gray.opacity(0.3))
 //            .tabViewStyle(PageTabViewStyle())
@@ -31,6 +33,8 @@ struct MainTabView: View {
                 TabButton(selectedTab: $selectedTab, tab: 0, riveFile: "home_icon", stateMachine: stateMachine, text: "Celebrations")
                 Spacer()
                 TabButton(selectedTab: $selectedTab, tab: 1, riveFile: "usericon", stateMachine: stateMachine, text: "You")
+                Spacer()
+                TabButton(selectedTab: $selectedTab, tab: 2, riveFile: "restart_icon", stateMachine: stateMachine, text: "Workouts")
                 Spacer()
             }
         }

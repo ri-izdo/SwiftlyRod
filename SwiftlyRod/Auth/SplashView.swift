@@ -79,7 +79,7 @@ struct SplashView: View {
                                 ZStack {
                                     loginButton.view()
                                         .opacity(loginButtonOpacity)
-                                        .scaleEffect(1.2)
+                                        .scaleEffect(1.5)
                                         .onAppear {
                                             loginButton.setInput("active", value: false)
                                             
@@ -114,7 +114,7 @@ struct SplashView: View {
                                         }
                                     }
                                 }
-                                .offset(y:350)
+                                .offset(y:250)
                                 .onChange(of: isContinue) {
                                     loginText = "CONTINUE"
                                     loginButton.setInput("active", value: false)
