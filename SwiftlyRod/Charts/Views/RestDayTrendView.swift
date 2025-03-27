@@ -106,17 +106,31 @@ struct RestDayTrendView: View {
                         .offset(y:-40)
                 }
                 
-                HStack {
-                    Text("ActiveDay")
-                        .font(Font.custom("SF Pro", size: 14))
-                        .font(.title.bold())
-                        .foregroundColor(.white)
-                    Rectangle()
-                        .frame(width: 20, height: 10)
-                        .foregroundColor(Color(hex: "FF5722"))
-
+                VStack {
+                    HStack {
+                        Text("Rest Day")
+                            .font(Font.custom("SF Pro", size: 14))
+                            .font(.title.bold())
+                            .foregroundColor(.white)
+                        Rectangle()
+                            .frame(width: 20, height: 10)
+                            .foregroundColor(.gray)
+                        
+                    }
+                    .offset(x:65 ,y:65)
+                    
+                    HStack {
+                        Text("Active Day")
+                            .font(Font.custom("SF Pro", size: 14))
+                            .font(.title.bold())
+                            .foregroundColor(.white)
+                        Rectangle()
+                            .frame(width: 20, height: 10)
+                            .foregroundColor(Color(hex: "FF5722"))
+                        
+                    }
+                    .offset(x:70 ,y:70)
                 }
-                .offset(x:65 ,y:65)
             }
             .onAppear {
                 stravaViewModel.fetchActivities()
