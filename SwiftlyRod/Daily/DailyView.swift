@@ -139,8 +139,8 @@ struct DailyRingView: View {
                 for activity in homeViewModel.homeViewActivity {
                     if activity.title == "Today Steps" {
                         let subtitle = activity.subtitle
-                        stepGoal = Int(subtitle.replacingOccurrences(of: "Goal: ", with: ""))!
-                        stepCount = Int(activity.amount.replacingOccurrences(of: ",", with: ""))!
+                        stepGoal = Int(subtitle.replacingOccurrences(of: "Goal: ", with: "")) ?? 0
+                        stepCount = Int(activity.amount.replacingOccurrences(of: ",", with: "")) ?? 0
 //                        print("steps","\(stepCount)","\(stepGoal)", type(of: stepCount), type(of: stepGoal))
                     }
                 }
