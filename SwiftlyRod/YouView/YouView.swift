@@ -46,6 +46,7 @@ struct YouView: View {
     @State private var showGoalsSection = false
     @State private var showDailyingRingSection = false
     @State private var isWalkingViewSection = false
+    @State private var isRestDayTrendSection = false
     
     @State private var animationDuration = 2.0
     
@@ -109,7 +110,9 @@ struct YouView: View {
 //                            .cornerRadius(sectionRadius)
                         
                         RestDayTrendView(token: token)
-                            .frame(maxWidth: .infinity, minHeight: 250)
+                            .frame(maxWidth: .infinity, minHeight: 300)
+                            .opacity(isRestDayTrendSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: isRestDayTrendSection)
                         
 //                        MonthWorkoutsGraph()
 //                            .frame(maxWidth: .infinity, minHeight: 250)
@@ -267,6 +270,7 @@ struct YouView: View {
                         showDailyingRingSection = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                             showTitle = true
+                            isRestDayTrendSection = true
                         }
                     }
                 }
@@ -286,6 +290,7 @@ struct YouView: View {
             showTitle = false
             showDailyingRingSection = false
             isWalkingViewSection = false
+            isRestDayTrendSection = false
 
 
         }
