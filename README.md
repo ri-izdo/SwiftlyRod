@@ -2,7 +2,7 @@
 
 This prototype was developed as part of my interview process for the **Staff Design Technologist** role at Strava. It demonstrates how I approach systems thinking, motion design, and interactive prototyping across platforms.
 
-## 🛠 Features
+## Features
 
 ### SwiftUI Experience (iOS/macOS)
 - **Live step data visualization** using Charts and animated dot tracking
