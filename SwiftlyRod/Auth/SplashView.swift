@@ -79,7 +79,7 @@ struct SplashView: View {
                                 ZStack {
                                     loginButton.view()
                                         .opacity(loginButtonOpacity)
-                                        .scaleEffect(1.5)
+                                        .scaleEffect(1.25)
                                         .onAppear {
                                             loginButton.setInput("active", value: false)
                                             
@@ -90,6 +90,7 @@ struct SplashView: View {
                                     
                                     if !buttonActive || token == nil {
                                         Button(loginText) {
+                                            
                                             loginButton.setInput("active", value: true)
                                             isContinue = true
                                             loginText = ""
@@ -97,11 +98,12 @@ struct SplashView: View {
                                                 login()
                                             }
                                         }
+                                        .font(.title.bold())
                                         .opacity(loginButtonOpacity)
                                         .foregroundColor(.white)
                                         .onAppear {
                                             if !isContinue {
-                                                withAnimation(.easeIn(duration: 1.0)) {
+                                                withAnimation(.easeIn(duration: 10.0)) {
                                                     loginText = "CONTINUE"
                                                     loginButtonOpacity = 1.0
                                                 }

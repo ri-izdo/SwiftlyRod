@@ -41,7 +41,7 @@ struct WeeklyWalkView: View {
 //                        .scaleEffect(0.6)
                     VStack {
                         riveWeeklyChart.view()
-                            .scaleEffect(1.5)
+                            .scaleEffect(0.5)
                         
                     }
                 }

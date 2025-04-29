@@ -88,9 +88,7 @@ struct YouView: View {
                             .opacity(showGoalsSection ? 1 : 0)
                             .animation(.easeIn(duration: animationDuration), value: showGoalsSection)
                         
-//                        WeeklyWalkView()
-//                            .frame(maxWidth: .infinity, minHeight: 250)
-//                            .cornerRadius(sectionRadius)
+
                         
                         StravaMonthlyActivityView(token: token)
                             .frame(maxWidth: .infinity, minHeight: 300)
@@ -104,6 +102,12 @@ struct YouView: View {
                             .animation(.easeIn(duration: animationDuration), value: showDailyingRingSection)
 //                            .cornerRadius(sectionRadius)
                         
+                        WeeklyWalkView()
+                            .frame(maxWidth: .infinity, minHeight: 500)
+                            .opacity(isRestDayTrendSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: isRestDayTrendSection)
+
+                        
                         RestDayTrendView(token: token)
                             .frame(maxWidth: .infinity, minHeight: 300)
                             .opacity(isRestDayTrendSection ? 1 : 0)
@@ -111,35 +115,35 @@ struct YouView: View {
 
                         
                         
-//                        MonthWorkoutsGraph()
-//                            .frame(maxWidth: .infinity, minHeight: 250)
-//                            .cornerRadius(sectionRadius)
-//                            .opacity(showWalkSection ? 1 : 0)
-//                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
+                        MonthWorkoutsGraph()
+                            .frame(maxWidth: .infinity, minHeight: 250)
+                            .cornerRadius(sectionRadius)
+                            .opacity(showWalkSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
                         
-//                        WalkStatsView()
-//                            .frame(maxWidth: .infinity, minHeight: 600)
-//                            .cornerRadius(sectionRadius)
-//                            .opacity(showWalkSection ? 1 : 0)
-//                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
+                        WalkStatsView()
+                            .frame(maxWidth: .infinity, minHeight: 600)
+                            .cornerRadius(sectionRadius)
+                            .opacity(showWalkSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
                         
                         
-//                        awardSection()
-//                            .frame(maxWidth: .infinity, minHeight: 200)
-//                            .cornerRadius(sectionRadius)
-//                            .opacity(showAwardSection ? 1 : 0)
-//                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
-//                        
-//                        HealthKitWorkoutView()
-//                            .frame(maxWidth: .infinity, minHeight: 250)
-//                            .opacity(isRestDayTrendSection ? 1 : 0)
-//                            .animation(.easeIn(duration: animationDuration), value: isRestDayTrendSection)
-//                        
-//                        MonthWorkoutsView()
-//                            .frame(maxWidth: .infinity, minHeight: 250)
-//                            .cornerRadius(sectionRadius)
-//                            .opacity(showWalkSection ? 1 : 0)
-//                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
+                        awardSection()
+                            .frame(maxWidth: .infinity, minHeight: 200)
+                            .cornerRadius(sectionRadius)
+                            .opacity(showAwardSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showAwardSection)
+                        
+                        HealthKitWorkoutView()
+                            .frame(maxWidth: .infinity, minHeight: 250)
+                            .opacity(isRestDayTrendSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: isRestDayTrendSection)
+                        
+                        MonthWorkoutsView()
+                            .frame(maxWidth: .infinity, minHeight: 250)
+                            .cornerRadius(sectionRadius)
+                            .opacity(showWalkSection ? 1 : 0)
+                            .animation(.easeIn(duration: animationDuration), value: showWalkSection)
 //                        
                                             
                     }
