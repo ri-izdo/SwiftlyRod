@@ -32,7 +32,7 @@ all with a nod to the kind of thoughtful engagement Strava already excels at. He
 
 ## Intent
 
-This prototype isn't meant to replicate production work — it’s a **conceptual demonstration** of how I approach complex problems with clarity, motion, and empathy. It's also a gesture of respect toward Strava’s mission of celebrating activity and connection through thoughtful, data-informed design.
+This prototype isn't meant to replicate production work — it’s a conceptual demonstration of how I approach complex problems with clarity, motion, and empathy. It's also a gesture of respect toward Strava’s mission of celebrating activity and connection through thoughtful, data-informed design.
 
 ## Files
 
