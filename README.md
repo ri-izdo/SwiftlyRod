@@ -5,7 +5,10 @@ delight and movement into the experience. While the project was purely explorato
 a great way to combine my interests in fitness, storytelling, and systems-driven design — 
 all with a nod to the kind of thoughtful engagement Strava already excels at.
 
-![Alt Text]([https://github.com/ri-izdo/Blender-Automation/blob/main/sources/test%20Sketch.jpg](https://github.com/ri-izdo/SwiftlyRod/blob/main/SwiftlyRod/Content/example.png?raw=true))
+![Alt Text](https://github.com/ri-izdo/SwiftlyRod/blob/main/SwiftlyRod/Content/example.png)
+
+
+
 
 ## Features
 
