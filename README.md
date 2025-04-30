@@ -1,7 +1,10 @@
 # Summary
+Strava prototype for fun.
+
 ## Features
 
 ### SwiftUI Experience (iOS/macOS)
+- **Strava API & HealthKit** data for fitness updates
 - **Live step data visualization** using Charts and animated dot tracking
 - **Splash screen experience** combining `Rive` animation and layered transitions
 - **Award system grid UI** with animated state-based interactions
