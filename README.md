@@ -1,19 +1,15 @@
-# Motion, Data & Interactive Systems
-
-This prototype was developed as part of my interview process for the **Staff Design Technologist** role at Strava. It demonstrates how I approach systems thinking, motion design, and interactive prototyping across platforms.
-
+# Summary
 ## Features
 
 ### SwiftUI Experience (iOS/macOS)
 - **Live step data visualization** using Charts and animated dot tracking
 - **Splash screen experience** combining `Rive` animation and layered transitions
 - **Award system grid UI** with animated state-based interactions
-- **Rest Day vs Workout Grid** calendar visualization using Strava-style color logic
 
 
 ## Technologies Used
 
-- SwiftUI (iOS/macOS)
+- SwiftUI (iOS)
 - Rive for motion-driven UI
 - Spline for spatial 3D interaction design
 - HealthKit-style mock data
