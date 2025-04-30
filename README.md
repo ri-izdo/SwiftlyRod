@@ -1,5 +1,9 @@
 # Summary
 This prototype started as a fun, weekend exploration — a hobby project to investigate how live fitness data could be turned into something more interactive and emotionally engaging. It connects to Apple HealthKit and the Strava API to pull real activity data like steps, workouts, and recovery patterns, then visualizes that information through animated charts, motion graphics, and playful UI.
+
+![Alt Text]([https://github.com/ri-izdo/SwiftlyRod/blob/main/SwiftlyRod/Content/example.png](https://github.com/ri-izdo/SwiftlyRod/blob/main/SwiftlyRod/Content/metalcurve.gif)
+Interactive Curves and graphs using Metal graphics.
+
 Along the way, I incorporated tools like SwiftUI, Rive, and Spline to bring moments of 
 delight and movement into the experience. While the project was purely exploratory, it was 
 a great way to combine my interests in fitness, storytelling, and systems-driven design — 
